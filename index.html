@@ -26,13 +26,34 @@
     /* Google Calendar iframe — responsive height */
     .sim1-gcal-iframe { height: 720px; }
 
+    /* Register CTA on marquee cards — hidden until hover (desktop) */
+    .sim1-register-cta {
+        opacity: 0;
+        transform: translateY(6px);
+        transition: opacity .25s ease, transform .25s ease;
+    }
+    .sim1-marquee-card:hover .sim1-register-cta {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    /* Touch devices have no hover, so always show the register prompt */
+    @media (hover: none) {
+        .sim1-register-cta { opacity: 1; transform: none; }
+    }
+
     /* Mobile */
     @media (max-width: 768px) {
+        .sim1-evt-hero      { padding: 80px 22px 46px !important; }
         .sim1-evt-hero h1   { font-size: 3.4em !important; }
         .sim1-evt-hero p    { font-size: 1.05em !important; }
-        .sim1-marquee-card  { width: 220px !important; }
-        .sim1-marquee-track { animation-duration: 40s; }
-        .sim1-gcal-iframe   { height: 560px; }
+        .sim1-marquee-card  { width: 200px !important; }
+        .sim1-marquee-track { animation-duration: 40s; gap: 12px; }
+        .sim1-cal-section   { padding: 40px 16px 50px !important; }
+        .sim1-cta-section   { padding: 50px 16px !important; }
+        .sim1-cta-inner     { padding: 32px 22px !important; }
+        .sim1-gcal-iframe   { height: 600px; }
+        /* Some mobile browsers misreport hover — force the prompt visible */
+        .sim1-register-cta  { opacity: 1 !important; transform: none !important; }
     }
 </style>
 
@@ -60,7 +81,7 @@
 </div>
 
 <!-- ── GOOGLE CALENDAR EMBED ── -->
-<div style="padding:60px 40px 80px;background:#0a0a0a;">
+<div class="sim1-cal-section" style="padding:60px 40px 80px;background:#0a0a0a;">
     <div style="max-width:1100px;margin:0 auto;">
         <div style="text-align:center;margin-bottom:36px;">
             <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.75em;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#EF4444;margin-bottom:10px;">FULL CALENDAR</div>
@@ -106,8 +127,8 @@
 </div>
 
 <!-- ── CTA: GET ON THE LIST ── -->
-<div style="padding:70px 40px;background:linear-gradient(180deg,#0a0a0a 0%,#000 100%);">
-    <div style="max-width:760px;margin:0 auto;background:linear-gradient(135deg,#1a0000,#2a0808);border:1px solid rgba(239,68,68,0.3);border-radius:14px;padding:40px 30px;text-align:center;">
+<div class="sim1-cta-section" style="padding:70px 40px;background:linear-gradient(180deg,#0a0a0a 0%,#000 100%);">
+    <div class="sim1-cta-inner" style="max-width:760px;margin:0 auto;background:linear-gradient(135deg,#1a0000,#2a0808);border:1px solid rgba(239,68,68,0.3);border-radius:14px;padding:40px 30px;text-align:center;">
         <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.75em;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#EF4444;margin-bottom:10px;">DON'T MISS A NIGHT</div>
         <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:2em;font-weight:900;text-transform:uppercase;color:white;margin:0 0 12px;">Get Event Updates</h3>
         <p style="font-family:'Barlow',sans-serif;font-size:0.95em;color:#b0b0b0;margin:0 0 24px;">Drop your info and we'll let you know the second new events drop. No spam — just races, meets, and watch parties.</p>
@@ -188,7 +209,7 @@ const sim1EventsData = [
         title: 'East Coast Runners Car Meet',
         date: '2026-05-29',
         startTime: '7:00 PM',
-        graphic: 'https://placehold.co/400x500/0a0a0a/f97316?text=EAST+COAST+RUNNERS&font=oswald',
+        graphic: 'https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a17a2f45c35616d44d7b18c/1779933941215/Insta+Events+%288%29.png',
         signupUrl: '#'
     },
     {
@@ -235,6 +256,15 @@ const sim1EventsData = [
     },
 
     // ── WATCH PARTIES ──
+    {
+        type: 'watch-party',
+        title: 'UCL Final Watch Party',
+        date: '2026-05-30',
+        startTime: '12:00 PM',
+        endTime: '2:00 PM',
+        graphic: 'https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a17a24e4707152678cc61b0/1779933775773/Insta+Events+%287%29.png',
+        signupUrl: '#'
+    },
     {
         type: 'watch-party',
         title: 'F1 Monaco GP Watch Party',
@@ -298,6 +328,11 @@ const SIM1_EVENT_TYPES = {
     'scale-drift':   { color: '#22c55e', label: 'SCALE DRIFT' }
 };
 
+// Event types that require sign-up. Their cards become clickable and show a
+// "Click to Register →" prompt on hover (always visible on mobile/touch).
+// Types NOT listed here (car-meet, watch-party) are "just show up" — no prompt.
+const SIM1_REGISTER_TYPES = ['weekly-sprint', 'workshop', 'group-class', 'members-night', 'couples-night', 'scale-drift'];
+
 // ── Helpers ──
 function sim1IsUpcoming(ev) {
     const today = new Date(); today.setHours(0, 0, 0, 0);
@@ -338,26 +373,40 @@ function sim1RenderMarquee() {
     }
 
     const buildCard = (ev) => {
-        const cfg     = SIM1_EVENT_TYPES[ev.type] || { color:'#EF4444', label:'EVENT' };
-        const daysTag = sim1DaysAway(ev.date);
-        const urgent  = daysTag === 'TODAY' || daysTag === 'TOMORROW';
+        const cfg      = SIM1_EVENT_TYPES[ev.type] || { color:'#EF4444', label:'EVENT' };
+        const daysTag  = sim1DaysAway(ev.date);
+        const urgent   = daysTag === 'TODAY' || daysTag === 'TOMORROW';
+        const needsReg = SIM1_REGISTER_TYPES.includes(ev.type);
+        const timeStr  = ev.endTime ? `${ev.startTime} – ${ev.endTime}` : ev.startTime;
+
         const dayBadge = daysTag
             ? `<div style="position:absolute;top:12px;right:12px;background:${urgent ? '#EF4444' : 'rgba(0,0,0,0.7)'};color:white;font-family:'Barlow Condensed',sans-serif;font-size:0.62em;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:4px 9px;border-radius:6px;z-index:2;backdrop-filter:blur(4px);">${daysTag}</div>`
             : '';
-        return `
-            <a href="${ev.signupUrl || '#'}" target="_blank" class="sim1-marquee-card" style="flex-shrink:0;width:260px;background:#111;border:1px solid #2a2a2a;border-radius:12px;overflow:hidden;text-decoration:none;display:block;position:relative;transition:transform 0.2s, border-color 0.2s;" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='${cfg.color}'" onmouseout="this.style.transform='translateY(0)';this.style.borderColor='#2a2a2a'">
+
+        const regCta = needsReg
+            ? `<div class="sim1-register-cta" style="margin-top:9px;display:inline-block;background:${cfg.color};color:#000;font-family:'Barlow Condensed',sans-serif;font-size:0.72em;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;border-radius:6px;">Click to Register →</div>`
+            : '';
+
+        const inner = `
                 <div style="position:absolute;top:12px;left:12px;background:${cfg.color};color:#000;font-family:'Barlow Condensed',sans-serif;font-size:0.6em;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;border-radius:6px;z-index:2;">${cfg.label}</div>
                 ${dayBadge}
                 <div style="aspect-ratio:4/5;background:linear-gradient(160deg,#0a0a0a,#1a1a1a);overflow:hidden;position:relative;">
                     <img src="${ev.graphic}" alt="${ev.title}" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
-                    <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 50%);"></div>
+                    <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 55%);"></div>
                     <div style="position:absolute;bottom:0;left:0;right:0;padding:14px 16px;">
-                        <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.7em;font-weight:800;letter-spacing:1.5px;color:${cfg.color};text-transform:uppercase;margin-bottom:4px;">${sim1FormatDate(ev.date)} · ${ev.startTime}</div>
+                        <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.7em;font-weight:800;letter-spacing:1.5px;color:${cfg.color};text-transform:uppercase;margin-bottom:4px;">${sim1FormatDate(ev.date)} · ${timeStr}</div>
                         <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.15em;font-weight:900;color:white;text-transform:uppercase;line-height:1.1;">${ev.title}</div>
+                        ${regCta}
                     </div>
-                </div>
-            </a>
-        `;
+                </div>`;
+
+        const cardStyle = "flex-shrink:0;width:260px;background:#111;border:1px solid #2a2a2a;border-radius:12px;overflow:hidden;text-decoration:none;display:block;position:relative;transition:transform 0.2s, border-color 0.2s;";
+        const hoverOn   = `this.style.transform='translateY(-4px)';this.style.borderColor='${cfg.color}'`;
+        const hoverOff  = `this.style.transform='translateY(0)';this.style.borderColor='#2a2a2a'`;
+
+        return needsReg
+            ? `<a href="${ev.signupUrl || '#'}" target="_blank" class="sim1-marquee-card" style="${cardStyle}cursor:pointer;" onmouseover="${hoverOn}" onmouseout="${hoverOff}">${inner}</a>`
+            : `<div class="sim1-marquee-card" style="${cardStyle}" onmouseover="${hoverOn}" onmouseout="${hoverOff}">${inner}</div>`;
     };
 
     // Duplicate the set so the marquee loops seamlessly with translateX(-50%)
@@ -365,4 +414,14 @@ function sim1RenderMarquee() {
 }
 
 sim1RenderMarquee();
+
+// ── Google Calendar: switch to AGENDA (list) view on small screens ──
+// MONTH grid is cramped on phones; AGENDA reads as a clean scrollable list.
+(function sim1TuneCalendarForMobile() {
+    if (window.innerWidth > 768) return;
+    const iframe = document.querySelector('.sim1-gcal-iframe');
+    if (iframe && /mode=MONTH/i.test(iframe.src)) {
+        iframe.src = iframe.src.replace(/mode=MONTH/i, 'mode=AGENDA');
+    }
+})();
 </script>
