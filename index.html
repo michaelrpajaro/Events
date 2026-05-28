@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIM1Racing — Events</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&family=Barlow+Condensed:wght@700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; }
+        html, body { margin: 0; padding: 0; background: #000; }
+    </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     SIM1RACING — EVENTS PAGE
+     Two pieces:
+       1. Top marquee — scrolling "next 5 upcoming events" with branded
+          4:5 graphics. Edit sim1EventsData[] below to feature events here.
+       2. Google Calendar embed — your live calendar handles the full
+          event list (it's the source of truth — update events in
+          Google Calendar and they show up here automatically).
+     ═══════════════════════════════════════════════════════════════════════ -->
+
+<style>
+    /* Marquee animation */
+    @keyframes sim1-marquee {
+        from { transform: translateX(0); }
+        to   { transform: translateX(-50%); }
+    }
+    .sim1-marquee-track {
+        display: flex;
+        gap: 18px;
+        width: max-content;
+        animation: sim1-marquee 60s linear infinite;
+    }
+    .sim1-marquee-track:hover { animation-play-state: paused; }
+    .sim1-marquee-wrap { mask-image: linear-gradient(90deg, transparent 0, #000 4%, #000 96%, transparent 100%); -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 4%, #000 96%, transparent 100%); }
+
+    /* Google Calendar iframe — responsive height */
+    .sim1-gcal-iframe { height: 720px; }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+        .sim1-evt-hero h1   { font-size: 3.4em !important; }
+        .sim1-evt-hero p    { font-size: 1.05em !important; }
+        .sim1-marquee-card  { width: 220px !important; }
+        .sim1-marquee-track { animation-duration: 40s; }
+        .sim1-gcal-iframe   { height: 560px; }
+    }
+</style>
+
+<!-- ── HERO ── -->
+<div style="padding:120px 40px 70px;background:#000;text-align:center;position:relative;overflow:hidden;" class="sim1-evt-hero">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(239,68,68,0.12) 0%,transparent 70%);pointer-events:none;"></div>
+    <div style="position:relative;z-index:1;">
+        <div style="display:inline-block;background:#EF4444;color:white;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase;padding:5px 18px;border-radius:14px;margin-bottom:20px;">Race. Gather. Compete.</div>
+        <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:5.5em;font-weight:900;text-transform:uppercase;color:white;margin:0 0 24px;line-height:1;">EVENTS</h1>
+        <p style="font-family:'Barlow',sans-serif;font-size:1.3em;line-height:1.7;color:#b0b0b0;max-width:780px;margin:0 auto;">Sprint races, watch parties, car meets, workshops, drift battles — there's always something happening at SIM1Racing. Featured events up top, full calendar below.</p>
+    </div>
+</div>
+
+<!-- ── UPCOMING EVENTS MARQUEE (TOP FEATURE) ── -->
+<div style="padding:50px 0 60px;background:#000;position:relative;overflow:hidden;">
+    <div style="text-align:center;margin-bottom:32px;padding:0 22px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.75em;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#EF4444;margin-bottom:10px;">WHAT'S NEXT</div>
+        <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:2.4em;font-weight:900;text-transform:uppercase;color:white;margin:0;">Upcoming Events</h2>
+    </div>
+    <div class="sim1-marquee-wrap" style="position:relative;">
+        <div class="sim1-marquee-track" id="sim1-marquee-track">
+            <!-- JS injects cards here -->
+        </div>
+    </div>
+</div>
+
+<!-- ── GOOGLE CALENDAR EMBED ── -->
+<div style="padding:60px 40px 80px;background:#0a0a0a;">
+    <div style="max-width:1100px;margin:0 auto;">
+        <div style="text-align:center;margin-bottom:36px;">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.75em;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#EF4444;margin-bottom:10px;">FULL CALENDAR</div>
+            <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:2.4em;font-weight:900;text-transform:uppercase;color:white;margin:0 0 12px;">Every Event, All in One Place</h2>
+            <p style="font-family:'Barlow',sans-serif;font-size:1em;color:#888;max-width:640px;margin:0 auto;">Click any event for details, location, and sign-up info.</p>
+        </div>
+
+        <!--
+            ▼ REPLACE THE src URL BELOW WITH YOUR OWN GOOGLE CALENDAR EMBED URL ▼
+            How to get it:
+              1. Open Google Calendar in a browser
+              2. Settings (gear icon) → "Settings for my calendars" → pick your calendar
+              3. Scroll to "Integrate calendar" → copy the value in "Public URL to this calendar"
+                 (or grab the full <iframe> code under "Embed code")
+              4. Paste your calendar ID where it says YOUR_CALENDAR_ID@group.calendar.google.com
+                 (the part after "src=" in the embed URL)
+              5. Your calendar must be set to public, or events won't show.
+                 Settings → "Access permissions for events" → check "Make available to public"
+
+            URL parameters you can tweak:
+              mode=MONTH       → MONTH | WEEK | AGENDA  (AGENDA is best for mobile)
+              ctz=...          → timezone (currently New York)
+              bgcolor=%23ffffff→ iframe background (white). Try %23000000 for dark.
+              showTitle=0      → hide calendar name above the grid
+              showPrint=0      → hide print button
+              showTabs=1       → show the Month/Week/Agenda view tabs
+              showCalendars=0  → hide the calendar-picker sidebar
+              showTz=0         → hide the timezone label
+        -->
+        <div style="background:#fff;border:1px solid #2a2a2a;border-radius:14px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.4);">
+            <iframe
+                class="sim1-gcal-iframe"
+                src="https://calendar.google.com/calendar/embed?src=059ba3bc2a85a499190466be5d133a334132b939814362cc8fbf5fbaf752152c%40group.calendar.google.com&ctz=America%2FNew_York&bgcolor=%23ffffff&showTitle=0&showPrint=0&showCalendars=0&showTabs=1&showTz=0&mode=MONTH"
+                style="border:0;width:100%;display:block;"
+                frameborder="0"
+                scrolling="no"
+                title="SIM1Racing Events Calendar">
+            </iframe>
+        </div>
+
+        <p style="font-family:'Barlow',sans-serif;font-size:0.82em;color:#555;text-align:center;margin:18px 0 0;">Tip: click the <strong style="color:#888;">[+ Google Calendar]</strong> button in the bottom-right of the calendar to add ours to your own.</p>
+    </div>
+</div>
+
+<!-- ── CTA: GET ON THE LIST ── -->
+<div style="padding:70px 40px;background:linear-gradient(180deg,#0a0a0a 0%,#000 100%);">
+    <div style="max-width:760px;margin:0 auto;background:linear-gradient(135deg,#1a0000,#2a0808);border:1px solid rgba(239,68,68,0.3);border-radius:14px;padding:40px 30px;text-align:center;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.75em;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#EF4444;margin-bottom:10px;">DON'T MISS A NIGHT</div>
+        <h3 style="font-family:'Barlow Condensed',sans-serif;font-size:2em;font-weight:900;text-transform:uppercase;color:white;margin:0 0 12px;">Get Event Updates</h3>
+        <p style="font-family:'Barlow',sans-serif;font-size:0.95em;color:#b0b0b0;margin:0 0 24px;">Drop your info and we'll let you know the second new events drop. No spam — just races, meets, and watch parties.</p>
+        <a href="#" id="sim1-signup-cta" style="display:inline-block;background:#EF4444;color:white;padding:14px 36px;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-size:1em;font-weight:800;text-decoration:none;text-transform:uppercase;letter-spacing:1px;">JOIN THE LIST →</a>
+    </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     MARQUEE DATA + RENDER LOGIC
+     Only the TOP MARQUEE uses this data. Everything else lives in
+     your Google Calendar above. Edit sim1EventsData[] to add/remove
+     featured events. Past events auto-archive on the day after.
+     ═══════════════════════════════════════════════════════════════ -->
+<script>
+// ──────────────────────────────────────────────────────────────────
+//  FEATURED EVENTS — shown in the top scrolling marquee (next 5)
+//  Past events auto-archive. Weekly Sprint Race is auto-generated
+//  below — DON'T add Thursday sprints here.
+// ──────────────────────────────────────────────────────────────────
+const sim1EventsData = [
+
+    // ── WORKSHOP WEDNESDAYS ──
+    {
+        type: 'workshop',
+        title: 'How to Drive Manual',
+        date: '2026-05-20',
+        startTime: '8:00 PM',
+        graphic: 'https://placehold.co/400x500/0a0a0a/60a5fa?text=DRIVE+MANUAL&font=oswald',
+        signupUrl: '#'
+    },
+    {
+        type: 'workshop',
+        title: 'How to Change Your Oil',
+        date: '2026-06-03',
+        startTime: '8:00 PM',
+        graphic: 'https://placehold.co/400x500/0a0a0a/60a5fa?text=OIL+CHANGE&font=oswald',
+        signupUrl: '#'
+    },
+
+    // ── GROUP CLASSES ──
+    {
+        type: 'group-class',
+        title: 'Prototype Group Class',
+        date: '2026-05-25',
+        startTime: '5:00 PM',
+        graphic: 'https://placehold.co/400x500/001a18/14b8a6?text=PROTOTYPE+CLASS&font=oswald',
+        signupUrl: '#'
+    },
+    {
+        type: 'group-class',
+        title: 'Manual Car Group Class',
+        date: '2026-06-01',
+        startTime: '5:00 PM',
+        graphic: 'https://placehold.co/400x500/001a18/14b8a6?text=MANUAL+CLASS&font=oswald',
+        signupUrl: '#'
+    },
+
+    // ── CAR MEETS ──
+    {
+        type: 'car-meet',
+        title: "Rollin' Euroz Sim Night",
+        date: '2026-05-23',
+        startTime: '7:00 PM',
+        graphic: "https://placehold.co/400x500/0a0a0a/f97316?text=ROLLIN%27+EUROZ&font=oswald",
+        signupUrl: '#'
+    },
+    {
+        type: 'car-meet',
+        title: 'Tristate Cars & Coffee',
+        date: '2026-05-24',
+        startTime: '11:00 AM',
+        graphic: 'https://placehold.co/400x500/0a0a0a/f97316?text=CARS+%26+COFFEE&font=oswald',
+        signupUrl: '#'
+    },
+    {
+        type: 'car-meet',
+        title: 'East Coast Runners Car Meet',
+        date: '2026-05-29',
+        startTime: '7:00 PM',
+        graphic: 'https://placehold.co/400x500/0a0a0a/f97316?text=EAST+COAST+RUNNERS&font=oswald',
+        signupUrl: '#'
+    },
+    {
+        type: 'car-meet',
+        title: 'S/R Syndicate Car Meet',
+        date: '2026-05-31',
+        startTime: '8:00 AM',
+        graphic: 'https://placehold.co/400x500/0a0a0a/f97316?text=S%2FR+SYNDICATE&font=oswald',
+        signupUrl: '#'
+    },
+    {
+        type: 'car-meet',
+        title: 'RIX Magazine Monthly Meet',
+        date: '2026-06-05',
+        startTime: '7:00 PM',
+        graphic: 'https://placehold.co/400x500/0a0a0a/f97316?text=RIX+MONTHLY&font=oswald',
+        signupUrl: '#'
+    },
+    {
+        type: 'car-meet',
+        title: "Rollin' Euroz Sim Night",
+        date: '2026-06-06',
+        startTime: '7:00 PM',
+        graphic: "https://placehold.co/400x500/0a0a0a/f97316?text=ROLLIN%27+EUROZ&font=oswald",
+        signupUrl: '#'
+    },
+    {
+        type: 'car-meet',
+        title: 'RIX Magazine Car Show',
+        date: '2026-06-07',
+        startTime: '9:00 AM',
+        graphic: 'https://placehold.co/400x500/0a0a0a/f97316?text=RIX+CAR+SHOW&font=oswald',
+        signupUrl: '#'
+    },
+
+    // ── MEMBERS NIGHT ──
+    {
+        type: 'members-night',
+        title: 'May Members Night',
+        date: '2026-05-26',
+        startTime: '8:00 PM',
+        graphic: 'https://placehold.co/400x500/1a1100/fbbf24?text=MEMBERS+NIGHT&font=oswald',
+        signupUrl: '#'
+    },
+
+    // ── WATCH PARTIES ──
+    {
+        type: 'watch-party',
+        title: 'F1 Monaco GP Watch Party',
+        date: '2026-06-07',
+        startTime: '9:00 AM',
+        graphic: 'https://placehold.co/400x500/1a0010/a78bfa?text=MONACO+GP&font=oswald',
+        signupUrl: '#'
+    },
+    {
+        type: 'watch-party',
+        title: 'F1 Spanish GP Watch Party',
+        date: '2026-06-14',
+        startTime: '9:00 AM',
+        graphic: 'https://placehold.co/400x500/1a0010/a78bfa?text=BARCELONA+GP&font=oswald',
+        signupUrl: '#'
+    }
+];
+
+// ──────────────────────────────────────────────────────────────────
+//  WEEKLY SPRINT RACE — auto-generated every Thursday at 8 PM.
+//  Edit the template to change the look/copy/signup link.
+// ──────────────────────────────────────────────────────────────────
+const sim1WeeklySprintTemplate = {
+    type: 'weekly-sprint',
+    title: 'Weekly Sprint Race',
+    startTime: '8:00 PM',
+    graphic: 'https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/69fd50e9294d8f22a2076e4e/1778209001402/Apr+Wk2+Sprint+%281%29.jpg',
+    signupUrl: '#'
+};
+const SIM1_SPRINT_WEEKS_AHEAD = 12;
+
+function sim1GenerateWeeklySprints() {
+    const sprints = [];
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const dayOfWeek = today.getDay();                   // 0=Sun, 4=Thu
+    const daysUntilThu = ((4 - dayOfWeek) + 7) % 7;
+    const firstThu = new Date(today);
+    firstThu.setDate(today.getDate() + daysUntilThu);
+
+    for (let i = 0; i < SIM1_SPRINT_WEEKS_AHEAD; i++) {
+        const d = new Date(firstThu);
+        d.setDate(firstThu.getDate() + i * 7);
+        const dateStr = d.getFullYear() + '-'
+            + String(d.getMonth() + 1).padStart(2, '0') + '-'
+            + String(d.getDate()).padStart(2, '0');
+        sprints.push({ ...sim1WeeklySprintTemplate, date: dateStr });
+    }
+    return sprints;
+}
+
+// Per-type color + label (used for the marquee card badges)
+const SIM1_EVENT_TYPES = {
+    'weekly-sprint': { color: '#EF4444', label: 'SPRINT RACE' },
+    'watch-party':   { color: '#a78bfa', label: 'WATCH PARTY' },
+    'car-meet':      { color: '#f97316', label: 'CAR MEET' },
+    'workshop':      { color: '#60a5fa', label: 'WORKSHOP' },
+    'group-class':   { color: '#14b8a6', label: 'GROUP CLASS' },
+    'couples-night': { color: '#ec4899', label: 'COUPLES NIGHT' },
+    'members-night': { color: '#fbbf24', label: 'MEMBERS NIGHT' },
+    'scale-drift':   { color: '#22c55e', label: 'SCALE DRIFT' }
+};
+
+// ── Helpers ──
+function sim1IsUpcoming(ev) {
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    return new Date(ev.date + 'T00:00:00') >= today;
+}
+function sim1FormatDate(dateStr) {
+    return new Date(dateStr + 'T00:00:00')
+        .toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })
+        .toUpperCase();
+}
+function sim1DaysAway(dateStr) {
+    const today = new Date(); today.setHours(0,0,0,0);
+    const d = new Date(dateStr + 'T00:00:00');
+    const diff = Math.round((d - today) / (1000*60*60*24));
+    if (diff === 0) return 'TODAY';
+    if (diff === 1) return 'TOMORROW';
+    if (diff < 7)   return `IN ${diff} DAYS`;
+    if (diff < 14)  return 'NEXT WEEK';
+    return null;
+}
+
+// Combined upcoming, sorted soonest-first
+function sim1Upcoming() {
+    return [...sim1EventsData, ...sim1GenerateWeeklySprints()]
+        .filter(sim1IsUpcoming)
+        .sort((a, b) => new Date(a.date) - new Date(b.date));
+}
+
+// ── Marquee render ──
+function sim1RenderMarquee() {
+    const track = document.getElementById('sim1-marquee-track');
+    const upcoming = sim1Upcoming().slice(0, 5);
+
+    if (!upcoming.length) {
+        track.innerHTML = `<div style="padding:60px 40px;text-align:center;font-family:'Barlow',sans-serif;color:#444;font-size:0.95em;width:100%;">No events scheduled — check back soon.</div>`;
+        track.style.animation = 'none';
+        return;
+    }
+
+    const buildCard = (ev) => {
+        const cfg     = SIM1_EVENT_TYPES[ev.type] || { color:'#EF4444', label:'EVENT' };
+        const daysTag = sim1DaysAway(ev.date);
+        const urgent  = daysTag === 'TODAY' || daysTag === 'TOMORROW';
+        const dayBadge = daysTag
+            ? `<div style="position:absolute;top:12px;right:12px;background:${urgent ? '#EF4444' : 'rgba(0,0,0,0.7)'};color:white;font-family:'Barlow Condensed',sans-serif;font-size:0.62em;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:4px 9px;border-radius:6px;z-index:2;backdrop-filter:blur(4px);">${daysTag}</div>`
+            : '';
+        return `
+            <a href="${ev.signupUrl || '#'}" target="_blank" class="sim1-marquee-card" style="flex-shrink:0;width:260px;background:#111;border:1px solid #2a2a2a;border-radius:12px;overflow:hidden;text-decoration:none;display:block;position:relative;transition:transform 0.2s, border-color 0.2s;" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='${cfg.color}'" onmouseout="this.style.transform='translateY(0)';this.style.borderColor='#2a2a2a'">
+                <div style="position:absolute;top:12px;left:12px;background:${cfg.color};color:#000;font-family:'Barlow Condensed',sans-serif;font-size:0.6em;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;border-radius:6px;z-index:2;">${cfg.label}</div>
+                ${dayBadge}
+                <div style="aspect-ratio:4/5;background:linear-gradient(160deg,#0a0a0a,#1a1a1a);overflow:hidden;position:relative;">
+                    <img src="${ev.graphic}" alt="${ev.title}" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
+                    <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 50%);"></div>
+                    <div style="position:absolute;bottom:0;left:0;right:0;padding:14px 16px;">
+                        <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.7em;font-weight:800;letter-spacing:1.5px;color:${cfg.color};text-transform:uppercase;margin-bottom:4px;">${sim1FormatDate(ev.date)} · ${ev.startTime}</div>
+                        <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.15em;font-weight:900;color:white;text-transform:uppercase;line-height:1.1;">${ev.title}</div>
+                    </div>
+                </div>
+            </a>
+        `;
+    };
+
+    // Duplicate the set so the marquee loops seamlessly with translateX(-50%)
+    track.innerHTML = upcoming.map(buildCard).join('') + upcoming.map(buildCard).join('');
+}
+
+sim1RenderMarquee();
+</script>
+
+</body>
+</html>
