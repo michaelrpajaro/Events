@@ -9,7 +9,7 @@
      ═══════════════════════════════════════════════════════════════════════ -->
 
 <style>
-    /* Marquee animation */
+    /* Marquee animation (shared by the top marquee and feature galleries) */
     @keyframes sim1-marquee {
         from { transform: translateX(0); }
         to   { transform: translateX(-50%); }
@@ -26,34 +26,86 @@
     /* Google Calendar iframe — responsive height */
     .sim1-gcal-iframe { height: 720px; }
 
-    /* Register CTA on marquee cards — hidden until hover (desktop) */
-    .sim1-register-cta {
-        opacity: 0;
-        transform: translateY(6px);
-        transition: opacity .25s ease, transform .25s ease;
+    /* "What we host" feature sections — text on one side, photo gallery on the other */
+    .sim1-feature-section { padding: 70px 40px; }
+    .sim1-feature-row {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 48px;
+        align-items: center;
     }
-    .sim1-marquee-card:hover .sim1-register-cta {
-        opacity: 1;
-        transform: translateY(0);
+    .sim1-feature-reverse .sim1-feature-text { order: 2; }
+    .sim1-feature-reverse .sim1-feature-gallery-wrap { order: 1; }
+    .sim1-feature-text { font-family: 'Barlow', sans-serif; color: #b0b0b0; }
+    .sim1-eyebrow {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 0.75em; font-weight: 800;
+        letter-spacing: 3px; text-transform: uppercase;
+        margin-bottom: 10px;
     }
-    /* Touch devices have no hover, so always show the register prompt */
-    @media (hover: none) {
-        .sim1-register-cta { opacity: 1; transform: none; }
+    .sim1-feature-h2 {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 2.4em; font-weight: 900;
+        text-transform: uppercase; color: white;
+        margin: 0 0 14px; line-height: 1;
     }
+    .sim1-feature-p { font-size: 1.02em; line-height: 1.65; margin: 0 0 22px; }
+    .sim1-feature-link {
+        display: inline-block;
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 0.95em; font-weight: 800;
+        letter-spacing: 1.5px; text-transform: uppercase;
+        color: #EF4444; text-decoration: none;
+        border-bottom: 2px solid rgba(239,68,68,0.4);
+        padding-bottom: 2px;
+        transition: border-color .2s, color .2s;
+    }
+    .sim1-feature-link:hover { border-bottom-color: #EF4444; color: #ff6b6b; }
+
+    /* Scrolling photo gallery inside each feature section */
+    .sim1-feature-gallery-wrap {
+        overflow: hidden;
+        mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+        -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+    }
+    .sim1-gallery-track {
+        display: flex;
+        gap: 12px;
+        width: max-content;
+        animation: sim1-marquee 35s linear infinite;
+    }
+    .sim1-gallery-track:hover { animation-play-state: paused; }
+    .sim1-gallery-card {
+        flex-shrink: 0;
+        width: 180px;
+        aspect-ratio: 4/5;
+        border-radius: 10px;
+        overflow: hidden;
+        background: #111;
+        border: 1px solid #2a2a2a;
+    }
+    .sim1-gallery-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
     /* Mobile */
     @media (max-width: 768px) {
-        .sim1-evt-hero      { padding: 80px 22px 46px !important; }
-        .sim1-evt-hero h1   { font-size: 3.4em !important; }
-        .sim1-evt-hero p    { font-size: 1.05em !important; }
-        .sim1-marquee-card  { width: 200px !important; }
-        .sim1-marquee-track { animation-duration: 40s; gap: 12px; }
-        .sim1-cal-section   { padding: 40px 16px 50px !important; }
-        .sim1-cta-section   { padding: 50px 16px !important; }
-        .sim1-cta-inner     { padding: 32px 22px !important; }
-        .sim1-gcal-iframe   { height: 600px; }
-        /* Some mobile browsers misreport hover — force the prompt visible */
-        .sim1-register-cta  { opacity: 1 !important; transform: none !important; }
+        .sim1-evt-hero        { padding: 80px 22px 46px !important; }
+        .sim1-evt-hero h1     { font-size: 3.4em !important; }
+        .sim1-evt-hero p      { font-size: 1.05em !important; }
+        .sim1-marquee-card    { width: 220px !important; }
+        .sim1-marquee-track   { animation-duration: 40s; gap: 12px; }
+        .sim1-cal-section     { padding: 40px 16px 50px !important; }
+        .sim1-cta-section     { padding: 50px 16px !important; }
+        .sim1-cta-inner       { padding: 32px 22px !important; }
+        .sim1-gcal-iframe     { height: 600px; }
+        .sim1-feature-section { padding: 52px 18px !important; }
+        .sim1-feature-row     { grid-template-columns: 1fr !important; gap: 26px; }
+        .sim1-feature-reverse .sim1-feature-text,
+        .sim1-feature-reverse .sim1-feature-gallery-wrap { order: initial; }
+        .sim1-feature-h2      { font-size: 2em; }
+        .sim1-gallery-card    { width: 150px; }
+        .sim1-gallery-track   { animation-duration: 28s; }
     }
 </style>
 
@@ -79,6 +131,95 @@
         </div>
     </div>
 </div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     "WHAT WE HOST" — one section per event type. Each section pairs a
+     short description with a scrolling photo gallery (4:5 pics).
+       - Edit copy directly in the HTML below.
+       - Edit the gallery images in SIM1_GALLERIES (in the <script> block).
+       - Each "Full details →" link's href is a placeholder ("#") — swap in
+         the real page URL on Squarespace.
+     ═══════════════════════════════════════════════════════════════════════ -->
+
+<!-- ── WEEKLY SPRINT RACE ── -->
+<section class="sim1-feature-section" style="background:#0a0a0a;">
+    <div class="sim1-feature-row">
+        <div class="sim1-feature-text">
+            <div class="sim1-eyebrow" style="color:#EF4444;">WEEKLY SPRINT RACE</div>
+            <h2 class="sim1-feature-h2">Thursdays. 8 PM. Lights Out.</h2>
+            <p class="sim1-feature-p">Same format every week — practice, qualifying, then the race. Climb through divisions based on your best laps. Whether you're already seeded or showing up for the first time, there's a grid spot waiting.</p>
+            <!-- ▼ swap href for your qualifiers / sprint info page ▼ -->
+            <a href="#" class="sim1-feature-link">How qualifiers &amp; divisions work →</a>
+        </div>
+        <div class="sim1-feature-gallery-wrap">
+            <div class="sim1-gallery-track" data-sim1-gallery="weekly-sprint"></div>
+        </div>
+    </div>
+</section>
+
+<!-- ── GROUP CLASSES ── -->
+<section class="sim1-feature-section" style="background:#000;">
+    <div class="sim1-feature-row sim1-feature-reverse">
+        <div class="sim1-feature-text">
+            <div class="sim1-eyebrow" style="color:#14b8a6;">GROUP CLASSES</div>
+            <h2 class="sim1-feature-h2">Coaching, Mondays at 5</h2>
+            <p class="sim1-feature-p">Six rotating classes — Open Wheel, Sports Car, Street Car, Racecraft, Prototype, and Manual. Small groups, structured coaching, focused on driving your laptimes down. New class every Monday.</p>
+            <!-- ▼ swap href for your group-class info / signup page ▼ -->
+            <a href="#" class="sim1-feature-link" style="color:#14b8a6;border-bottom-color:rgba(20,184,166,0.4);">Full class breakdown →</a>
+        </div>
+        <div class="sim1-feature-gallery-wrap">
+            <div class="sim1-gallery-track" data-sim1-gallery="group-classes"></div>
+        </div>
+    </div>
+</section>
+
+<!-- ── WATCH PARTIES ── -->
+<section class="sim1-feature-section" style="background:#0a0a0a;">
+    <div class="sim1-feature-row">
+        <div class="sim1-feature-text">
+            <div class="sim1-eyebrow" style="color:#a78bfa;">WATCH PARTIES</div>
+            <h2 class="sim1-feature-h2">Big Screen. Bar Open.</h2>
+            <p class="sim1-feature-p">Every F1 race of the season, the UCL final, and a few big football matchups. Show up, grab a seat, watch with people who actually care which way the steering wheel turns. Doors open an hour before lights out.</p>
+            <!-- ▼ swap href for your watch-party info page ▼ -->
+            <a href="#" class="sim1-feature-link" style="color:#a78bfa;border-bottom-color:rgba(167,139,250,0.4);">See the full watch schedule →</a>
+        </div>
+        <div class="sim1-feature-gallery-wrap">
+            <div class="sim1-gallery-track" data-sim1-gallery="watch-parties"></div>
+        </div>
+    </div>
+</section>
+
+<!-- ── CAR MEETS ── -->
+<section class="sim1-feature-section" style="background:#000;">
+    <div class="sim1-feature-row sim1-feature-reverse">
+        <div class="sim1-feature-text">
+            <div class="sim1-eyebrow" style="color:#f97316;">CAR MEETS</div>
+            <h2 class="sim1-feature-h2">A Different Crew Every Week</h2>
+            <p class="sim1-feature-p">We open the doors to Rollin' Euroz, East Coast Runners, RIX Magazine, S/R Syndicate, and our own monthly meet. Free, open, always something parked outside worth a closer look.</p>
+            <!-- ▼ swap href for your car-meet info / "host your own" page ▼ -->
+            <a href="#" class="sim1-feature-link" style="color:#f97316;border-bottom-color:rgba(249,115,22,0.4);">Want to host your own? →</a>
+        </div>
+        <div class="sim1-feature-gallery-wrap">
+            <div class="sim1-gallery-track" data-sim1-gallery="car-meets"></div>
+        </div>
+    </div>
+</section>
+
+<!-- ── SCALE DRIFT SERIES ── -->
+<section class="sim1-feature-section" style="background:#0a0a0a;">
+    <div class="sim1-feature-row">
+        <div class="sim1-feature-text">
+            <div class="sim1-eyebrow" style="color:#22c55e;">SCALE DRIFT SERIES</div>
+            <h2 class="sim1-feature-h2">RC Drift. Real Stakes.</h2>
+            <p class="sim1-feature-p">Battle nights on our purpose-built scale track — judged tandems, bracket competition, and a season-long points championship. Bring your chassis or rent one of ours. All experience levels welcome.</p>
+            <!-- ▼ swap href for your scale-drift series page ▼ -->
+            <a href="#" class="sim1-feature-link" style="color:#22c55e;border-bottom-color:rgba(34,197,94,0.4);">Series rules &amp; standings →</a>
+        </div>
+        <div class="sim1-feature-gallery-wrap">
+            <div class="sim1-gallery-track" data-sim1-gallery="scale-drift"></div>
+        </div>
+    </div>
+</section>
 
 <!-- ── GOOGLE CALENDAR EMBED ── -->
 <div class="sim1-cal-section" style="padding:60px 40px 80px;background:#0a0a0a;">
@@ -540,28 +681,33 @@ function sim1RenderMarquee() {
         const needsReg = SIM1_REGISTER_TYPES.includes(ev.type);
         const timeStr  = ev.endTime ? `${ev.startTime} – ${ev.endTime}` : ev.startTime;
 
-        const dayBadge = daysTag
-            ? `<div style="position:absolute;top:12px;right:12px;background:${urgent ? '#EF4444' : 'rgba(0,0,0,0.7)'};color:white;font-family:'Barlow Condensed',sans-serif;font-size:0.62em;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:4px 9px;border-radius:6px;z-index:2;backdrop-filter:blur(4px);">${daysTag}</div>`
+        const dayPill = daysTag
+            ? `<span style="background:${urgent ? '#EF4444' : 'rgba(255,255,255,0.08)'};color:${urgent ? '#fff' : '#b0b0b0'};font-family:'Barlow Condensed',sans-serif;font-size:0.62em;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;border-radius:6px;">${daysTag}</span>`
             : '';
 
-        const regCta = needsReg
-            ? `<div class="sim1-register-cta" style="margin-top:9px;display:inline-block;background:${cfg.color};color:#000;font-family:'Barlow Condensed',sans-serif;font-size:0.72em;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;border-radius:6px;">Click to Register →</div>`
-            : '';
-
-        const inner = `
-                <div style="position:absolute;top:12px;left:12px;background:${cfg.color};color:#000;font-family:'Barlow Condensed',sans-serif;font-size:0.6em;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;border-radius:6px;z-index:2;">${cfg.label}</div>
-                ${dayBadge}
-                <div style="aspect-ratio:4/5;background:linear-gradient(160deg,#0a0a0a,#1a1a1a);overflow:hidden;position:relative;">
-                    <img src="${ev.graphic}" alt="${ev.title}" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
-                    <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 55%);"></div>
-                    <div style="position:absolute;bottom:0;left:0;right:0;padding:14px 16px;">
-                        <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.7em;font-weight:800;letter-spacing:1.5px;color:${cfg.color};text-transform:uppercase;margin-bottom:4px;">${sim1FormatDate(ev.date)} · ${timeStr}</div>
-                        <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.15em;font-weight:900;color:white;text-transform:uppercase;line-height:1.1;">${ev.title}</div>
-                        ${regCta}
-                    </div>
+        const bottom = needsReg
+            ? `<div style="padding:11px 14px 13px;border-top:1px solid #1f1f1f;background:#0d0d0d;text-align:center;">
+                    <span style="display:inline-block;background:${cfg.color};color:#000;font-family:'Barlow Condensed',sans-serif;font-size:0.78em;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:6px;">Click to Register →</span>
+                </div>`
+            : `<div style="padding:13px 14px;border-top:1px solid #1f1f1f;background:#0d0d0d;text-align:center;">
+                    <span style="font-family:'Barlow Condensed',sans-serif;font-size:0.72em;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#666;">No Registration · Just Show Up</span>
                 </div>`;
 
-        const cardStyle = "flex-shrink:0;width:260px;background:#111;border:1px solid #2a2a2a;border-radius:12px;overflow:hidden;text-decoration:none;display:block;position:relative;transition:transform 0.2s, border-color 0.2s;";
+        const inner = `
+                <div style="padding:13px 14px 11px;">
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
+                        <span style="background:${cfg.color};color:#000;font-family:'Barlow Condensed',sans-serif;font-size:0.62em;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;border-radius:6px;">${cfg.label}</span>
+                        ${dayPill}
+                    </div>
+                    <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.1em;font-weight:900;color:white;text-transform:uppercase;line-height:1.15;margin-bottom:4px;">${ev.title}</div>
+                    <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.7em;font-weight:800;letter-spacing:1.5px;color:${cfg.color};text-transform:uppercase;">${sim1FormatDate(ev.date)} · ${timeStr}</div>
+                </div>
+                <div style="aspect-ratio:4/5;background:linear-gradient(160deg,#0a0a0a,#1a1a1a);overflow:hidden;">
+                    <img src="${ev.graphic}" alt="${ev.title}" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
+                </div>
+                ${bottom}`;
+
+        const cardStyle = "flex-shrink:0;width:260px;background:#111;border:1px solid #2a2a2a;border-radius:12px;overflow:hidden;text-decoration:none;display:flex;flex-direction:column;transition:transform 0.2s, border-color 0.2s;";
         const hoverOn   = `this.style.transform='translateY(-4px)';this.style.borderColor='${cfg.color}'`;
         const hoverOff  = `this.style.transform='translateY(0)';this.style.borderColor='#2a2a2a'`;
 
@@ -575,6 +721,70 @@ function sim1RenderMarquee() {
 }
 
 sim1RenderMarquee();
+
+// ──────────────────────────────────────────────────────────────────
+//  FEATURE-SECTION PHOTO GALLERIES — one image list per event type.
+//  Swap the placeholder URLs below for real photos (4:5 works best).
+//  Add or remove URLs freely; the gallery scrolls in a seamless loop.
+// ──────────────────────────────────────────────────────────────────
+const SIM1_GALLERIES = {
+    'weekly-sprint': [
+        'https://placehold.co/400x500/1a0000/EF4444?text=SPRINT+1&font=oswald',
+        'https://placehold.co/400x500/1a0000/EF4444?text=SPRINT+2&font=oswald',
+        'https://placehold.co/400x500/1a0000/EF4444?text=SPRINT+3&font=oswald',
+        'https://placehold.co/400x500/1a0000/EF4444?text=SPRINT+4&font=oswald',
+        'https://placehold.co/400x500/1a0000/EF4444?text=SPRINT+5&font=oswald',
+        'https://placehold.co/400x500/1a0000/EF4444?text=SPRINT+6&font=oswald'
+    ],
+    'group-classes': [
+        'https://placehold.co/400x500/001a18/14b8a6?text=CLASS+1&font=oswald',
+        'https://placehold.co/400x500/001a18/14b8a6?text=CLASS+2&font=oswald',
+        'https://placehold.co/400x500/001a18/14b8a6?text=CLASS+3&font=oswald',
+        'https://placehold.co/400x500/001a18/14b8a6?text=CLASS+4&font=oswald',
+        'https://placehold.co/400x500/001a18/14b8a6?text=CLASS+5&font=oswald',
+        'https://placehold.co/400x500/001a18/14b8a6?text=CLASS+6&font=oswald'
+    ],
+    'watch-parties': [
+        'https://placehold.co/400x500/1a0010/a78bfa?text=WATCH+1&font=oswald',
+        'https://placehold.co/400x500/1a0010/a78bfa?text=WATCH+2&font=oswald',
+        'https://placehold.co/400x500/1a0010/a78bfa?text=WATCH+3&font=oswald',
+        'https://placehold.co/400x500/1a0010/a78bfa?text=WATCH+4&font=oswald',
+        'https://placehold.co/400x500/1a0010/a78bfa?text=WATCH+5&font=oswald',
+        'https://placehold.co/400x500/1a0010/a78bfa?text=WATCH+6&font=oswald'
+    ],
+    'car-meets': [
+        'https://placehold.co/400x500/0a0a0a/f97316?text=MEET+1&font=oswald',
+        'https://placehold.co/400x500/0a0a0a/f97316?text=MEET+2&font=oswald',
+        'https://placehold.co/400x500/0a0a0a/f97316?text=MEET+3&font=oswald',
+        'https://placehold.co/400x500/0a0a0a/f97316?text=MEET+4&font=oswald',
+        'https://placehold.co/400x500/0a0a0a/f97316?text=MEET+5&font=oswald',
+        'https://placehold.co/400x500/0a0a0a/f97316?text=MEET+6&font=oswald'
+    ],
+    'scale-drift': [
+        'https://placehold.co/400x500/001a05/22c55e?text=DRIFT+1&font=oswald',
+        'https://placehold.co/400x500/001a05/22c55e?text=DRIFT+2&font=oswald',
+        'https://placehold.co/400x500/001a05/22c55e?text=DRIFT+3&font=oswald',
+        'https://placehold.co/400x500/001a05/22c55e?text=DRIFT+4&font=oswald',
+        'https://placehold.co/400x500/001a05/22c55e?text=DRIFT+5&font=oswald',
+        'https://placehold.co/400x500/001a05/22c55e?text=DRIFT+6&font=oswald'
+    ]
+};
+
+function sim1RenderGalleries() {
+    document.querySelectorAll('[data-sim1-gallery]').forEach(track => {
+        const key  = track.getAttribute('data-sim1-gallery');
+        const imgs = SIM1_GALLERIES[key] || [];
+        if (!imgs.length) {
+            track.innerHTML = `<div style="padding:30px;color:#444;font-family:'Barlow',sans-serif;font-size:0.9em;">Photos coming soon.</div>`;
+            track.style.animation = 'none';
+            return;
+        }
+        const card = src => `<div class="sim1-gallery-card"><img src="${src}" alt="" loading="lazy"></div>`;
+        // Duplicate the set so the track loops seamlessly at translateX(-50%)
+        track.innerHTML = imgs.map(card).join('') + imgs.map(card).join('');
+    });
+}
+sim1RenderGalleries();
 
 // ── Google Calendar: switch to AGENDA (list) view on small screens ──
 // MONTH grid is cramped on phones; AGENDA reads as a clean scrollable list.
