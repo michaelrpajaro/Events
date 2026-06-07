@@ -37,7 +37,7 @@
         align-items: center;
     }
     .sim1-feature-reverse .sim1-feature-text { order: 2; }
-    .sim1-feature-reverse .sim1-feature-gallery-wrap { order: 1; }
+    .sim1-feature-reverse .sim1-feature-photo { order: 1; }
     .sim1-feature-text { font-family: 'Barlow', sans-serif; color: #b0b0b0; }
     .sim1-eyebrow {
         font-family: 'Barlow Condensed', sans-serif;
@@ -64,29 +64,16 @@
     }
     .sim1-feature-link:hover { border-bottom-color: #EF4444; color: #ff6b6b; }
 
-    /* Scrolling photo gallery inside each feature section */
-    .sim1-feature-gallery-wrap {
-        overflow: hidden;
-        mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
-        -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
-    }
-    .sim1-gallery-track {
-        display: flex;
-        gap: 12px;
-        width: max-content;
-        animation: sim1-marquee 35s linear infinite;
-    }
-    .sim1-gallery-track:hover { animation-play-state: paused; }
-    .sim1-gallery-card {
-        flex-shrink: 0;
-        width: 180px;
-        aspect-ratio: 4/5;
-        border-radius: 10px;
+    /* One 4:3 photo per feature section */
+    .sim1-feature-photo {
+        aspect-ratio: 4/3;
+        width: 100%;
+        border-radius: 12px;
         overflow: hidden;
         background: #111;
         border: 1px solid #2a2a2a;
     }
-    .sim1-gallery-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .sim1-feature-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
     /* Mobile */
     @media (max-width: 768px) {
@@ -102,10 +89,8 @@
         .sim1-feature-section { padding: 52px 18px !important; }
         .sim1-feature-row     { grid-template-columns: 1fr !important; gap: 26px; }
         .sim1-feature-reverse .sim1-feature-text,
-        .sim1-feature-reverse .sim1-feature-gallery-wrap { order: initial; }
+        .sim1-feature-reverse .sim1-feature-photo { order: initial; }
         .sim1-feature-h2      { font-size: 2em; }
-        .sim1-gallery-card    { width: 150px; }
-        .sim1-gallery-track   { animation-duration: 28s; }
     }
 </style>
 
@@ -134,9 +119,10 @@
 
 <!-- ═══════════════════════════════════════════════════════════════════════
      "WHAT WE HOST" — one section per event type. Each section pairs a
-     short description with a scrolling photo gallery (4:5 pics).
+     short description with a single 4:3 photo.
        - Edit copy directly in the HTML below.
-       - Edit the gallery images in SIM1_GALLERIES (in the <script> block).
+       - Swap each <img src="..."> for the real photo (any aspect ratio is
+         cover-cropped to 4:3).
        - Each "Full details →" link's href is a placeholder ("#") — swap in
          the real page URL on Squarespace.
      ═══════════════════════════════════════════════════════════════════════ -->
@@ -151,8 +137,9 @@
             <!-- ▼ swap href for your qualifiers / sprint info page ▼ -->
             <a href="#" class="sim1-feature-link">How qualifiers &amp; divisions work →</a>
         </div>
-        <div class="sim1-feature-gallery-wrap">
-            <div class="sim1-gallery-track" data-sim1-gallery="weekly-sprint"></div>
+        <!-- ▼ swap src for the real weekly sprint photo ▼ -->
+        <div class="sim1-feature-photo">
+            <img src="https://placehold.co/800x600/1a0000/EF4444?text=WEEKLY+SPRINT+RACE&font=oswald" alt="Weekly Sprint Race" loading="lazy">
         </div>
     </div>
 </section>
@@ -167,8 +154,9 @@
             <!-- ▼ swap href for your group-class info / signup page ▼ -->
             <a href="#" class="sim1-feature-link" style="color:#14b8a6;border-bottom-color:rgba(20,184,166,0.4);">Full class breakdown →</a>
         </div>
-        <div class="sim1-feature-gallery-wrap">
-            <div class="sim1-gallery-track" data-sim1-gallery="group-classes"></div>
+        <!-- ▼ swap src for the real group classes photo ▼ -->
+        <div class="sim1-feature-photo">
+            <img src="https://placehold.co/800x600/001a18/14b8a6?text=GROUP+CLASSES&font=oswald" alt="Group Classes" loading="lazy">
         </div>
     </div>
 </section>
@@ -183,8 +171,9 @@
             <!-- ▼ swap href for your watch-party info page ▼ -->
             <a href="#" class="sim1-feature-link" style="color:#a78bfa;border-bottom-color:rgba(167,139,250,0.4);">See the full watch schedule →</a>
         </div>
-        <div class="sim1-feature-gallery-wrap">
-            <div class="sim1-gallery-track" data-sim1-gallery="watch-parties"></div>
+        <!-- ▼ swap src for the real watch parties photo ▼ -->
+        <div class="sim1-feature-photo">
+            <img src="https://placehold.co/800x600/1a0010/a78bfa?text=WATCH+PARTIES&font=oswald" alt="Watch Parties" loading="lazy">
         </div>
     </div>
 </section>
@@ -199,8 +188,9 @@
             <!-- ▼ swap href for your car-meet info page ▼ -->
             <a href="#" class="sim1-feature-link" style="color:#f97316;border-bottom-color:rgba(249,115,22,0.4);">See upcoming meets →</a>
         </div>
-        <div class="sim1-feature-gallery-wrap">
-            <div class="sim1-gallery-track" data-sim1-gallery="car-meets"></div>
+        <!-- ▼ swap src for the real car meets photo ▼ -->
+        <div class="sim1-feature-photo">
+            <img src="https://placehold.co/800x600/0a0a0a/f97316?text=CAR+MEETS&font=oswald" alt="Car Meets" loading="lazy">
         </div>
     </div>
 </section>
@@ -215,8 +205,9 @@
             <!-- ▼ swap href for the Scale Drift Series partner page ▼ -->
             <a href="#" class="sim1-feature-link" style="color:#22c55e;border-bottom-color:rgba(34,197,94,0.4);">About Scale Drift Series →</a>
         </div>
-        <div class="sim1-feature-gallery-wrap">
-            <div class="sim1-gallery-track" data-sim1-gallery="scale-drift"></div>
+        <!-- ▼ swap src for the real scale drift photo ▼ -->
+        <div class="sim1-feature-photo">
+            <img src="https://placehold.co/800x600/001a05/22c55e?text=SCALE+DRIFT&font=oswald" alt="Scale Drift Series" loading="lazy">
         </div>
     </div>
 </section>
@@ -727,70 +718,6 @@ function sim1RenderMarquee() {
 }
 
 sim1RenderMarquee();
-
-// ──────────────────────────────────────────────────────────────────
-//  FEATURE-SECTION PHOTO GALLERIES — one image list per event type.
-//  Swap the placeholder URLs below for real photos (4:5 works best).
-//  Add or remove URLs freely; the gallery scrolls in a seamless loop.
-// ──────────────────────────────────────────────────────────────────
-const SIM1_GALLERIES = {
-    'weekly-sprint': [
-        'https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/69fd50e9294d8f22a2076e4e/1778209001402/Apr+Wk2+Sprint+%281%29.jpg',
-        'https://placehold.co/400x500/1a0000/EF4444?text=SPRINT+2&font=oswald',
-        'https://placehold.co/400x500/1a0000/EF4444?text=SPRINT+3&font=oswald',
-        'https://placehold.co/400x500/1a0000/EF4444?text=SPRINT+4&font=oswald',
-        'https://placehold.co/400x500/1a0000/EF4444?text=SPRINT+5&font=oswald',
-        'https://placehold.co/400x500/1a0000/EF4444?text=SPRINT+6&font=oswald'
-    ],
-    'group-classes': [
-        'https://placehold.co/400x500/001a18/14b8a6?text=CLASS+1&font=oswald',
-        'https://placehold.co/400x500/001a18/14b8a6?text=CLASS+2&font=oswald',
-        'https://placehold.co/400x500/001a18/14b8a6?text=CLASS+3&font=oswald',
-        'https://placehold.co/400x500/001a18/14b8a6?text=CLASS+4&font=oswald',
-        'https://placehold.co/400x500/001a18/14b8a6?text=CLASS+5&font=oswald',
-        'https://placehold.co/400x500/001a18/14b8a6?text=CLASS+6&font=oswald'
-    ],
-    'watch-parties': [
-        'https://placehold.co/400x500/1a0010/a78bfa?text=WATCH+1&font=oswald',
-        'https://placehold.co/400x500/1a0010/a78bfa?text=WATCH+2&font=oswald',
-        'https://placehold.co/400x500/1a0010/a78bfa?text=WATCH+3&font=oswald',
-        'https://placehold.co/400x500/1a0010/a78bfa?text=WATCH+4&font=oswald',
-        'https://placehold.co/400x500/1a0010/a78bfa?text=WATCH+5&font=oswald',
-        'https://placehold.co/400x500/1a0010/a78bfa?text=WATCH+6&font=oswald'
-    ],
-    'car-meets': [
-        'https://placehold.co/400x500/0a0a0a/f97316?text=MEET+1&font=oswald',
-        'https://placehold.co/400x500/0a0a0a/f97316?text=MEET+2&font=oswald',
-        'https://placehold.co/400x500/0a0a0a/f97316?text=MEET+3&font=oswald',
-        'https://placehold.co/400x500/0a0a0a/f97316?text=MEET+4&font=oswald',
-        'https://placehold.co/400x500/0a0a0a/f97316?text=MEET+5&font=oswald',
-        'https://placehold.co/400x500/0a0a0a/f97316?text=MEET+6&font=oswald'
-    ],
-    'scale-drift': [
-        'https://placehold.co/400x500/001a05/22c55e?text=DRIFT+1&font=oswald',
-        'https://placehold.co/400x500/001a05/22c55e?text=DRIFT+2&font=oswald',
-        'https://placehold.co/400x500/001a05/22c55e?text=DRIFT+3&font=oswald',
-        'https://placehold.co/400x500/001a05/22c55e?text=DRIFT+4&font=oswald',
-        'https://placehold.co/400x500/001a05/22c55e?text=DRIFT+5&font=oswald',
-        'https://placehold.co/400x500/001a05/22c55e?text=DRIFT+6&font=oswald'
-    ]
-};
-
-function sim1RenderGalleries() {
-    document.querySelectorAll('[data-sim1-gallery]').forEach(track => {
-        const key  = track.getAttribute('data-sim1-gallery');
-        const imgs = SIM1_GALLERIES[key] || [];
-        if (!imgs.length) {
-            track.innerHTML = `<div style="padding:30px;color:#444;font-family:'Barlow',sans-serif;font-size:0.9em;">Photos coming soon.</div>`;
-            track.style.animation = 'none';
-            return;
-        }
-        const card = src => `<div class="sim1-gallery-card"><img src="${src}" alt="" loading="lazy"></div>`;
-        // Duplicate the set so the track loops seamlessly at translateX(-50%)
-        track.innerHTML = imgs.map(card).join('') + imgs.map(card).join('');
-    });
-}
-sim1RenderGalleries();
 
 // ── Google Calendar: switch to AGENDA (list) view on small screens ──
 // MONTH grid is cramped on phones; AGENDA reads as a clean scrollable list.
