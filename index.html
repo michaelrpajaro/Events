@@ -562,28 +562,28 @@ const sim1GroupClassesTemplates = [
         firstDate: '2026-06-22',  // Monday
         startTime: '5:00 PM',
         graphic: 'https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a24b5917cef27205ff07e83/1780790673715/street+car+group+class.png',
-        signupUrl: '#'
+        signupUrl: 'https://sim1racing.as.me/street-car-group-class'
     },
     {
         title: 'Racecraft Group Class',
         firstDate: '2026-06-29',  // Monday
         startTime: '5:00 PM',
         graphic: 'https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a24b5c6cad38e377aa425cf/1780790726809/racecraft+group+class.png',
-        signupUrl: '#'
+        signupUrl: 'https://sim1racing.as.me/racecraft-group-class'
     },
     {
         title: 'Prototype Group Class',
         firstDate: '2026-07-06',  // Monday
         startTime: '5:00 PM',
         graphic: 'https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a24b8d1dd18c84bb04ff573/1780791505794/prototype+group+class.png',
-        signupUrl: '#'
+        signupUrl: 'https://sim1racing.as.me/prototype-group-class'
     },
     {
         title: 'Manual Car Group Class',
         firstDate: '2026-07-13',  // Monday
         startTime: '5:00 PM',
         graphic: 'https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a24b946078b6642b666198f/1780791623244/manual+car+group+class.png',
-        signupUrl: '#'
+        signupUrl: 'https://sim1racing.as.me/manual-car-group-class'
     }
     // ← all 6 classes added; rotation cycles every 6 weeks
 ];
@@ -620,20 +620,25 @@ function sim1GenerateGroupClasses() {
 
 // Per-type color + label (used for the marquee card badges)
 const SIM1_EVENT_TYPES = {
-    'weekly-sprint': { color: '#EF4444', label: 'SPRINT RACE' },
-    'watch-party':   { color: '#a78bfa', label: 'WATCH PARTY' },
-    'car-meet':      { color: '#f97316', label: 'CAR MEET' },
-    'workshop':      { color: '#60a5fa', label: 'WORKSHOP' },
-    'group-class':   { color: '#14b8a6', label: 'GROUP CLASS' },
-    'couples-night': { color: '#ec4899', label: 'COUPLES NIGHT' },
-    'members-night': { color: '#fbbf24', label: 'MEMBERS NIGHT' },
-    'scale-drift':   { color: '#22c55e', label: 'SCALE DRIFT' }
+    'weekly-sprint':  { color: '#EF4444', label: 'SPRINT RACE' },
+    'endurance-race': { color: '#6366f1', label: 'ENDURANCE' },
+    'watch-party':    { color: '#a78bfa', label: 'WATCH PARTY' },
+    'car-meet':       { color: '#f97316', label: 'CAR MEET' },
+    'workshop':       { color: '#60a5fa', label: 'WORKSHOP' },
+    'group-class':    { color: '#14b8a6', label: 'GROUP CLASS' },
+    'couples-night':  { color: '#ec4899', label: 'COUPLES NIGHT' },
+    'members-night':  { color: '#fbbf24', label: 'MEMBERS NIGHT' },
+    'scale-drift':    { color: '#22c55e', label: 'SCALE DRIFT' }
 };
 
-// Event types that require sign-up. Their cards become clickable and show a
-// "Click to Register →" prompt on hover (always visible on mobile/touch).
-// Types NOT listed here (car-meet, watch-party) are "just show up" — no prompt.
-const SIM1_REGISTER_TYPES = ['weekly-sprint', 'workshop', 'group-class', 'members-night', 'couples-night', 'scale-drift'];
+// Event types that require sign-up. Their cards show "Click to Register →"
+// as a button below the graphic and link to the event's signupUrl.
+// Types NOT listed here (car-meet, watch-party) are "just show up".
+const SIM1_REGISTER_TYPES = ['weekly-sprint', 'endurance-race', 'workshop', 'group-class', 'members-night', 'couples-night', 'scale-drift'];
+
+// Shared signup URL for endurance races — use this in any endurance-race
+// entry's signupUrl field when you add one to sim1EventsData.
+const SIM1_ENDURANCE_SIGNUP_URL = 'https://sim1racing.as.me/endurance-race';
 
 // ── Helpers ──
 function sim1IsUpcoming(ev) {
