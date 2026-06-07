@@ -162,8 +162,8 @@
     <div class="sim1-feature-row sim1-feature-reverse">
         <div class="sim1-feature-text">
             <div class="sim1-eyebrow" style="color:#14b8a6;">GROUP CLASSES</div>
-            <h2 class="sim1-feature-h2">Coaching, Mondays at 5</h2>
-            <p class="sim1-feature-p">Six rotating classes — Open Wheel, Sports Car, Street Car, Racecraft, Prototype, and Manual. Small groups, structured coaching, focused on driving your laptimes down. New class every Monday.</p>
+            <h2 class="sim1-feature-h2">Coaching, Every Monday</h2>
+            <p class="sim1-feature-p">Six rotating classes — Open Wheel, Sports Car, Street Car, Racecraft, Prototype, and Manual. Small groups, structured coaching, focused on driving your laptimes down. Mondays at <strong style="color:#fff;">5 PM (kids)</strong> or <strong style="color:#fff;">7 PM (adults)</strong>.</p>
             <!-- ▼ swap href for your group-class info / signup page ▼ -->
             <a href="#" class="sim1-feature-link" style="color:#14b8a6;border-bottom-color:rgba(20,184,166,0.4);">Full class breakdown →</a>
         </div>
@@ -178,8 +178,8 @@
     <div class="sim1-feature-row">
         <div class="sim1-feature-text">
             <div class="sim1-eyebrow" style="color:#a78bfa;">WATCH PARTIES</div>
-            <h2 class="sim1-feature-h2">Big Screen. Bar Open.</h2>
-            <p class="sim1-feature-p">Every F1 race of the season, the UCL final, and a few big football matchups. Show up, grab a seat, watch with people who actually care which way the steering wheel turns. Doors open an hour before lights out.</p>
+            <h2 class="sim1-feature-h2">230-Inch LED. Multiple Rooms.</h2>
+            <p class="sim1-feature-p">Every F1 race of the season, the UCL final, and a few big football matchups. Multiple viewing areas anchored by a 230-inch LED screen, so no matter where you grab a seat you don't miss a corner. Doors open an hour before lights out.</p>
             <!-- ▼ swap href for your watch-party info page ▼ -->
             <a href="#" class="sim1-feature-link" style="color:#a78bfa;border-bottom-color:rgba(167,139,250,0.4);">See the full watch schedule →</a>
         </div>
@@ -194,10 +194,10 @@
     <div class="sim1-feature-row sim1-feature-reverse">
         <div class="sim1-feature-text">
             <div class="sim1-eyebrow" style="color:#f97316;">CAR MEETS</div>
-            <h2 class="sim1-feature-h2">A Different Crew Every Week</h2>
-            <p class="sim1-feature-p">We open the doors to Rollin' Euroz, East Coast Runners, RIX Magazine, S/R Syndicate, and our own monthly meet. Free, open, always something parked outside worth a closer look.</p>
-            <!-- ▼ swap href for your car-meet info / "host your own" page ▼ -->
-            <a href="#" class="sim1-feature-link" style="color:#f97316;border-bottom-color:rgba(249,115,22,0.4);">Want to host your own? →</a>
+            <h2 class="sim1-feature-h2">Front Lot. Different Crew Each Time.</h2>
+            <p class="sim1-feature-p">We've hosted Lamborghini Paramus, Tristate Motorclub, RIX Magazine, Daikoku NYC, and more. Meets take place outside in our front lot and run alongside sim racing tournaments inside, so there's something happening in both directions.</p>
+            <!-- ▼ swap href for your car-meet info page ▼ -->
+            <a href="#" class="sim1-feature-link" style="color:#f97316;border-bottom-color:rgba(249,115,22,0.4);">See upcoming meets →</a>
         </div>
         <div class="sim1-feature-gallery-wrap">
             <div class="sim1-gallery-track" data-sim1-gallery="car-meets"></div>
@@ -210,10 +210,10 @@
     <div class="sim1-feature-row">
         <div class="sim1-feature-text">
             <div class="sim1-eyebrow" style="color:#22c55e;">SCALE DRIFT SERIES</div>
-            <h2 class="sim1-feature-h2">RC Drift. Real Stakes.</h2>
-            <p class="sim1-feature-p">Battle nights on our purpose-built scale track — judged tandems, bracket competition, and a season-long points championship. Bring your chassis or rent one of ours. All experience levels welcome.</p>
-            <!-- ▼ swap href for your scale-drift series page ▼ -->
-            <a href="#" class="sim1-feature-link" style="color:#22c55e;border-bottom-color:rgba(34,197,94,0.4);">Series rules &amp; standings →</a>
+            <h2 class="sim1-feature-h2">Pro Tournaments. Public Demos.</h2>
+            <p class="sim1-feature-p">In collaboration with the Scale Drift Series. Every few months, top RC drifters take over the floor for an all-day tournament — with breaks built in for the public to grab a controller and run free demo laps on the scale track.</p>
+            <!-- ▼ swap href for the Scale Drift Series partner page ▼ -->
+            <a href="#" class="sim1-feature-link" style="color:#22c55e;border-bottom-color:rgba(34,197,94,0.4);">About Scale Drift Series →</a>
         </div>
         <div class="sim1-feature-gallery-wrap">
             <div class="sim1-gallery-track" data-sim1-gallery="scale-drift"></div>
@@ -676,29 +676,20 @@ function sim1RenderMarquee() {
 
     const buildCard = (ev) => {
         const cfg      = SIM1_EVENT_TYPES[ev.type] || { color:'#EF4444', label:'EVENT' };
-        const daysTag  = sim1DaysAway(ev.date);
-        const urgent   = daysTag === 'TODAY' || daysTag === 'TOMORROW';
         const needsReg = SIM1_REGISTER_TYPES.includes(ev.type);
         const timeStr  = ev.endTime ? `${ev.startTime} – ${ev.endTime}` : ev.startTime;
-
-        const dayPill = daysTag
-            ? `<span style="background:${urgent ? '#EF4444' : 'rgba(255,255,255,0.08)'};color:${urgent ? '#fff' : '#b0b0b0'};font-family:'Barlow Condensed',sans-serif;font-size:0.62em;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;border-radius:6px;">${daysTag}</span>`
-            : '';
 
         const bottom = needsReg
             ? `<div style="padding:11px 14px 13px;border-top:1px solid #1f1f1f;background:#0d0d0d;text-align:center;">
                     <span style="display:inline-block;background:${cfg.color};color:#000;font-family:'Barlow Condensed',sans-serif;font-size:0.78em;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:6px;">Click to Register →</span>
                 </div>`
-            : `<div style="padding:13px 14px;border-top:1px solid #1f1f1f;background:#0d0d0d;text-align:center;">
-                    <span style="font-family:'Barlow Condensed',sans-serif;font-size:0.72em;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#666;">No Registration · Just Show Up</span>
+            : `<div style="padding:13px 14px;border-top:1px solid #1f1f1f;background:#0d0d0d;text-align:center;line-height:1.35;">
+                    <span style="display:block;font-family:'Barlow Condensed',sans-serif;font-size:0.72em;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#666;">No Registration</span>
+                    <span style="display:block;font-family:'Barlow Condensed',sans-serif;font-size:0.72em;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#666;">Just Show Up</span>
                 </div>`;
 
         const inner = `
                 <div style="padding:13px 14px 11px;">
-                    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
-                        <span style="background:${cfg.color};color:#000;font-family:'Barlow Condensed',sans-serif;font-size:0.62em;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;border-radius:6px;">${cfg.label}</span>
-                        ${dayPill}
-                    </div>
                     <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.1em;font-weight:900;color:white;text-transform:uppercase;line-height:1.15;margin-bottom:4px;">${ev.title}</div>
                     <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.7em;font-weight:800;letter-spacing:1.5px;color:${cfg.color};text-transform:uppercase;">${sim1FormatDate(ev.date)} · ${timeStr}</div>
                 </div>
