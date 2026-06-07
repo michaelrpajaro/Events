@@ -548,14 +548,14 @@ const sim1GroupClassesTemplates = [
         firstDate: '2026-06-08',  // Monday
         startTime: '5:00 PM',
         graphic: 'https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a24b151078b6642b6645542/1780789585591/open+wheel+group+class.png',
-        signupUrl: '#'
+        signupUrl: 'https://sim1racing.as.me/open-wheel-group-class'
     },
     {
         title: 'Sports Car Group Class',
         firstDate: '2026-06-15',  // Monday
         startTime: '5:00 PM',
         graphic: 'https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a24b1a3cad38e377aa34f8f/1780789668397/sports+car+group+class.png',
-        signupUrl: '#'
+        signupUrl: 'https://sim1racing.as.me/sports-car-group-class'
     },
     {
         title: 'Street Car Group Class',
@@ -683,9 +683,9 @@ function sim1RenderMarquee() {
             ? `<div style="padding:11px 14px 13px;border-top:1px solid #1f1f1f;background:#0d0d0d;text-align:center;">
                     <span style="display:inline-block;background:${cfg.color};color:#000;font-family:'Barlow Condensed',sans-serif;font-size:0.78em;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:6px;">Click to Register →</span>
                 </div>`
-            : `<div style="padding:13px 14px;border-top:1px solid #1f1f1f;background:#0d0d0d;text-align:center;line-height:1.35;">
-                    <span style="display:block;font-family:'Barlow Condensed',sans-serif;font-size:0.72em;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#666;">No Registration</span>
-                    <span style="display:block;font-family:'Barlow Condensed',sans-serif;font-size:0.72em;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#666;">Just Show Up</span>
+            : `<div style="padding:11px 10px 12px;border-top:1px solid #1f1f1f;background:#0d0d0d;text-align:center;line-height:1.25;">
+                    <span style="display:block;font-family:'Barlow Condensed',sans-serif;font-size:0.92em;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#888;white-space:nowrap;">No Registration</span>
+                    <span style="display:block;font-family:'Barlow Condensed',sans-serif;font-size:0.92em;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#888;white-space:nowrap;">Just Show Up</span>
                 </div>`;
 
         const inner = `
