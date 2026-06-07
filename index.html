@@ -689,8 +689,8 @@ function sim1RenderMarquee() {
                 </div>`;
 
         const inner = `
-                <div style="padding:13px 14px 11px;">
-                    <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.1em;font-weight:900;color:white;text-transform:uppercase;line-height:1.15;margin-bottom:4px;">${ev.title}</div>
+                <div style="padding:13px 14px 11px;text-align:center;">
+                    <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.1em;font-weight:900;color:white;text-transform:uppercase;line-height:1.15;min-height:2.55em;display:flex;align-items:center;justify-content:center;margin-bottom:4px;">${ev.title}</div>
                     <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.7em;font-weight:800;letter-spacing:1.5px;color:${cfg.color};text-transform:uppercase;">${sim1FormatDate(ev.date)} · ${timeStr}</div>
                 </div>
                 <div style="aspect-ratio:4/5;background:linear-gradient(160deg,#0a0a0a,#1a1a1a);overflow:hidden;">
@@ -720,7 +720,7 @@ sim1RenderMarquee();
 // ──────────────────────────────────────────────────────────────────
 const SIM1_GALLERIES = {
     'weekly-sprint': [
-        'https://placehold.co/400x500/1a0000/EF4444?text=SPRINT+1&font=oswald',
+        'https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/69fd50e9294d8f22a2076e4e/1778209001402/Apr+Wk2+Sprint+%281%29.jpg',
         'https://placehold.co/400x500/1a0000/EF4444?text=SPRINT+2&font=oswald',
         'https://placehold.co/400x500/1a0000/EF4444?text=SPRINT+3&font=oswald',
         'https://placehold.co/400x500/1a0000/EF4444?text=SPRINT+4&font=oswald',
