@@ -630,42 +630,42 @@ const sim1GroupClassesTemplates = [
     {
         title: 'Open Wheel Group Class',
         firstDate: '2026-06-08',  // Monday
-        startTime: '5:00 PM',
+        startTime: '5 & 7 PM',
         graphic: 'https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a24b151078b6642b6645542/1780789585591/open+wheel+group+class.png',
         signupUrl: 'https://sim1racing.as.me/open-wheel-group-class'
     },
     {
         title: 'Sports Car Group Class',
         firstDate: '2026-06-15',  // Monday
-        startTime: '5:00 PM',
+        startTime: '5 & 7 PM',
         graphic: 'https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a24b1a3cad38e377aa34f8f/1780789668397/sports+car+group+class.png',
         signupUrl: 'https://sim1racing.as.me/sports-car-group-class'
     },
     {
         title: 'Street Car Group Class',
         firstDate: '2026-06-22',  // Monday
-        startTime: '5:00 PM',
+        startTime: '5 & 7 PM',
         graphic: 'https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a24b5917cef27205ff07e83/1780790673715/street+car+group+class.png',
         signupUrl: 'https://sim1racing.as.me/street-car-group-class'
     },
     {
         title: 'Racecraft Group Class',
         firstDate: '2026-06-29',  // Monday
-        startTime: '5:00 PM',
+        startTime: '5 & 7 PM',
         graphic: 'https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a24b5c6cad38e377aa425cf/1780790726809/racecraft+group+class.png',
         signupUrl: 'https://sim1racing.as.me/racecraft-group-class'
     },
     {
         title: 'Prototype Group Class',
         firstDate: '2026-07-06',  // Monday
-        startTime: '5:00 PM',
+        startTime: '5 & 7 PM',
         graphic: 'https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a24b8d1dd18c84bb04ff573/1780791505794/prototype+group+class.png',
         signupUrl: 'https://sim1racing.as.me/prototype-group-class'
     },
     {
         title: 'Manual Car Group Class',
         firstDate: '2026-07-13',  // Monday
-        startTime: '5:00 PM',
+        startTime: '5 & 7 PM',
         graphic: 'https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a24b946078b6642b666198f/1780791623244/manual+car+group+class.png',
         signupUrl: 'https://sim1racing.as.me/manual-car-group-class'
     }
@@ -725,13 +725,18 @@ const SIM1_REGISTER_TYPES = ['weekly-sprint', 'endurance-race', 'workshop', 'gro
 const SIM1_ENDURANCE_SIGNUP_URL = 'https://sim1racing.as.me/endurance-race';
 
 // ── Helpers ──
-// Parse a 12-hour clock string like "8:00 PM" into [hours, minutes] (24-h).
+// Parse a 12-hour clock string into [hours, minutes] (24-h). Handles
+// single times ("8:00 PM"), multi-time strings ("5 & 7 PM"), and
+// minute-less forms ("5 PM"). When multiple times appear, the LATEST
+// is returned — so a class listed as "5 & 7 PM" expires based on the
+// 7 PM session, not the 5 PM one.
 function sim1ParseTime12h(t) {
     if (!t) return [0, 0];
-    const m = String(t).trim().match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
-    if (!m) return [0, 0];
+    const matches = [...String(t).matchAll(/(\d{1,2})(?::(\d{2}))?\s*(AM|PM)/gi)];
+    if (!matches.length) return [0, 0];
+    const m = matches[matches.length - 1];
     let h = parseInt(m[1], 10);
-    const mins = parseInt(m[2], 10);
+    const mins = m[2] ? parseInt(m[2], 10) : 0;
     const ampm = m[3].toUpperCase();
     if (ampm === 'PM' && h !== 12) h += 12;
     if (ampm === 'AM' && h === 12) h = 0;
