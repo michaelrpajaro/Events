@@ -273,6 +273,23 @@
     </div>
 </section>
 
+<!-- ── WORKSHOP WEDNESDAYS ── -->
+<section class="sim1-feature-section" style="background:#000;">
+    <div class="sim1-feature-row sim1-feature-reverse">
+        <div class="sim1-feature-text">
+            <div class="sim1-eyebrow" style="color:#60a5fa;">WORKSHOP WEDNESDAYS</div>
+            <h2 class="sim1-feature-h2">Free. 30 Minutes. Real Skills.</h2>
+            <p class="sim1-feature-p">Every other Wednesday at 8 PM. Quick, focused workshops on things every driver should know — how to drive manual, how to drift, how to launch, and more. Free to attend, spots are limited.</p>
+            <!-- href is auto-set by JS to the NEXT upcoming workshop's signupUrl -->
+            <a href="#" id="sim1-next-workshop-link" class="sim1-feature-link" style="color:#60a5fa;border-bottom-color:rgba(96,165,250,0.4);">Book the next workshop →</a>
+        </div>
+        <!-- ▼ swap src for a dedicated Workshop Wednesdays photo when ready ▼ -->
+        <div class="sim1-feature-photo">
+            <img src="https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a28a034575ae708cd3193da/1781047349505/Insta+Events+%2830%29.jpg" alt="Workshop Wednesdays" loading="lazy">
+        </div>
+    </div>
+</section>
+
 <!-- ── GOOGLE CALENDAR EMBED ── -->
 <div class="sim1-cal-section" style="padding:60px 40px 80px;background:#0a0a0a;">
     <div style="max-width:1100px;margin:0 auto;">
@@ -368,6 +385,19 @@ const sim1EventsData = [
 
     // ── GROUP CLASSES ── handled by the rotating generator below
     //  (sim1GroupClassesTemplates). Don't add one-off classes here.
+
+    // ── WORKSHOP WEDNESDAYS ──
+    //  Every other Wednesday at 8 PM, 30-minute free workshops on a
+    //  specific topic (manual driving, drifting, launching, etc.).
+    //  Add each upcoming workshop here as the topic is announced.
+    {
+        type: 'workshop',
+        title: 'How to Drive Manual',
+        date: '2026-06-17',
+        startTime: '8:00 PM',
+        graphic: 'https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a28a034575ae708cd3193da/1781047349505/Insta+Events+%2830%29.jpg',
+        signupUrl: 'https://sim1racing.as.me/manual-driving-workshop'
+    },
 
     // ── ENDURANCE RACES ──
     {
@@ -863,6 +893,32 @@ document.querySelectorAll('#sim1-watch-modal [data-sim1-close]').forEach(el => {
 document.addEventListener('keydown', e => {
     if (e.key === 'Escape') sim1CloseWatchModal();
 });
+
+// ──────────────────────────────────────────────────────────────────
+//  WORKSHOP WEDNESDAYS — keep the section CTA link pointed at the
+//  NEXT upcoming workshop's signupUrl automatically. As new workshops
+//  are added to sim1EventsData (type: 'workshop'), this link updates
+//  with no extra edits.
+// ──────────────────────────────────────────────────────────────────
+function sim1WireNextWorkshopLink() {
+    const link = document.getElementById('sim1-next-workshop-link');
+    if (!link) return;
+    const next = sim1EventsData
+        .filter(ev => ev.type === 'workshop')
+        .filter(sim1IsUpcoming)
+        .sort((a, b) => sim1EventStart(a) - sim1EventStart(b))[0];
+    if (next && next.signupUrl && next.signupUrl !== '#') {
+        link.href = next.signupUrl;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+    } else {
+        link.textContent = 'Next workshop coming soon';
+        link.style.cursor = 'default';
+        link.style.borderBottomColor = 'transparent';
+        link.addEventListener('click', e => e.preventDefault());
+    }
+}
+sim1WireNextWorkshopLink();
 
 // ── Google Calendar: switch to AGENDA (list) view on small screens ──
 // MONTH grid is cramped on phones; AGENDA reads as a clean scrollable list.
