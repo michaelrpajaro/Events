@@ -1,28 +1,15 @@
 <!-- ═══════════════════════════════════════════════════════════════════════
      SIM1RACING — EVENTS PAGE
-     Two pieces:
-       1. Top marquee — scrolling "next 5 upcoming events" with branded
-          4:5 graphics. Edit sim1EventsData[] below to feature events here.
-       2. Google Calendar embed — your live calendar handles the full
-          event list (it's the source of truth — update events in
-          Google Calendar and they show up here automatically).
+     Contents:
+       1. Intro band (one-liner about what we host)
+       2. "What we host" feature sections — one per event type, each with
+          a short description and a 4:3 photo
+       3. Google Calendar embed — the live source of truth for the full
+          event list (edit events there and they show up here)
+       4. Watch-party schedule popup (opens from the Watch Parties section)
      ═══════════════════════════════════════════════════════════════════════ -->
 
 <style>
-    /* Marquee animation (shared by the top marquee and feature galleries) */
-    @keyframes sim1-marquee {
-        from { transform: translateX(0); }
-        to   { transform: translateX(-50%); }
-    }
-    .sim1-marquee-track {
-        display: flex;
-        gap: 18px;
-        width: max-content;
-        animation: sim1-marquee 60s linear infinite;
-    }
-    .sim1-marquee-track:hover { animation-play-state: paused; }
-    .sim1-marquee-wrap { mask-image: linear-gradient(90deg, transparent 0, #000 4%, #000 96%, transparent 100%); -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 4%, #000 96%, transparent 100%); }
-
     /* Google Calendar iframe — responsive height */
     .sim1-gcal-iframe { height: 720px; }
 
@@ -151,11 +138,6 @@
 
     /* Mobile */
     @media (max-width: 768px) {
-        .sim1-evt-hero        { padding: 80px 22px 46px !important; }
-        .sim1-evt-hero h1     { font-size: 3.4em !important; }
-        .sim1-evt-hero p      { font-size: 1.05em !important; }
-        .sim1-marquee-card    { width: 220px !important; }
-        .sim1-marquee-track   { animation-duration: 40s; gap: 12px; }
         .sim1-cal-section     { padding: 40px 16px 50px !important; }
         .sim1-gcal-iframe     { height: 600px; }
         .sim1-feature-section { padding: 52px 18px !important; }
@@ -166,21 +148,8 @@
     }
 </style>
 
-<!-- ── UPCOMING EVENTS MARQUEE — first and main thing on the page ── -->
-<div style="padding:90px 0 30px;background:#000;position:relative;overflow:hidden;">
-    <div style="text-align:center;margin-bottom:32px;padding:0 22px;">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.75em;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#EF4444;margin-bottom:10px;">WHAT'S NEXT</div>
-        <h2 style="font-family:'Barlow Condensed',sans-serif;font-size:2.4em;font-weight:900;text-transform:uppercase;color:white;margin:0;">Upcoming Events</h2>
-    </div>
-    <div class="sim1-marquee-wrap" style="position:relative;">
-        <div class="sim1-marquee-track" id="sim1-marquee-track">
-            <!-- JS injects cards here -->
-        </div>
-    </div>
-</div>
-
-<!-- ── INTRO BAND — one-line description of what we host, sits right under the carousel ── -->
-<div style="padding:14px 22px 60px;background:#000;text-align:center;">
+<!-- ── INTRO BAND — one-line description of what we host, first thing on the page ── -->
+<div style="padding:110px 22px 70px;background:#000;text-align:center;">
     <p style="font-family:'Barlow',sans-serif;font-size:1.15em;line-height:1.7;color:#b0b0b0;max-width:820px;margin:0 auto;">Sprint races, endurance races, group classes, watch parties, car meets, scale drift battles — there's always something happening at SIM1Racing.</p>
 </div>
 
@@ -789,56 +758,6 @@ function sim1Upcoming() {
         .filter(sim1IsUpcoming)
         .sort((a, b) => new Date(a.date) - new Date(b.date));
 }
-
-// ── Marquee render ──
-function sim1RenderMarquee() {
-    const track = document.getElementById('sim1-marquee-track');
-    const upcoming = sim1Upcoming().slice(0, 5);
-
-    if (!upcoming.length) {
-        track.innerHTML = `<div style="padding:60px 40px;text-align:center;font-family:'Barlow',sans-serif;color:#444;font-size:0.95em;width:100%;">No events scheduled — check back soon.</div>`;
-        track.style.animation = 'none';
-        return;
-    }
-
-    const buildCard = (ev) => {
-        const cfg      = SIM1_EVENT_TYPES[ev.type] || { color:'#EF4444', label:'EVENT' };
-        const needsReg = SIM1_REGISTER_TYPES.includes(ev.type);
-        const timeStr  = ev.endTime ? `${ev.startTime} – ${ev.endTime}` : ev.startTime;
-
-        const bottom = needsReg
-            ? `<div style="padding:11px 14px 13px;border-top:1px solid #1f1f1f;background:#0d0d0d;text-align:center;">
-                    <span style="display:inline-block;background:${cfg.color};color:#000;font-family:'Barlow Condensed',sans-serif;font-size:0.78em;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:6px;">Click to Register →</span>
-                </div>`
-            : `<div style="padding:11px 10px 12px;border-top:1px solid #1f1f1f;background:#0d0d0d;text-align:center;line-height:1.25;">
-                    <span style="display:block;font-family:'Barlow Condensed',sans-serif;font-size:0.92em;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#888;white-space:nowrap;">No Registration</span>
-                    <span style="display:block;font-family:'Barlow Condensed',sans-serif;font-size:0.92em;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#888;white-space:nowrap;">Just Show Up</span>
-                </div>`;
-
-        const inner = `
-                <div style="padding:13px 14px 11px;text-align:center;">
-                    <div style="font-family:'Barlow Condensed',sans-serif;font-size:1.1em;font-weight:900;color:white;text-transform:uppercase;line-height:1.15;min-height:2.55em;display:flex;align-items:center;justify-content:center;margin-bottom:4px;">${ev.title}</div>
-                    <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.7em;font-weight:800;letter-spacing:1.5px;color:${cfg.color};text-transform:uppercase;">${sim1FormatDate(ev.date)} · ${timeStr}</div>
-                </div>
-                <div style="aspect-ratio:4/5;background:linear-gradient(160deg,#0a0a0a,#1a1a1a);overflow:hidden;">
-                    <img src="${ev.graphic}" alt="${ev.title}" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
-                </div>
-                ${bottom}`;
-
-        const cardStyle = "flex-shrink:0;width:260px;background:#111;border:1px solid #2a2a2a;border-radius:12px;overflow:hidden;text-decoration:none;display:flex;flex-direction:column;transition:transform 0.2s, border-color 0.2s;";
-        const hoverOn   = `this.style.transform='translateY(-4px)';this.style.borderColor='${cfg.color}'`;
-        const hoverOff  = `this.style.transform='translateY(0)';this.style.borderColor='#2a2a2a'`;
-
-        return needsReg
-            ? `<a href="${ev.signupUrl || '#'}" target="_blank" class="sim1-marquee-card" style="${cardStyle}cursor:pointer;" onmouseover="${hoverOn}" onmouseout="${hoverOff}">${inner}</a>`
-            : `<div class="sim1-marquee-card" style="${cardStyle}" onmouseover="${hoverOn}" onmouseout="${hoverOff}">${inner}</div>`;
-    };
-
-    // Duplicate the set so the marquee loops seamlessly with translateX(-50%)
-    track.innerHTML = upcoming.map(buildCard).join('') + upcoming.map(buildCard).join('');
-}
-
-sim1RenderMarquee();
 
 // ──────────────────────────────────────────────────────────────────
 //  WATCH-PARTY SCHEDULE MODAL — opens from the Watch Parties section.
