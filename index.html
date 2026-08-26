@@ -1,12 +1,13 @@
 <!-- ═══════════════════════════════════════════════════════════════════════
      SIM1RACING — EVENTS PAGE
      Contents:
-       1. Intro band (one-liner about what we host)
+       1. Header + intro band (page title + one-liner)
        2. "What we host" feature sections — one per event type, each with
           a short description and a 4:3 photo
        3. Google Calendar embed — the live source of truth for the full
           event list (edit events there and they show up here)
-       4. Watch-party schedule popup (opens from the Watch Parties section)
+       4. Live watch-party countdown embedded in the Watch Parties
+          section (reads next event from sim1EventsData)
      ═══════════════════════════════════════════════════════════════════════ -->
 
 <style>
@@ -51,80 +52,6 @@
     }
     .sim1-feature-link:hover { border-bottom-color: #EF4444; color: #ff6b6b; }
 
-    /* Watch-party schedule modal */
-    .sim1-modal {
-        position: fixed; inset: 0; z-index: 9999;
-        display: none; align-items: center; justify-content: center;
-        padding: 20px;
-    }
-    .sim1-modal.is-open { display: flex; }
-    .sim1-modal-backdrop {
-        position: absolute; inset: 0;
-        background: rgba(0,0,0,0.85);
-        backdrop-filter: blur(4px);
-    }
-    .sim1-modal-card {
-        position: relative;
-        background: #111;
-        border: 1px solid #2a2a2a;
-        border-radius: 14px;
-        max-width: 560px;
-        width: 100%;
-        max-height: 85vh;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-    }
-    .sim1-modal-header { padding: 26px 26px 18px; border-bottom: 1px solid #1f1f1f; }
-    .sim1-modal-title {
-        font-family: 'Barlow Condensed', sans-serif;
-        font-size: 2em; font-weight: 900;
-        text-transform: uppercase; color: white;
-        margin: 0 0 6px; line-height: 1;
-    }
-    .sim1-modal-sub {
-        font-family: 'Barlow', sans-serif;
-        font-size: 0.9em; color: #888; margin: 0;
-    }
-    .sim1-modal-close {
-        position: absolute; top: 12px; right: 12px;
-        background: rgba(255,255,255,0.06); color: white;
-        border: 0; width: 34px; height: 34px;
-        border-radius: 8px; font-size: 22px; line-height: 1;
-        cursor: pointer; transition: background .2s; z-index: 1;
-    }
-    .sim1-modal-close:hover { background: rgba(255,255,255,0.14); }
-    .sim1-modal-list { overflow-y: auto; padding: 6px 0; }
-    .sim1-modal-row {
-        display: flex; align-items: center; justify-content: space-between; gap: 16px;
-        padding: 14px 26px; border-bottom: 1px solid #1a1a1a;
-    }
-    .sim1-modal-row:last-child { border-bottom: 0; }
-    .sim1-modal-row-text { min-width: 0; }
-    .sim1-modal-row-title {
-        font-family: 'Barlow Condensed', sans-serif;
-        font-size: 1.05em; font-weight: 800;
-        color: white; text-transform: uppercase; line-height: 1.15;
-    }
-    .sim1-modal-row-meta {
-        font-family: 'Barlow Condensed', sans-serif;
-        font-size: 0.72em; font-weight: 700;
-        letter-spacing: 1.2px; text-transform: uppercase;
-        color: #a78bfa; margin-top: 3px;
-    }
-    .sim1-modal-row-time {
-        font-family: 'Barlow Condensed', sans-serif;
-        font-size: 0.92em; font-weight: 800;
-        color: #b0b0b0; text-transform: uppercase;
-        white-space: nowrap;
-    }
-    @media (max-width: 768px) {
-        .sim1-modal-header { padding: 22px 20px 16px; }
-        .sim1-modal-row    { padding: 12px 20px; }
-        .sim1-modal-title  { font-size: 1.7em; }
-    }
-
     /* One 4:3 photo per feature section */
     .sim1-feature-photo {
         aspect-ratio: 4/3;
@@ -138,6 +65,8 @@
 
     /* Mobile */
     @media (max-width: 768px) {
+        .sim1-page-header     { padding: 70px 18px 16px !important; }
+        .sim1-page-header h1  { font-size: 3.2em !important; }
         .sim1-cal-section     { padding: 40px 16px 50px !important; }
         .sim1-gcal-iframe     { height: 600px; }
         .sim1-feature-section { padding: 52px 18px !important; }
@@ -148,8 +77,14 @@
     }
 </style>
 
-<!-- ── INTRO BAND — one-line description of what we host, first thing on the page ── -->
-<div style="padding:110px 22px 70px;background:#000;text-align:center;">
+<!-- ── HEADER ── -->
+<div style="padding:100px 22px 24px;background:#000;text-align:center;" class="sim1-page-header">
+    <div style="display:inline-block;background:#EF4444;color:white;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase;padding:5px 18px;border-radius:14px;margin-bottom:20px;">Race. Gather. Compete.</div>
+    <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:4.6em;font-weight:900;text-transform:uppercase;color:white;margin:0;line-height:1;">Events</h1>
+</div>
+
+<!-- ── INTRO BAND — one-line description of what we host ── -->
+<div style="padding:22px 22px 70px;background:#000;text-align:center;">
     <p style="font-family:'Barlow',sans-serif;font-size:1.15em;line-height:1.7;color:#b0b0b0;max-width:820px;margin:0 auto;">Sprint races, endurance races, group classes, watch parties, car meets, scale drift battles — there's always something happening at SIM1Racing.</p>
 </div>
 
@@ -169,12 +104,12 @@
         <div class="sim1-feature-text">
             <div class="sim1-eyebrow" style="color:#EF4444;">WEEKLY SPRINT RACE</div>
             <h2 class="sim1-feature-h2">Thursdays. 8 PM. Lights Out.</h2>
-            <p class="sim1-feature-p">Same format every week — practice, qualifying, then the race. Climb through divisions based on your best laps. Whether you're already seeded or showing up for the first time, there's a grid spot waiting.</p>
-            <a href="https://www.sim1racing.com/qualifiers" class="sim1-feature-link">How qualifiers &amp; divisions work →</a>
+            <p class="sim1-feature-p">A one-hour race night: <strong style="color:#fff;">10 min practice</strong>, <strong style="color:#fff;">10 min qualifying</strong>, then a <strong style="color:#fff;">40 min race</strong>. Tickets are <strong style="color:#fff;">$45</strong> — a full hour of driving for $15 less than a standard hour. Same car and track as the current weekly qualifier (posted on our Instagram).</p>
+            <a href="https://sim1racing.as.me/sprint-race" target="_blank" rel="noopener noreferrer" class="sim1-feature-link">Reserve your spot →</a>
         </div>
         <!-- ▼ swap src for the real weekly sprint photo ▼ -->
         <div class="sim1-feature-photo">
-            <img src="https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a271db727f85b57f5488b88/1780948412356/CTA00145.jpg" alt="Weekly Sprint Race" loading="lazy">
+            <img src="https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/69f4c1b64362a00309517d2e/1777648054733/photo_5161281553185836080_y.jpg" alt="Weekly Sprint Race" loading="lazy">
         </div>
     </div>
 </section>
@@ -183,9 +118,9 @@
 <section class="sim1-feature-section" style="background:#000;">
     <div class="sim1-feature-row sim1-feature-reverse">
         <div class="sim1-feature-text">
-            <div class="sim1-eyebrow" style="color:#14b8a6;">GROUP CLASSES</div>
-            <h2 class="sim1-feature-h2">Coaching, Every Monday</h2>
-            <p class="sim1-feature-p">Six rotating classes — Open Wheel, Sports Car, Street Car, Racecraft, Prototype, and Manual. Small groups, structured coaching, focused on driving your laptimes down. Mondays at <strong style="color:#fff;">5 PM (kids)</strong> or <strong style="color:#fff;">7 PM (adults)</strong>.</p>
+            <div class="sim1-eyebrow" style="color:#14b8a6;">KIDS GROUP CLASSES</div>
+            <h2 class="sim1-feature-h2">For Ages 7 to 18</h2>
+            <p class="sim1-feature-p">Coaching for young drivers, every Monday at <strong style="color:#fff;">5 PM</strong>. Six rotating classes — Open Wheel, Sports Car, Street Car, Racecraft, Prototype, and Manual. Small groups, structured instruction, real laptime gains.</p>
             <a href="https://www.sim1racing.com/group-classes" class="sim1-feature-link" style="color:#14b8a6;border-bottom-color:rgba(20,184,166,0.4);">Full class breakdown →</a>
         </div>
         <!-- ▼ swap src for the real group classes photo ▼ -->
@@ -199,10 +134,11 @@
 <section class="sim1-feature-section" style="background:#0a0a0a;">
     <div class="sim1-feature-row">
         <div class="sim1-feature-text">
-            <div class="sim1-eyebrow" style="color:#a78bfa;">WATCH PARTIES</div>
-            <h2 class="sim1-feature-h2">230-Inch LED. Multiple Rooms.</h2>
-            <p class="sim1-feature-p">Every F1 race of the season, the UCL final, and a few big football matchups. Multiple viewing areas anchored by a 230-inch LED screen, so no matter where you grab a seat you don't miss a corner.</p>
-            <a href="#" id="sim1-watch-schedule-link" class="sim1-feature-link" style="color:#a78bfa;border-bottom-color:rgba(167,139,250,0.4);white-space:nowrap;">See the full watch party schedule →</a>
+            <div class="sim1-eyebrow" style="color:#a78bfa;">FREE F1 WATCH PARTIES</div>
+            <h2 class="sim1-feature-h2">Every Race. Free to Attend.</h2>
+            <p class="sim1-feature-p">We host free watch parties for every race of the Formula 1 season. Multiple viewing areas anchored by a 230-inch LED screen, so no matter where you grab a seat you don't miss a corner.</p>
+            <!-- Live countdown to the next upcoming watch party (auto-populated by JS) -->
+            <div id="sim1-watch-countdown" style="margin-top:6px;"></div>
         </div>
         <!-- ▼ swap src for the real watch parties photo ▼ -->
         <div class="sim1-feature-photo">
@@ -218,6 +154,8 @@
             <div class="sim1-eyebrow" style="color:#f97316;">CAR MEETS</div>
             <h2 class="sim1-feature-h2">Front Lot. Different Crew Each Time.</h2>
             <p class="sim1-feature-p">We've hosted Lamborghini Paramus, Tristate Motorclub, RIX Magazine, Daikoku NYC, and more. Meets take place outside in our front lot and run alongside sim racing tournaments inside, so there's something happening in both directions.</p>
+            <!-- ▼ swap href if your Instagram handle isn't @sim1racing ▼ -->
+            <a href="https://www.instagram.com/sim1racing/" target="_blank" rel="noopener noreferrer" class="sim1-feature-link" style="color:#f97316;border-bottom-color:rgba(249,115,22,0.4);">See upcoming meets on Instagram →</a>
         </div>
         <!-- ▼ swap src for the real car meets photo ▼ -->
         <div class="sim1-feature-photo">
@@ -302,21 +240,6 @@
         </div>
 
         <p style="font-family:'Barlow',sans-serif;font-size:0.82em;color:#555;text-align:center;margin:18px 0 0;">Tip: click the <strong style="color:#888;">[+ Google Calendar]</strong> button in the bottom-right of the calendar to add ours to your own.</p>
-    </div>
-</div>
-
-<!-- ── WATCH-PARTY SCHEDULE MODAL ── populated by JS, opened by the
-     "See the full watch schedule →" link in the Watch Parties section -->
-<div id="sim1-watch-modal" class="sim1-modal" role="dialog" aria-modal="true" aria-labelledby="sim1-watch-modal-title">
-    <div class="sim1-modal-backdrop" data-sim1-close></div>
-    <div class="sim1-modal-card">
-        <button class="sim1-modal-close" type="button" data-sim1-close aria-label="Close">×</button>
-        <div class="sim1-modal-header">
-            <div class="sim1-eyebrow" style="color:#a78bfa;">WATCH PARTY SCHEDULE</div>
-            <h3 class="sim1-modal-title" id="sim1-watch-modal-title">F1 Season &amp; More</h3>
-            <p class="sim1-modal-sub">Multiple viewing areas, 230-inch LED.</p>
-        </div>
-        <div id="sim1-watch-modal-list" class="sim1-modal-list"></div>
     </div>
 </div>
 
@@ -611,42 +534,42 @@ const sim1GroupClassesTemplates = [
     {
         title: 'Open Wheel Group Class',
         firstDate: '2026-06-08',  // Monday
-        startTime: '5 & 7 PM',
+        startTime: '5:00 PM',
         graphic: 'https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a24b151078b6642b6645542/1780789585591/open+wheel+group+class.png',
         signupUrl: 'https://sim1racing.as.me/open-wheel-group-class'
     },
     {
         title: 'Sports Car Group Class',
         firstDate: '2026-06-15',  // Monday
-        startTime: '5 & 7 PM',
+        startTime: '5:00 PM',
         graphic: 'https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a24b1a3cad38e377aa34f8f/1780789668397/sports+car+group+class.png',
         signupUrl: 'https://sim1racing.as.me/sports-car-group-class'
     },
     {
         title: 'Street Car Group Class',
         firstDate: '2026-06-22',  // Monday
-        startTime: '5 & 7 PM',
+        startTime: '5:00 PM',
         graphic: 'https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a24b5917cef27205ff07e83/1780790673715/street+car+group+class.png',
         signupUrl: 'https://sim1racing.as.me/street-car-group-class'
     },
     {
         title: 'Racecraft Group Class',
         firstDate: '2026-06-29',  // Monday
-        startTime: '5 & 7 PM',
+        startTime: '5:00 PM',
         graphic: 'https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a24b5c6cad38e377aa425cf/1780790726809/racecraft+group+class.png',
         signupUrl: 'https://sim1racing.as.me/racecraft-group-class'
     },
     {
         title: 'Prototype Group Class',
         firstDate: '2026-07-06',  // Monday
-        startTime: '5 & 7 PM',
+        startTime: '5:00 PM',
         graphic: 'https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a24b8d1dd18c84bb04ff573/1780791505794/prototype+group+class.png',
         signupUrl: 'https://sim1racing.as.me/prototype-group-class'
     },
     {
         title: 'Manual Car Group Class',
         firstDate: '2026-07-13',  // Monday
-        startTime: '5 & 7 PM',
+        startTime: '5:00 PM',
         graphic: 'https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a24b946078b6642b666198f/1780791623244/manual+car+group+class.png',
         signupUrl: 'https://sim1racing.as.me/manual-car-group-class'
     }
@@ -760,58 +683,50 @@ function sim1Upcoming() {
 }
 
 // ──────────────────────────────────────────────────────────────────
-//  WATCH-PARTY SCHEDULE MODAL — opens from the Watch Parties section.
-//  Builds the list directly from upcoming watch-party entries so it
-//  stays in sync with sim1EventsData automatically.
+//  WATCH-PARTY COUNTDOWN — live tick to the next upcoming watch party.
+//  Reads directly from sim1EventsData, so as watch parties pass or
+//  new ones get added, the countdown re-targets automatically.
 // ──────────────────────────────────────────────────────────────────
-function sim1RenderWatchModalList() {
-    const list = document.getElementById('sim1-watch-modal-list');
-    if (!list) return;
-    const parties = sim1EventsData
+function sim1RenderWatchCountdown() {
+    const wrap = document.getElementById('sim1-watch-countdown');
+    if (!wrap) return;
+    const next = sim1EventsData
         .filter(ev => ev.type === 'watch-party')
         .filter(sim1IsUpcoming)
-        .sort((a, b) => sim1EventStart(a) - sim1EventStart(b));
+        .sort((a, b) => sim1EventStart(a) - sim1EventStart(b))[0];
 
-    if (!parties.length) {
-        list.innerHTML = `<div style="padding:34px 26px;text-align:center;color:#666;font-family:'Barlow',sans-serif;">No upcoming watch parties — check back soon.</div>`;
+    if (!next) {
+        wrap.innerHTML = `<div style="font-family:'Barlow Condensed',sans-serif;font-size:0.85em;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#666;">More watch parties coming soon</div>`;
         return;
     }
 
-    list.innerHTML = parties.map(ev => {
-        const timeStr = ev.endTime ? `${ev.startTime} – ${ev.endTime}` : ev.startTime;
-        const dateLong = new Date(ev.date + 'T00:00:00')
-            .toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
-        return `
-            <div class="sim1-modal-row">
-                <div class="sim1-modal-row-text">
-                    <div class="sim1-modal-row-title">${ev.title}</div>
-                    <div class="sim1-modal-row-meta">${dateLong}</div>
-                </div>
-                <div class="sim1-modal-row-time">${timeStr}</div>
-            </div>
-        `;
-    }).join('');
+    const diff  = Math.max(0, sim1EventStart(next).getTime() - Date.now());
+    const days  = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const mins  = Math.floor((diff % 3600000) / 60000);
+    const secs  = Math.floor((diff % 60000) / 1000);
+    const pad   = n => String(n).padStart(2, '0');
+
+    const dateLong = new Date(next.date + 'T00:00:00')
+        .toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+    const timeStr = next.endTime ? `${next.startTime} – ${next.endTime}` : next.startTime;
+
+    const unit = (n, label) => `
+        <div style="text-align:center;min-width:52px;">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:2.4em;font-weight:900;color:#fff;line-height:1;">${pad(n)}</div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.62em;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;color:#888;margin-top:4px;">${label}</div>
+        </div>`;
+
+    wrap.innerHTML = `
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:0.72em;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:#a78bfa;margin-bottom:10px;">Next Watch Party In</div>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;">
+            ${unit(days, 'Days')}${unit(hours, 'Hrs')}${unit(mins, 'Min')}${unit(secs, 'Sec')}
+        </div>
+        <div style="margin-top:12px;font-family:'Barlow Condensed',sans-serif;font-size:0.9em;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#b0b0b0;">${next.title} · ${dateLong} · ${timeStr}</div>
+    `;
 }
-function sim1OpenWatchModal() {
-    sim1RenderWatchModalList();
-    const modal = document.getElementById('sim1-watch-modal');
-    modal.classList.add('is-open');
-    document.body.style.overflow = 'hidden';
-}
-function sim1CloseWatchModal() {
-    document.getElementById('sim1-watch-modal').classList.remove('is-open');
-    document.body.style.overflow = '';
-}
-const sim1WatchLink = document.getElementById('sim1-watch-schedule-link');
-if (sim1WatchLink) {
-    sim1WatchLink.addEventListener('click', e => { e.preventDefault(); sim1OpenWatchModal(); });
-}
-document.querySelectorAll('#sim1-watch-modal [data-sim1-close]').forEach(el => {
-    el.addEventListener('click', sim1CloseWatchModal);
-});
-document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') sim1CloseWatchModal();
-});
+sim1RenderWatchCountdown();
+setInterval(sim1RenderWatchCountdown, 1000);
 
 // ──────────────────────────────────────────────────────────────────
 //  WORKSHOP WEDNESDAYS — keep the section CTA link pointed at the
