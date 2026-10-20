@@ -1,0 +1,871 @@
+<!-- ═══════════════════════════════════════════════════════════════════════
+     SIM1RACING — EVENTS PAGE (v2)
+     Built on the SIM1Racing design system. Single-snippet Squarespace
+     Code Block. All scoped under .s1 / #s1-root — nothing leaks out.
+     Signature moment: a vertical red "racing line" that draws itself
+     down the weekly timeline as you scroll, lighting each day in turn.
+     ═══════════════════════════════════════════════════════════════════════ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900;1,800;1,900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+
+<div class="s1" id="s1-root">
+<script>
+(function(){
+  var REF = 2560, MIN = 0.675, el = document.getElementById('s1-root');
+  function fit(){
+    var w = document.documentElement.clientWidth, h = window.innerHeight;
+    var z = w > 1024 ? Math.min(1, Math.max(MIN, w / REF)) : 1;
+    el.style.setProperty('--z', z);
+    el.style.setProperty('--vwu', (w / z / 100) + 'px');
+    el.style.setProperty('--vhu', (h / z / 100) + 'px');
+  }
+  fit(); window.addEventListener('resize', fit);
+})();
+</script>
+
+<style>
+/* ─── TOKENS + BASE ──────────────────────────────────── */
+.s1{
+  --red:#ED1C24; --red-dk:#C8161D;
+  --ink:#000; --ink-2:#0A0A0B; --ink-3:#141417;
+  --line:rgba(255,255,255,.1);
+  --muted:#A1A1AA;
+  --cond:'Barlow Condensed',sans-serif;
+  --body:'Barlow',sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  background:var(--ink); color:#F4F4F5;
+  font-family:var(--body); font-size:17px; line-height:1.6;
+  overflow:hidden; position:relative;
+  -webkit-font-smoothing:antialiased;
+  zoom:var(--z,1);
+}
+.s1 *,.s1 *::before,.s1 *::after{box-sizing:border-box}
+.s1 :where(h1,h2,h3,p,ul,dl,dd){margin:0;padding:0}
+.s1 :where(a){color:inherit;text-decoration:none}
+.s1 svg{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.s1-red{color:var(--red)} .s1-italic{font-style:italic}
+
+/* ─── CONTAINERS ─────────────────────────────────────── */
+.s1-wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+.s1-wrap--wide{max-width:1760px;margin:0 auto;padding-left:clamp(24px,4vw,72px);padding-right:clamp(24px,4vw,72px)}
+.s1-section{padding:120px 0;position:relative}
+
+/* ─── TYPOGRAPHY ─────────────────────────────────────── */
+.s1-eyebrow{
+  font-family:var(--cond);font-weight:800;
+  font-size:clamp(17px,calc(1.3 * var(--vwu,1vw)),20px);
+  letter-spacing:.2em;text-transform:uppercase;color:#fff;
+  display:inline-flex;align-items:center;gap:14px;margin-bottom:18px;
+}
+.s1-eyebrow::before{content:"";width:38px;height:4px;background:var(--red);transform:skewX(-30deg);flex-shrink:0}
+.s1-eyebrow--center{display:flex;justify-content:center}
+.s1-h2{
+  font-family:var(--cond);font-weight:900;
+  font-size:clamp(42px,calc(5.4 * var(--vwu,1vw)),76px);
+  line-height:.96;text-transform:uppercase;color:#fff;
+  -webkit-text-stroke:max(4px,.06em) #000;paint-order:stroke fill;
+}
+.s1-h2--xl{font-size:clamp(50px,calc(8 * var(--vwu,1vw)),120px);line-height:.9}
+.s1-lead{color:#C9C9CF;font-size:clamp(17px,calc(1.35 * var(--vwu,1vw)),19px);line-height:1.75;max-width:620px;margin-top:24px}
+
+/* ─── BUTTONS ────────────────────────────────────────── */
+.s1-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:38px}
+.s1-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:12px;
+  font-family:var(--cond);font-weight:800;font-size:19px;letter-spacing:.12em;text-transform:uppercase;line-height:1.1;
+  padding:19px 38px;border-radius:6px;overflow:hidden;isolation:isolate;cursor:pointer;border:0;
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease),background .3s,color .3s,border-color .3s}
+.s1-btn svg{font-size:20px;transition:transform .3s var(--ease)}
+.s1-btn:hover svg{transform:translateX(5px)}
+.s1-btn--red{background:var(--red);color:#fff;box-shadow:0 10px 30px -8px rgba(237,28,36,.6)}
+.s1-btn--red::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.4) 50%,transparent 70%);transform:translateX(-120%);animation:s1-shine 4s ease-in-out infinite}
+.s1-btn--red:hover{background:var(--red-dk);transform:translateY(-3px);box-shadow:0 16px 36px -8px rgba(237,28,36,.8)}
+.s1-btn--ghost{border:2px solid rgba(255,255,255,.75);color:#fff;background:rgba(255,255,255,.05)}
+.s1-btn--ghost:hover{background:#fff;color:#000;border-color:#fff;transform:translateY(-3px)}
+@keyframes s1-shine{0%,55%{transform:translateX(-120%)}85%,100%{transform:translateX(120%)}}
+
+/* ─── ANIMATION PRIMITIVES ───────────────────────────── */
+.s1-js .s1-intro{opacity:0;transform:translateY(40px);animation:s1-in .9s var(--ease) forwards;animation-delay:var(--d,0s)}
+.s1-js .s1-intro.is-done{animation:none;opacity:1;transform:none}
+@keyframes s1-in{to{opacity:1;transform:none}}
+.s1-js .s1-reveal{opacity:0;transform:translateY(36px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:var(--rd,0s)}
+.s1-js .s1-reveal.is-in{opacity:1;transform:none}
+.s1-curtain{position:relative;overflow:hidden}
+.s1-js .s1-curtain::before{content:"";position:absolute;inset:0;background:#000;z-index:2;transform-origin:right;transition:transform 1.2s cubic-bezier(.7,0,.2,1)}
+.s1-js .s1-curtain.is-in::before{transform:scaleX(0)}
+.s1-js .s1-curtain img{transform:scale(1.15);transition:transform 1.2s cubic-bezier(.7,0,.2,1)}
+.s1-js .s1-curtain.is-in img{transform:scale(1)}
+.s1-streaks{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:1}
+.s1-streaks i{position:absolute;left:-30%;height:2px;width:260px;background:linear-gradient(90deg,transparent,var(--red),transparent);opacity:0;animation:s1-streak 3.2s linear infinite}
+.s1-streaks i:nth-child(1){top:14%;animation-delay:0s}
+.s1-streaks i:nth-child(2){top:28%;animation-delay:.6s;width:200px}
+.s1-streaks i:nth-child(3){top:42%;animation-delay:1.1s;width:180px}
+.s1-streaks i:nth-child(4){top:58%;animation-delay:1.6s;width:220px}
+.s1-streaks i:nth-child(5){top:72%;animation-delay:2.1s;width:200px}
+.s1-streaks i:nth-child(6){top:86%;animation-delay:2.6s;width:160px}
+@keyframes s1-streak{0%{transform:translateX(0);opacity:0}10%{opacity:.9}60%{opacity:.9}100%{transform:translateX(620%);opacity:0}}
+
+/* ─── HERO ───────────────────────────────────────────── */
+.s1-hero{position:relative;overflow:hidden;isolation:isolate;padding:140px 0 110px;min-height:calc(70 * var(--vhu,1vh));display:flex;flex-direction:column;justify-content:center}
+.s1-hero::before{content:"";position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse at 30% 20%,rgba(237,28,36,.15) 0%,transparent 55%),radial-gradient(ellipse at 80% 95%,rgba(237,28,36,.12) 0%,transparent 55%)}
+.s1-hero__ghost{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);font-family:var(--cond);font-weight:900;font-style:italic;font-size:clamp(260px,calc(42 * var(--vwu,1vw)),720px);line-height:.85;color:transparent;-webkit-text-stroke:3px rgba(255,255,255,.05);letter-spacing:-.02em;white-space:nowrap;z-index:0;pointer-events:none;user-select:none}
+.s1-hero__inner{position:relative;z-index:2}
+.s1-hero__hours{font-family:var(--cond);font-weight:800;font-size:clamp(16px,calc(1.6 * var(--vwu,1vw)),28px);letter-spacing:.1em;text-transform:uppercase;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.6);margin-bottom:28px}
+.s1-hero__title{font-family:var(--cond);font-weight:900;text-transform:uppercase;font-size:clamp(60px,calc(10 * var(--vwu,1vw)),170px);line-height:.88;letter-spacing:.01em;color:#fff;-webkit-text-stroke:max(6px,.045em) #000;paint-order:stroke fill}
+.s1-hero__title .s1-line{display:block;overflow:hidden;white-space:nowrap;padding:.08em .2em .08em 0}
+.s1-hero__title .s1-line+.s1-line{margin-top:-.12em}
+.s1-hero__lead{max-width:640px;margin-top:34px;font-size:clamp(17px,calc(1.4 * var(--vwu,1vw)),22px);line-height:1.65;color:#C9C9CF}
+
+/* ─── TIMELINE (signature) ───────────────────────────── */
+.s1-timeline{padding:140px 0 160px;position:relative;overflow:hidden}
+.s1-timeline__header{text-align:center;margin-bottom:90px;position:relative;z-index:1;padding:0 24px}
+.s1-timeline__wrap{position:relative;max-width:1200px;margin:0 auto;padding:0 24px;z-index:1}
+.s1-timeline__track{position:absolute;left:50%;top:0;bottom:0;transform:translateX(-50%);width:4px;pointer-events:none;z-index:0}
+.s1-timeline__track-bg{position:absolute;inset:0;background:rgba(255,255,255,.08);border-radius:4px}
+.s1-timeline__track-fill{position:absolute;left:0;top:0;width:100%;height:0%;background:linear-gradient(180deg,var(--red),var(--red-dk));box-shadow:0 0 24px rgba(237,28,36,.5),0 0 48px rgba(237,28,36,.3);border-radius:4px;transition:height .18s linear;will-change:height}
+.s1-timeline__row{display:grid;grid-template-columns:1fr 90px 1fr;align-items:center;padding:46px 0;position:relative}
+.s1-timeline__cell{min-height:1px}
+.s1-timeline__dot-cell{display:flex;justify-content:center;align-items:center;position:relative;z-index:2}
+.s1-timeline__dot{width:26px;height:26px;border-radius:50%;background:#1a1a1a;border:4px solid #000;box-shadow:0 0 0 2px rgba(255,255,255,.08);transition:background .35s var(--ease),box-shadow .35s var(--ease)}
+.s1-timeline__row.is-active .s1-timeline__dot{background:var(--red);box-shadow:0 0 0 2px rgba(237,28,36,.4),0 0 24px rgba(237,28,36,.85)}
+.s1-timeline__card{display:inline-block;max-width:460px;padding:28px 32px;background:rgba(20,20,23,.6);border:1px solid var(--line);border-radius:12px;backdrop-filter:blur(10px);transition:border-color .4s var(--ease),transform .3s var(--ease),background .3s var(--ease)}
+.s1-timeline__card:hover{border-color:rgba(237,28,36,.6);background:rgba(30,30,33,.75);transform:translateY(-2px)}
+.s1-timeline__row.is-active .s1-timeline__card{border-color:rgba(237,28,36,.35)}
+.s1-timeline__row--left .s1-timeline__cell--left{text-align:right}
+.s1-timeline__row--left .s1-timeline__cell--right{visibility:hidden}
+.s1-timeline__row--right .s1-timeline__cell--right{text-align:left}
+.s1-timeline__row--right .s1-timeline__cell--left{visibility:hidden}
+.s1-timeline__day{font-family:var(--cond);font-weight:900;font-style:italic;font-size:clamp(32px,calc(3.6 * var(--vwu,1vw)),58px);line-height:.9;text-transform:uppercase;letter-spacing:.02em;color:transparent;-webkit-text-stroke:1.5px rgba(237,28,36,.5);margin-bottom:6px;transition:color .4s var(--ease),-webkit-text-stroke-color .4s var(--ease)}
+.s1-timeline__row.is-active .s1-timeline__day{color:var(--red);-webkit-text-stroke-color:var(--red)}
+.s1-timeline__event{font-family:var(--cond);font-weight:900;font-size:clamp(22px,calc(1.9 * var(--vwu,1vw)),30px);text-transform:uppercase;color:#fff;line-height:1.08;margin-bottom:8px}
+.s1-timeline__meta{font-family:var(--cond);font-weight:700;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:#A1A1AA}
+
+/* ─── ALTERNATING FEATURE ROWS ──────────────────────── */
+.s1-feat{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.s1-feat--reverse .s1-feat__media{order:2}
+.s1-feat--reverse .s1-feat__body{order:1}
+.s1-feat__media{aspect-ratio:4/3;border-radius:12px;overflow:hidden;background:var(--ink-3)}
+.s1-feat__media img{width:100%;height:100%;object-fit:cover;display:block}
+.s1-track-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px}
+.s1-track-card{background:rgba(0,0,0,.4);border:1px solid var(--line);border-left:3px solid var(--red);border-radius:8px;padding:16px 18px;backdrop-filter:blur(8px)}
+.s1-track-card__label{font-family:var(--cond);font-weight:800;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#A1A1AA;margin-bottom:6px}
+.s1-track-card__value{font-family:var(--cond);font-weight:900;font-size:22px;text-transform:uppercase;color:#fff;line-height:1.1}
+.s1-note{margin-top:24px;padding:16px 18px;background:rgba(0,0,0,.3);border:1px solid var(--line);border-radius:8px;color:#D4D4D8;font-size:15px}
+.s1-note strong{color:#fff;font-weight:800}
+
+/* ─── TUESDAY · FULL-BLEED PROMO ─────────────────── */
+.s1-promo{position:relative;overflow:hidden;isolation:isolate;padding:140px 0}
+.s1-promo__bg{position:absolute;inset:0;z-index:0}
+.s1-promo__bg img{width:100%;height:100%;object-fit:cover;display:block;opacity:.35;filter:saturate(1.1) contrast(1.05)}
+.s1-promo__bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.9) 0%,rgba(0,0,0,.6) 55%,rgba(0,0,0,.8) 100%)}
+.s1-promo__ghost{position:absolute;right:-4%;top:50%;transform:translateY(-50%);font-family:var(--cond);font-weight:900;font-style:italic;font-size:clamp(260px,calc(32 * var(--vwu,1vw)),540px);line-height:.85;color:transparent;-webkit-text-stroke:3px rgba(255,255,255,.055);letter-spacing:-.02em;white-space:nowrap;z-index:0;pointer-events:none;user-select:none}
+.s1-promo__inner{position:relative;z-index:2;max-width:1240px;margin:0 auto;padding:0 24px}
+.s1-promo__pills{display:flex;gap:20px;flex-wrap:wrap;margin-top:46px}
+.s1-promo__pill{background:rgba(237,28,36,.08);border:1px solid rgba(237,28,36,.35);border-radius:14px;padding:28px 36px;min-width:260px}
+.s1-promo__pill-amt{font-family:var(--cond);font-weight:900;font-style:italic;font-size:clamp(60px,calc(6 * var(--vwu,1vw)),100px);line-height:.9;color:#fff}
+.s1-promo__pill-amt .s1-pct{color:var(--red);font-size:.6em;vertical-align:top;margin-left:4px;font-style:normal}
+.s1-promo__pill-note{font-family:var(--cond);font-weight:800;font-size:16px;letter-spacing:.14em;text-transform:uppercase;color:#D4D4D8;margin-top:8px}
+
+/* ─── WEDNESDAY · STEPS ──────────────────────────── */
+.s1-steps{display:grid;grid-template-columns:1.1fr 1fr;gap:70px;align-items:center}
+.s1-steps__list{display:flex;flex-direction:column;gap:0;margin-top:28px}
+.s1-step{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:start;padding:22px 0;border-top:1px solid var(--line)}
+.s1-step:first-child{border-top:0;padding-top:0}
+.s1-step__num{font-family:var(--cond);font-weight:900;font-style:italic;font-size:clamp(44px,calc(4 * var(--vwu,1vw)),68px);line-height:.9;color:transparent;-webkit-text-stroke:1.5px var(--red);min-width:1.6em}
+.s1-step__title{font-family:var(--cond);font-weight:900;font-size:clamp(22px,calc(1.9 * var(--vwu,1vw)),30px);text-transform:uppercase;color:#fff;line-height:1.1;margin-bottom:6px}
+.s1-step__title em{font-style:normal;color:var(--red)}
+.s1-step__desc{color:#C9C9CF;font-size:16px;line-height:1.6}
+.s1-rotation{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+.s1-pill{display:inline-flex;align-items:center;padding:10px 18px;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:99px;font-family:var(--cond);font-weight:800;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:#E4E4E7}
+.s1-pill::before{content:"";width:8px;height:8px;background:var(--red);border-radius:50%;margin-right:10px;flex-shrink:0}
+
+/* ─── THURSDAY · RATE CARD ───────────────────────── */
+.s1-rate{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+.s1-rate__card{background:linear-gradient(145deg,rgba(237,28,36,.1),rgba(0,0,0,.4));border:1px solid rgba(237,28,36,.3);border-radius:16px;padding:46px 52px;position:relative;overflow:hidden}
+.s1-rate__card::before{content:"";position:absolute;top:-50px;right:-50px;width:220px;height:220px;background:radial-gradient(circle,rgba(237,28,36,.3),transparent 70%)}
+.s1-rate__price{font-family:var(--cond);font-weight:900;font-style:italic;font-size:clamp(100px,calc(12 * var(--vwu,1vw)),200px);line-height:.85;color:#fff;position:relative;z-index:1}
+.s1-rate__price .s1-cur{color:var(--red);font-size:.5em;vertical-align:top;margin-right:4px;font-style:normal}
+.s1-rate__price-note{font-family:var(--cond);font-weight:800;font-size:16px;letter-spacing:.14em;text-transform:uppercase;color:#D4D4D8;margin-top:6px;position:relative;z-index:1}
+.s1-rate__breakdown{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:36px;position:relative;z-index:1}
+.s1-rate__bk{text-align:center;padding:18px 10px;background:rgba(0,0,0,.4);border-radius:10px}
+.s1-rate__bk-mins{font-family:var(--cond);font-weight:900;font-style:italic;font-size:36px;color:#fff;line-height:1}
+.s1-rate__bk-mins .s1-m{color:var(--red);font-size:.6em;margin-left:2px;font-style:normal}
+.s1-rate__bk-lbl{font-family:var(--cond);font-weight:800;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#A1A1AA;margin-top:6px}
+
+/* ─── FRIDAY · STATS ─────────────────────────────── */
+.s1-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:46px 0 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.s1-stat{padding:30px 20px;position:relative;text-align:center}
+.s1-stat+.s1-stat{border-left:1px solid var(--line)}
+.s1-stat::before{content:"";position:absolute;top:-2px;left:50%;transform:translateX(-50%) skewX(-30deg);width:36px;height:4px;background:var(--red)}
+.s1-stat__num{font-family:var(--cond);font-weight:900;font-style:italic;font-size:clamp(44px,calc(4.5 * var(--vwu,1vw)),80px);line-height:1;color:#fff}
+.s1-stat__num .s1-u{color:var(--red);font-size:.5em;vertical-align:top;font-style:normal}
+.s1-stat__lbl{font-family:var(--cond);font-weight:800;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#D4D4D8;margin-top:8px}
+.s1-req{margin-top:28px;padding:20px 24px;background:rgba(237,28,36,.08);border:1px solid rgba(237,28,36,.3);border-radius:12px;color:#E4E4E7;font-size:15px;line-height:1.6}
+.s1-req strong{color:#fff;font-weight:800}
+
+/* ─── SATURDAY · MOSAIC ──────────────────────────── */
+.s1-mosaic{display:grid;grid-template-columns:1.1fr 1fr;gap:16px;margin-top:46px}
+.s1-mosaic__col{display:flex;flex-direction:column;gap:16px}
+.s1-mosaic__item{border-radius:12px;overflow:hidden;position:relative}
+.s1-mosaic__item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s var(--ease)}
+.s1-mosaic__item:hover img{transform:scale(1.04)}
+.s1-mosaic__item--tall{aspect-ratio:.88/1}
+.s1-mosaic__item--wide{aspect-ratio:2.5/1}
+.s1-crews{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.s1-crew{padding:10px 16px;background:rgba(0,0,0,.4);border:1px solid var(--line);border-left:3px solid var(--red);border-radius:6px;font-family:var(--cond);font-weight:800;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:#E4E4E7}
+
+/* ─── SUNDAY · COUNTDOWN ─────────────────────────── */
+.s1-cd{display:grid;grid-template-columns:1.1fr 1fr;gap:70px;align-items:center}
+.s1-cd__card{background:rgba(10,10,11,.6);border:1px solid var(--line);border-radius:16px;padding:40px 36px;backdrop-filter:blur(10px)}
+.s1-cd__eyebrow{font-family:var(--cond);font-weight:800;font-size:14px;letter-spacing:.2em;text-transform:uppercase;color:#A1A1AA;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.s1-cd__eyebrow::before{content:"";width:8px;height:8px;background:var(--red);border-radius:50%;box-shadow:0 0 10px var(--red);animation:s1-pulse 1.6s ease-in-out infinite}
+@keyframes s1-pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.75)}}
+.s1-cd__tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.s1-cd__tile{text-align:center;padding:20px 10px;background:#000;border:1px solid var(--line);border-radius:10px}
+.s1-cd__num{font-family:var(--cond);font-weight:900;font-style:italic;font-size:clamp(44px,calc(4 * var(--vwu,1vw)),64px);line-height:1;color:#fff;letter-spacing:.02em}
+.s1-cd__u{font-family:var(--cond);font-weight:800;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#A1A1AA;margin-top:8px}
+.s1-cd__next{margin-top:24px;padding-top:20px;border-top:1px solid var(--line);font-family:var(--cond);font-weight:800;font-size:16px;letter-spacing:.14em;text-transform:uppercase;color:#D4D4D8;line-height:1.4}
+.s1-cd__next strong{color:#fff;font-weight:900}
+
+/* ─── SCALE DRIFT · FULL-BLEED ───────────────────── */
+.s1-drift{position:relative;overflow:hidden;isolation:isolate;padding:140px 0;min-height:600px}
+.s1-drift__bg{position:absolute;inset:0;z-index:0}
+.s1-drift__bg img{width:100%;height:100%;object-fit:cover;display:block}
+.s1-drift__bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.92) 0%,rgba(0,0,0,.6) 55%,rgba(0,0,0,.3) 100%)}
+.s1-drift__inner{position:relative;z-index:2;max-width:1760px;margin:0 auto;padding:0 clamp(24px,4vw,72px)}
+.s1-drift__content{max-width:720px}
+
+/* ─── CALENDAR ──────────────────────────────────── */
+.s1-cal{padding:120px 0;background:var(--ink-2)}
+.s1-cal__header{text-align:center;margin-bottom:60px;padding:0 24px}
+.s1-cal__frame{max-width:1240px;margin:0 auto;padding:0 24px}
+.s1-cal__iframe{width:100%;height:720px;border:0;display:block;background:#000;border-radius:12px;border:1px solid var(--line)}
+
+/* ─── VISIT BLOCK ───────────────────────────────── */
+.s1-visit{padding:120px 0;position:relative;overflow:hidden}
+.s1-visit__flag{position:absolute;top:0;left:0;right:0;height:14px;background:repeating-conic-gradient(#fff 0% 25%,#000 0% 50%) 50%/28px 28px;opacity:.9}
+.s1-visit__row{display:grid;grid-template-columns:max-content minmax(0,560px);gap:60px;justify-content:center;align-items:stretch;max-width:1240px;margin:14px auto 0;padding:0 24px}
+.s1-visit__info{display:contents}
+.s1-visit__info .s1-eyebrow{grid-column:1;grid-row:1}
+.s1-visit__info .s1-h2{grid-column:1;grid-row:2}
+.s1-visit__info dl{grid-column:1;grid-row:3;display:grid;grid-template-columns:max-content 1fr;gap:12px 28px;margin-top:34px;align-content:start}
+.s1-visit__info dt{font-family:var(--cond);font-weight:800;font-size:18px;letter-spacing:.14em;text-transform:uppercase;color:#fff}
+.s1-visit__info dd{color:#D4D4D8;font-size:16px}
+.s1-visit__info dd a{color:#D4D4D8;text-decoration:underline;text-decoration-color:rgba(255,255,255,.3);text-underline-offset:3px;transition:color .25s}
+.s1-visit__info dd a:hover{color:var(--red)}
+.s1-visit__info .s1-ctas{grid-column:1;grid-row:4;margin-top:30px}
+.s1-visit__map{grid-column:2;grid-row:2/5;border-radius:12px;overflow:hidden;border:1px solid var(--line);min-height:460px}
+.s1-visit__map iframe{width:100%;height:100%;border:0;display:block;filter:grayscale(1) invert(.92) hue-rotate(180deg)}
+
+/* ─── FLOATING BOOK BAR ─────────────────────────── */
+.s1-book{position:fixed;z-index:60;transition:transform .4s var(--ease),opacity .4s var(--ease);opacity:0;pointer-events:none}
+.s1-book.is-visible{opacity:1;pointer-events:auto}
+.s1-book__inner{display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(0,0,0,.75);border:1px solid rgba(255,255,255,.12);border-radius:99px;backdrop-filter:blur(14px) saturate(1.2);box-shadow:0 10px 30px rgba(0,0,0,.6)}
+.s1-book__phone{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.08);display:inline-flex;align-items:center;justify-content:center;color:#fff;transition:background .25s}
+.s1-book__phone:hover{background:rgba(255,255,255,.15)}
+.s1-book__cta{padding:12px 24px;background:var(--red);color:#fff;border-radius:99px;font-family:var(--cond);font-weight:800;font-size:15px;letter-spacing:.1em;text-transform:uppercase;transition:background .25s,transform .25s}
+.s1-book__cta:hover{background:var(--red-dk);transform:translateY(-1px)}
+@media (min-width:1025px){
+  .s1-book{top:28px;right:32px;transform:translateY(-120%)}
+  .s1-book.is-visible{transform:translateY(0)}
+}
+@media (max-width:1024px){
+  .s1-book{bottom:16px;left:16px;right:16px;transform:translateY(120%)}
+  .s1-book.is-visible{transform:translateY(0)}
+  .s1-book__inner{width:100%;justify-content:space-between}
+  .s1-book__cta{flex:1;text-align:center}
+}
+
+/* ─── REDUCED MOTION ─────────────────────────────── */
+@media (prefers-reduced-motion:reduce){
+  .s1 *,.s1 *::before,.s1 *::after{animation:none!important;transition:none!important}
+  .s1-js .s1-intro,.s1-js .s1-reveal{opacity:1!important;transform:none!important}
+  .s1-js .s1-curtain::before{display:none}
+  .s1-js .s1-curtain img{transform:none!important}
+}
+
+/* ─── MOBILE EDGE-TO-EDGE + STACK ──────────────── */
+@media (max-width:1024px){
+  .s1{width:100vw;max-width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw)}
+  .s1-section{padding:84px 0}
+  .s1-hero{padding:110px 20px 70px;min-height:auto}
+  .s1-hero__title{font-size:clamp(44px,13vw,80px)}
+  .s1-hero__ghost{font-size:clamp(180px,55vw,420px)}
+  .s1-timeline{padding:84px 0 100px}
+  .s1-timeline__header{margin-bottom:50px}
+  .s1-timeline__wrap{padding:0 20px}
+  .s1-timeline__track{left:28px;transform:none}
+  .s1-timeline__row{grid-template-columns:56px 1fr;padding:22px 0;align-items:center}
+  .s1-timeline__dot-cell{grid-column:1;justify-content:center}
+  .s1-timeline__cell--left,.s1-timeline__cell--right{grid-column:2;visibility:visible!important;text-align:left!important}
+  .s1-timeline__row--left .s1-timeline__cell--right,
+  .s1-timeline__row--right .s1-timeline__cell--left{display:none!important}
+  .s1-timeline__card{display:block;max-width:none;padding:20px 22px}
+  .s1-feat{grid-template-columns:1fr;gap:30px}
+  .s1-feat--reverse .s1-feat__media{order:1}
+  .s1-feat--reverse .s1-feat__body{order:2}
+  .s1-steps,.s1-rate,.s1-cd{grid-template-columns:1fr;gap:34px}
+  .s1-mosaic{grid-template-columns:1fr;gap:12px}
+  .s1-rate__card{padding:30px 26px}
+  .s1-stats{grid-template-columns:1fr}
+  .s1-stat+.s1-stat{border-left:0;border-top:1px solid var(--line)}
+  .s1-track-cards{grid-template-columns:1fr}
+  .s1-visit__row{grid-template-columns:1fr;gap:30px;padding:0 20px}
+  .s1-visit__info dl{grid-column:1;grid-row:auto}
+  .s1-visit__info .s1-ctas{grid-column:1;grid-row:auto}
+  .s1-visit__map{grid-column:1;grid-row:auto;min-height:360px}
+  .s1-cal__iframe{height:560px}
+  .s1-promo{padding:84px 0}
+  .s1-promo__inner{padding:0 20px}
+}
+@media (max-width:768px){
+  .s1-section{padding:70px 0}
+  .s1-ctas{justify-content:center;flex-direction:column;align-items:center}
+  .s1-ctas .s1-btn{width:66%;padding:16px 22px;font-size:15px}
+  .s1-timeline__dot{width:22px;height:22px}
+  .s1-rate__price{font-size:clamp(72px,22vw,140px)}
+  .s1-promo__pill{min-width:0;flex:1 1 100%;padding:22px 26px}
+  .s1-promo__pill-amt{font-size:clamp(50px,16vw,88px)}
+  .s1-cd__tiles{gap:8px}
+  .s1-cd__tile{padding:14px 6px}
+}
+</style>
+
+<!-- ───────────────────────── HERO ───────────────────────── -->
+<section class="s1-hero">
+  <div class="s1-streaks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="s1-hero__ghost" aria-hidden="true">EVENTS</div>
+  <div class="s1-wrap s1-hero__inner">
+    <div class="s1-hero__hours s1-intro" style="--d:.05s">Open 7 Days a Week · 11AM – 11PM</div>
+    <h1 class="s1-hero__title">
+      <span class="s1-line s1-intro" style="--d:.2s">Seven days</span>
+      <span class="s1-line s1-intro" style="--d:.4s"><span class="s1-italic s1-red">Seven ways to race</span></span>
+    </h1>
+    <p class="s1-hero__lead s1-intro" style="--d:.65s">Group classes, free workshops, sprint races, Friday Night Showdowns, F1 watch parties, car meets — every day of the week something to walk into.</p>
+    <div class="s1-ctas s1-intro" style="--d:.85s">
+      <a href="https://sim1racing.as.me/" class="s1-btn s1-btn--red" target="_blank" rel="noopener">Book Now <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a href="#s1-week" class="s1-btn s1-btn--ghost">See the Week <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ────────── WEEKLY TIMELINE (SIGNATURE MOMENT) ────────── -->
+<section class="s1-timeline" id="s1-week">
+  <div class="s1-timeline__header">
+    <div class="s1-eyebrow s1-eyebrow--center s1-reveal">Your week here</div>
+    <h2 class="s1-h2 s1-reveal" style="--rd:.08s">Something every <span class="s1-red s1-italic">day of the week</span></h2>
+  </div>
+  <div class="s1-timeline__wrap">
+    <div class="s1-timeline__track" aria-hidden="true">
+      <div class="s1-timeline__track-bg"></div>
+      <div class="s1-timeline__track-fill"></div>
+    </div>
+
+    <div class="s1-timeline__row s1-timeline__row--left">
+      <div class="s1-timeline__cell s1-timeline__cell--left">
+        <a href="#s1-mon" class="s1-timeline__card">
+          <div class="s1-timeline__day">Mon</div>
+          <div class="s1-timeline__event">Group Classes</div>
+          <div class="s1-timeline__meta">5 PM kids · 7 PM adults</div>
+        </a>
+      </div>
+      <div class="s1-timeline__dot-cell"><div class="s1-timeline__dot"></div></div>
+      <div class="s1-timeline__cell s1-timeline__cell--right"></div>
+    </div>
+
+    <div class="s1-timeline__row s1-timeline__row--right">
+      <div class="s1-timeline__cell s1-timeline__cell--left"></div>
+      <div class="s1-timeline__dot-cell"><div class="s1-timeline__dot"></div></div>
+      <div class="s1-timeline__cell s1-timeline__cell--right">
+        <a href="#s1-tue" class="s1-timeline__card">
+          <div class="s1-timeline__day">Tue</div>
+          <div class="s1-timeline__event">Race Together, Save Together</div>
+          <div class="s1-timeline__meta">Up to 15% off with 2+ drivers</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="s1-timeline__row s1-timeline__row--left">
+      <div class="s1-timeline__cell s1-timeline__cell--left">
+        <a href="#s1-wed" class="s1-timeline__card">
+          <div class="s1-timeline__day">Wed</div>
+          <div class="s1-timeline__event">Free Workshops</div>
+          <div class="s1-timeline__meta">8 PM · Classroom + Sim</div>
+        </a>
+      </div>
+      <div class="s1-timeline__dot-cell"><div class="s1-timeline__dot"></div></div>
+      <div class="s1-timeline__cell s1-timeline__cell--right"></div>
+    </div>
+
+    <div class="s1-timeline__row s1-timeline__row--right">
+      <div class="s1-timeline__cell s1-timeline__cell--left"></div>
+      <div class="s1-timeline__dot-cell"><div class="s1-timeline__dot"></div></div>
+      <div class="s1-timeline__cell s1-timeline__cell--right">
+        <a href="#s1-thu" class="s1-timeline__card">
+          <div class="s1-timeline__day">Thu</div>
+          <div class="s1-timeline__event">Weekly Sprint Race</div>
+          <div class="s1-timeline__meta">8 PM · One-hour race night</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="s1-timeline__row s1-timeline__row--left">
+      <div class="s1-timeline__cell s1-timeline__cell--left">
+        <a href="#s1-fri" class="s1-timeline__card">
+          <div class="s1-timeline__day">Fri</div>
+          <div class="s1-timeline__event">Friday Night Showdown</div>
+          <div class="s1-timeline__meta">8 PM · iRacing</div>
+        </a>
+      </div>
+      <div class="s1-timeline__dot-cell"><div class="s1-timeline__dot"></div></div>
+      <div class="s1-timeline__cell s1-timeline__cell--right"></div>
+    </div>
+
+    <div class="s1-timeline__row s1-timeline__row--right">
+      <div class="s1-timeline__cell s1-timeline__cell--left"></div>
+      <div class="s1-timeline__dot-cell"><div class="s1-timeline__dot"></div></div>
+      <div class="s1-timeline__cell s1-timeline__cell--right">
+        <a href="#s1-sat" class="s1-timeline__card">
+          <div class="s1-timeline__day">Sat</div>
+          <div class="s1-timeline__event">Car Meets</div>
+          <div class="s1-timeline__meta">Front lot · Rotating host crews</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="s1-timeline__row s1-timeline__row--left">
+      <div class="s1-timeline__cell s1-timeline__cell--left">
+        <a href="#s1-sun" class="s1-timeline__card">
+          <div class="s1-timeline__day">Sun</div>
+          <div class="s1-timeline__event">F1 Watch Parties</div>
+          <div class="s1-timeline__meta">Free · 230-inch LED</div>
+        </a>
+      </div>
+      <div class="s1-timeline__dot-cell"><div class="s1-timeline__dot"></div></div>
+      <div class="s1-timeline__cell s1-timeline__cell--right"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────── MONDAY · GROUP CLASSES ─────── -->
+<section class="s1-section" id="s1-mon" style="background:#000">
+  <div class="s1-wrap--wide">
+    <div class="s1-feat">
+      <div class="s1-curtain s1-feat__media s1-reveal">
+        <img src="https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a271dfd73c1e86e3b638d3b/1780948478116/CTA09873+%281%29.jpg" alt="Group coaching on the sim" loading="lazy">
+      </div>
+      <div class="s1-feat__body">
+        <div class="s1-eyebrow s1-reveal">Monday · Group Classes</div>
+        <h2 class="s1-h2 s1-reveal" style="--rd:.08s">Coaching that <span class="s1-red s1-italic">sticks</span></h2>
+        <p class="s1-lead s1-reveal" style="--rd:.16s">Rotating Monday classes for drivers who've raced with us before — small groups, structured coaching, six-week cycle through Open Wheel, Sports Car, Street Car, Racecraft, Prototype, and Manual.</p>
+        <div class="s1-track-cards s1-reveal" style="--rd:.24s">
+          <div class="s1-track-card">
+            <div class="s1-track-card__label">Kids · Ages 7–18</div>
+            <div class="s1-track-card__value">5 PM Mondays</div>
+          </div>
+          <div class="s1-track-card">
+            <div class="s1-track-card__label">Adults</div>
+            <div class="s1-track-card__value">7 PM Mondays</div>
+          </div>
+        </div>
+        <div class="s1-note s1-reveal" style="--rd:.3s"><strong>New here?</strong> Start with <strong>Intro to Sim Racing</strong> on Workshop Wednesdays (every other Wednesday) before joining a Monday class.</div>
+        <div class="s1-ctas s1-reveal" style="--rd:.36s">
+          <a href="https://www.sim1racing.com/group-classes" class="s1-btn s1-btn--red">Full Class Breakdown <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────── TUESDAY · RACE TOGETHER ─────── -->
+<section class="s1-promo" id="s1-tue">
+  <div class="s1-promo__bg">
+    <img src="https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a8f31211fbd8b7f7719cc09/1787769123191/Untitled+design+%283%29.jpg" alt="" loading="lazy">
+  </div>
+  <div class="s1-promo__ghost" aria-hidden="true">SAVE</div>
+  <div class="s1-promo__inner">
+    <div class="s1-eyebrow s1-reveal">Tuesday · Group Discount</div>
+    <h2 class="s1-h2 s1-h2--xl s1-reveal" style="--rd:.08s">Race together<br><span class="s1-italic s1-red">save together</span></h2>
+    <p class="s1-lead s1-reveal" style="--rd:.16s">Roll in with 2 or more drivers on Tuesdays and the price drops. And every weekday has its own promo — see the full list before you plan your visit.</p>
+    <div class="s1-promo__pills s1-reveal" style="--rd:.24s">
+      <div class="s1-promo__pill">
+        <div class="s1-promo__pill-amt">15<span class="s1-pct">%</span><span class="s1-pct"> off</span></div>
+        <div class="s1-promo__pill-note">Before 4 PM · 2+ drivers</div>
+      </div>
+      <div class="s1-promo__pill">
+        <div class="s1-promo__pill-amt">10<span class="s1-pct">%</span><span class="s1-pct"> off</span></div>
+        <div class="s1-promo__pill-note">After 4 PM · 2+ drivers</div>
+      </div>
+    </div>
+    <div class="s1-ctas s1-reveal" style="--rd:.32s">
+      <a href="https://www.sim1racing.com/daily-rates" class="s1-btn s1-btn--red">See All Daily Promos <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ─────── WEDNESDAY · WORKSHOPS ─────── -->
+<section class="s1-section" id="s1-wed" style="background:var(--ink-2)">
+  <div class="s1-wrap--wide">
+    <div class="s1-steps">
+      <div class="s1-steps__body">
+        <div class="s1-eyebrow s1-reveal">Wednesday · Workshop Wednesdays</div>
+        <h2 class="s1-h2 s1-reveal" style="--rd:.08s">Free <span class="s1-italic s1-red">workshops</span></h2>
+        <p class="s1-lead s1-reveal" style="--rd:.16s">Every Wednesday at 8 PM. A quick classroom session on a rotating topic, then optional sim time to put it into practice.</p>
+        <div class="s1-steps__list s1-reveal" style="--rd:.24s">
+          <div class="s1-step">
+            <div class="s1-step__num">01</div>
+            <div><div class="s1-step__title">Walk in</div><div class="s1-step__desc">No sign-ups, no cost of entry — grab a seat.</div></div>
+          </div>
+          <div class="s1-step">
+            <div class="s1-step__num">02</div>
+            <div><div class="s1-step__title">20 min in the <em>classroom</em></div><div class="s1-step__desc">Topic rotates each week. Always free.</div></div>
+          </div>
+          <div class="s1-step">
+            <div class="s1-step__num">03</div>
+            <div><div class="s1-step__title">Add sim time (optional)</div><div class="s1-step__desc">20 or 40 minutes on a rig to race with everyone.</div></div>
+          </div>
+        </div>
+        <div class="s1-rotation s1-reveal" style="--rd:.3s">
+          <span class="s1-pill">Intro to Sim Racing</span>
+          <span class="s1-pill">How to Drive Manual</span>
+          <span class="s1-pill">How to Drift</span>
+        </div>
+        <div class="s1-ctas s1-reveal" style="--rd:.36s">
+          <a href="https://sim1racing.as.me/workshop-wednesdays" target="_blank" rel="noopener" class="s1-btn s1-btn--red">Book Workshop Wednesdays <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+      <div class="s1-curtain s1-feat__media s1-reveal" style="--rd:.1s">
+        <img src="https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a28c5a96230ef37a6ea61a1/1781056937924/POR00519+%281%29.jpg" alt="Workshop at the sim center" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────── THURSDAY · SPRINT RACE ─────── -->
+<section class="s1-section" id="s1-thu" style="background:#000">
+  <div class="s1-wrap--wide">
+    <div class="s1-rate">
+      <div class="s1-rate__body">
+        <div class="s1-eyebrow s1-reveal">Thursday · Weekly Sprint Race</div>
+        <h2 class="s1-h2 s1-h2--xl s1-reveal" style="--rd:.08s">Thursdays<br><span class="s1-italic s1-red">lights out at 8</span></h2>
+        <p class="s1-lead s1-reveal" style="--rd:.16s">A one-hour race night, same format every week — practice, qualify, then the race. Same car and track as the current weekly qualifier (we drop it on Instagram a few days out).</p>
+        <div class="s1-ctas s1-reveal" style="--rd:.24s">
+          <a href="https://sim1racing.as.me/sprint-race" target="_blank" rel="noopener" class="s1-btn s1-btn--red">Reserve Your Spot <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+      <div class="s1-rate__card s1-reveal" style="--rd:.1s">
+        <div class="s1-rate__price"><span class="s1-cur">$</span><span data-count="45">0</span></div>
+        <div class="s1-rate__price-note">Per seat · save $15 vs standard hour</div>
+        <div class="s1-rate__breakdown">
+          <div class="s1-rate__bk"><div class="s1-rate__bk-mins"><span data-count="10">0</span><span class="s1-m">m</span></div><div class="s1-rate__bk-lbl">Practice</div></div>
+          <div class="s1-rate__bk"><div class="s1-rate__bk-mins"><span data-count="10">0</span><span class="s1-m">m</span></div><div class="s1-rate__bk-lbl">Qualifying</div></div>
+          <div class="s1-rate__bk"><div class="s1-rate__bk-mins"><span data-count="40">0</span><span class="s1-m">m</span></div><div class="s1-rate__bk-lbl">Race</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────── FRIDAY · NIGHT SHOWDOWN ─────── -->
+<section class="s1-section" id="s1-fri" style="background:var(--ink-2)">
+  <div class="s1-wrap--wide">
+    <div class="s1-feat s1-feat--reverse">
+      <div class="s1-curtain s1-feat__media s1-reveal">
+        <img src="https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a8f315b25397c12cf3ad07a/1787769179932/Untitled+design+%284%29.jpg" alt="Friday Night Showdown" loading="lazy">
+      </div>
+      <div class="s1-feat__body">
+        <div class="s1-eyebrow s1-reveal">Friday · Friday Night Showdown</div>
+        <h2 class="s1-h2 s1-h2--xl s1-reveal" style="--rd:.08s">Compete<br><span class="s1-italic s1-red">coast to coast</span></h2>
+        <p class="s1-lead s1-reveal" style="--rd:.16s">Fridays at 8 PM. A one-hour session where you race against sim centers from across the US. Different car category every week — GT, open-wheel, dirt, and more. Car and track drop on our Instagram a few days ahead.</p>
+        <div class="s1-stats s1-reveal" style="--rd:.24s">
+          <div class="s1-stat"><div class="s1-stat__num"><span class="s1-u">$</span><span data-count="60">0</span></div><div class="s1-stat__lbl">Per Seat</div></div>
+          <div class="s1-stat"><div class="s1-stat__num"><span data-count="15">0</span>–<span data-count="35">0</span></div><div class="s1-stat__lbl">On the Grid</div></div>
+          <div class="s1-stat"><div class="s1-stat__num"><span data-count="1">0</span><span class="s1-u">hr</span></div><div class="s1-stat__lbl">Session</div></div>
+        </div>
+        <div class="s1-req s1-reveal" style="--rd:.3s"><strong>Required:</strong> your own iRacing account and that week's content.</div>
+        <div class="s1-ctas s1-reveal" style="--rd:.36s">
+          <a href="https://sim1racing.as.me/fns" target="_blank" rel="noopener" class="s1-btn s1-btn--red">Book the Showdown <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────── SATURDAY · CAR MEETS ─────── -->
+<section class="s1-section" id="s1-sat" style="background:#000">
+  <div class="s1-wrap--wide">
+    <div class="s1-eyebrow s1-reveal">Saturday · Car Meets</div>
+    <h2 class="s1-h2 s1-h2--xl s1-reveal" style="--rd:.08s">Front lot<br><span class="s1-italic s1-red">crew swap</span></h2>
+    <p class="s1-lead s1-reveal" style="--rd:.16s">Meets happen out in the front lot and run alongside sim tournaments inside. Different crew each time — walk through, pull up a wheel.</p>
+    <div class="s1-crews s1-reveal" style="--rd:.24s">
+      <span class="s1-crew">Lamborghini Paramus</span>
+      <span class="s1-crew">Tristate Motorclub</span>
+      <span class="s1-crew">RIX Magazine</span>
+      <span class="s1-crew">Daikoku NYC</span>
+      <span class="s1-crew">+ more</span>
+    </div>
+    <div class="s1-mosaic">
+      <div class="s1-curtain s1-mosaic__item s1-mosaic__item--tall s1-reveal">
+        <img src="https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a271f428c14d3607f5d5a10/1780948803723/CTA08645.jpg" alt="Car meet in the front lot" loading="lazy">
+      </div>
+      <div class="s1-mosaic__col">
+        <div class="s1-curtain s1-mosaic__item s1-mosaic__item--wide s1-reveal" style="--rd:.1s">
+          <img src="https://cdn.jsdelivr.net/gh/michaelrpajaro/Home@1cc9949bcb7db1cc84f7679e3f28f82867fc02fb/images/car-meet.jpg" alt="Indoor car meet" loading="lazy">
+        </div>
+        <div class="s1-curtain s1-mosaic__item s1-mosaic__item--wide s1-reveal" style="--rd:.2s">
+          <img src="https://cdn.jsdelivr.net/gh/michaelrpajaro/Home@f6c504c9b6163a7ae40ca85c5eea69a9a072c7c4/images/exterior.jpg" alt="Outside the building" loading="lazy">
+        </div>
+      </div>
+    </div>
+    <div class="s1-ctas s1-reveal" style="--rd:.3s">
+      <a href="https://www.instagram.com/sim1racing/" target="_blank" rel="noopener" class="s1-btn s1-btn--red">See Upcoming on Instagram <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ─────── SUNDAY · F1 WATCH + COUNTDOWN ─────── -->
+<section class="s1-section" id="s1-sun" style="background:var(--ink-2)">
+  <div class="s1-wrap--wide">
+    <div class="s1-cd">
+      <div class="s1-cd__body">
+        <div class="s1-eyebrow s1-reveal">Sunday · Free F1 Watch Parties</div>
+        <h2 class="s1-h2 s1-h2--xl s1-reveal" style="--rd:.08s">Every race<br><span class="s1-italic s1-red">230-inch LED</span></h2>
+        <p class="s1-lead s1-reveal" style="--rd:.16s">We host free watch parties for every race of the Formula 1 season. Multiple viewing areas anchored by the 230-inch LED so no matter where you grab a seat, you don't miss a corner.</p>
+      </div>
+      <div class="s1-cd__card s1-reveal" style="--rd:.1s">
+        <div class="s1-cd__eyebrow">Next watch party in</div>
+        <div class="s1-cd__tiles">
+          <div class="s1-cd__tile"><div class="s1-cd__num" id="s1-cd-d">00</div><div class="s1-cd__u">Days</div></div>
+          <div class="s1-cd__tile"><div class="s1-cd__num" id="s1-cd-h">00</div><div class="s1-cd__u">Hrs</div></div>
+          <div class="s1-cd__tile"><div class="s1-cd__num" id="s1-cd-m">00</div><div class="s1-cd__u">Min</div></div>
+          <div class="s1-cd__tile"><div class="s1-cd__num" id="s1-cd-s">00</div><div class="s1-cd__u">Sec</div></div>
+        </div>
+        <div class="s1-cd__next" id="s1-cd-next">—</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────── SCALE DRIFT SERIES ─────── -->
+<section class="s1-drift">
+  <div class="s1-drift__bg">
+    <img src="https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a272015254df31a6e069fe5/1780949013755/27c2b863-ae33-4db5-a845-6cb9fedc1eec.png" alt="" loading="lazy">
+  </div>
+  <div class="s1-drift__inner">
+    <div class="s1-drift__content">
+      <div class="s1-eyebrow s1-reveal">In collaboration with Scale Drift Series</div>
+      <h2 class="s1-h2 s1-h2--xl s1-reveal" style="--rd:.08s">Scale drift<br><span class="s1-italic s1-red">series</span></h2>
+      <p class="s1-lead s1-reveal" style="--rd:.16s">Every few months, top RC drifters take over the floor for an all-day tournament — with breaks built in for the public to grab a controller and run free demo laps on the scale track.</p>
+      <div class="s1-ctas s1-reveal" style="--rd:.24s">
+        <a href="https://www.instagram.com/scale_drift_series/" target="_blank" rel="noopener" class="s1-btn s1-btn--red">Follow @scale_drift_series <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────── FULL CALENDAR ─────── -->
+<section class="s1-cal" id="s1-cal">
+  <div class="s1-cal__header">
+    <div class="s1-eyebrow s1-eyebrow--center s1-reveal">Full Calendar</div>
+    <h2 class="s1-h2 s1-reveal" style="--rd:.08s">Every event <span class="s1-red s1-italic">in one view</span></h2>
+  </div>
+  <div class="s1-cal__frame s1-reveal" style="--rd:.16s">
+    <iframe class="s1-cal__iframe" src="https://calendar.google.com/calendar/embed?src=059ba3bc2a85a499190466be5d133a334132b939814362cc8fbf5fbaf752152c%40group.calendar.google.com&ctz=America%2FNew_York&bgcolor=%23000000&showTitle=0&showPrint=0&showCalendars=0&showTabs=1&showTz=0&mode=MONTH" title="SIM1Racing Events Calendar" frameborder="0" scrolling="no"></iframe>
+  </div>
+</section>
+
+<!-- ─────── VISIT BLOCK ─────── -->
+<section class="s1-visit">
+  <div class="s1-visit__flag" aria-hidden="true"></div>
+  <div class="s1-visit__row">
+    <div class="s1-visit__info">
+      <div class="s1-eyebrow s1-reveal">Visit Us</div>
+      <h2 class="s1-h2 s1-reveal" style="--rd:.08s">Come see it <span class="s1-red s1-italic">for yourself</span></h2>
+      <dl class="s1-reveal" style="--rd:.16s">
+        <dt>Hours</dt><dd>Open 7 days a week, 11AM – 11PM</dd>
+        <dt>Address</dt><dd><a href="https://www.google.com/maps/dir/?api=1&destination=145+Route+4+Paramus+NJ+07652" target="_blank" rel="noopener">145 Route 4, Paramus, NJ 07652</a></dd>
+        <dt>Phone</dt><dd><a href="tel:201-988-1329">(201) 988-1329</a></dd>
+      </dl>
+      <div class="s1-ctas s1-reveal" style="--rd:.24s">
+        <a href="https://sim1racing.as.me/" target="_blank" rel="noopener" class="s1-btn s1-btn--red">Book Now <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a href="tel:201-988-1329" class="s1-btn s1-btn--ghost">Call Us <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92V21a1 1 0 0 1-1.1 1 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 3.2 4.3 1 1 0 0 1 4.2 3h4.1a1 1 0 0 1 1 .75l1 4a1 1 0 0 1-.29 1L8.5 10.2a16 16 0 0 0 6 6l1.45-1.45a1 1 0 0 1 1-.29l4 1a1 1 0 0 1 .75 1z"/></svg></a>
+      </div>
+    </div>
+    <div class="s1-visit__map s1-reveal" style="--rd:.3s">
+      <iframe src="https://www.google.com/maps?q=145+Route+4+Paramus+NJ+07652&output=embed" title="Map to SIM1Racing" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ─────── FLOATING BOOK BAR ─────── -->
+<div class="s1-book" id="s1-book">
+  <div class="s1-book__inner">
+    <a href="tel:201-988-1329" class="s1-book__phone" aria-label="Call SIM1Racing"><svg viewBox="0 0 24 24" style="font-size:18px" aria-hidden="true"><path d="M22 16.92V21a1 1 0 0 1-1.1 1 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 3.2 4.3 1 1 0 0 1 4.2 3h4.1a1 1 0 0 1 1 .75l1 4a1 1 0 0 1-.29 1L8.5 10.2a16 16 0 0 0 6 6l1.45-1.45a1 1 0 0 1 1-.29l4 1a1 1 0 0 1 .75 1z"/></svg></a>
+    <a href="https://sim1racing.as.me/" target="_blank" rel="noopener" class="s1-book__cta">Book Now</a>
+  </div>
+</div>
+
+<script>
+(function(){
+  var root = document.getElementById('s1-root'); if (!root) return;
+  root.classList.add('s1-js');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  root.querySelectorAll('.s1-intro').forEach(function(el){
+    el.addEventListener('animationend', function(){ el.classList.add('is-done'); });
+  });
+
+  function countUp(el){
+    var target = parseFloat(el.getAttribute('data-count')); if (isNaN(target)) return;
+    if (reduce){ el.textContent = target.toLocaleString(); return; }
+    var start = performance.now(), dur = 1600, from = 0;
+    function step(now){
+      var p = Math.min(1,(now - start)/dur);
+      var e = 1 - Math.pow(1-p, 4);
+      var v = Math.round(from + (target - from) * e);
+      el.textContent = v.toLocaleString();
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  var targets = root.querySelectorAll('.s1-reveal, .s1-curtain, [data-count]');
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (!en.isIntersecting) return;
+        var el = en.target;
+        if (el.hasAttribute('data-count')) countUp(el);
+        else el.classList.add('is-in');
+        io.unobserve(el);
+      });
+    }, {threshold: 0.15, rootMargin:'0px 0px -40px 0px'});
+    targets.forEach(function(el){ io.observe(el); });
+  } else {
+    targets.forEach(function(el){
+      el.classList.add('is-in');
+      if (el.hasAttribute('data-count')) countUp(el);
+    });
+  }
+
+  root.querySelectorAll('img').forEach(function(img){
+    img.addEventListener('error', function(){
+      if (!img.dataset.retried){ img.dataset.retried = '1'; img.src = img.src.split('?')[0] + '?format=1500w'; return; }
+      img.style.display = 'none';
+    });
+  });
+
+  // ────────── SIGNATURE: RACING LINE ──────────
+  var timelineEl = root.querySelector('.s1-timeline__wrap');
+  var trackFill  = root.querySelector('.s1-timeline__track-fill');
+  var rows       = root.querySelectorAll('.s1-timeline__row');
+  var tlRaf = 0;
+  function updateTimeline(){
+    if (!timelineEl || !trackFill) return;
+    var rect = timelineEl.getBoundingClientRect();
+    var vh = window.innerHeight;
+    var activeLine = vh * 0.6;
+    var start = activeLine - rect.top;
+    var total = rect.height;
+    var p = total > 0 ? start / total : 0;
+    p = Math.max(0, Math.min(1, p));
+    trackFill.style.height = (p * 100) + '%';
+    rows.forEach(function(row){
+      var dot = row.querySelector('.s1-timeline__dot');
+      if (!dot) return;
+      var dr = dot.getBoundingClientRect();
+      var dy = dr.top + dr.height/2;
+      if (dy <= activeLine) row.classList.add('is-active');
+      else row.classList.remove('is-active');
+    });
+  }
+  function scheduleTimeline(){
+    if (tlRaf) return;
+    tlRaf = requestAnimationFrame(function(){ tlRaf = 0; updateTimeline(); });
+  }
+  window.addEventListener('scroll', scheduleTimeline, {passive:true});
+  window.addEventListener('resize', scheduleTimeline);
+  updateTimeline();
+
+  // ────────── SUNDAY: F1 COUNTDOWN ──────────
+  // Edit this list to add future watch parties (NJ-local times).
+  var s1Watch = [
+    {title:'F1 United States GP', date:'2026-10-25', time:'4:00 PM'},
+    {title:'F1 Mexican GP',       date:'2026-11-01', time:'3:00 PM'},
+    {title:'F1 Brazilian GP',     date:'2026-11-08', time:'12:00 PM'},
+    {title:'F1 Qatar GP',         date:'2026-11-29', time:'11:00 AM'}
+  ];
+  function parseTime(t){
+    var m = String(t).match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+    if (!m) return [0,0];
+    var h = parseInt(m[1],10), mins = parseInt(m[2],10);
+    var ampm = m[3].toUpperCase();
+    if (ampm === 'PM' && h !== 12) h += 12;
+    if (ampm === 'AM' && h === 12) h = 0;
+    return [h, mins];
+  }
+  function eventStart(ev){
+    var p = parseTime(ev.time);
+    var d = new Date(ev.date + 'T00:00:00');
+    d.setHours(p[0], p[1], 0, 0);
+    return d;
+  }
+  function nextParty(){
+    var now = Date.now(), TTL = 2 * 3600 * 1000;
+    var upcoming = s1Watch.filter(function(ev){ return eventStart(ev).getTime() + TTL > now; });
+    upcoming.sort(function(a,b){ return eventStart(a) - eventStart(b); });
+    return upcoming[0] || null;
+  }
+  function pad(n){ return String(n).padStart(2,'0'); }
+  function renderCountdown(){
+    var dEl = document.getElementById('s1-cd-d');
+    var hEl = document.getElementById('s1-cd-h');
+    var mEl = document.getElementById('s1-cd-m');
+    var sEl = document.getElementById('s1-cd-s');
+    var nx  = document.getElementById('s1-cd-next');
+    if (!dEl || !hEl || !mEl || !sEl || !nx) return;
+    var next = nextParty();
+    if (!next){
+      dEl.textContent='00'; hEl.textContent='00'; mEl.textContent='00'; sEl.textContent='00';
+      nx.innerHTML = '<strong>More F1 watch parties coming soon</strong>';
+      return;
+    }
+    var diff = Math.max(0, eventStart(next).getTime() - Date.now());
+    var days = Math.floor(diff / 86400000);
+    var hrs  = Math.floor((diff % 86400000) / 3600000);
+    var mins = Math.floor((diff % 3600000) / 60000);
+    var secs = Math.floor((diff % 60000) / 1000);
+    dEl.textContent = pad(days); hEl.textContent = pad(hrs);
+    mEl.textContent = pad(mins); sEl.textContent = pad(secs);
+    var dLong = new Date(next.date+'T00:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+    nx.innerHTML = '<strong>' + next.title + '</strong> · ' + dLong + ' · ' + next.time;
+  }
+  renderCountdown();
+  setInterval(renderCountdown, 1000);
+
+  // ────────── FLOATING BOOK BAR ──────────
+  var bookBar = document.getElementById('s1-book');
+  var showAfter = root.querySelector('.s1-timeline');
+  var visitSection = root.querySelector('.s1-visit');
+  var bookRaf = 0;
+  function updateBookBar(){
+    if (!bookBar || !showAfter) return;
+    var showRect = showAfter.getBoundingClientRect();
+    var hideRect = visitSection ? visitSection.getBoundingClientRect() : null;
+    var vh = window.innerHeight;
+    var show = showRect.top < vh * 0.5;
+    var hide = hideRect ? hideRect.top < vh * 0.65 : false;
+    if (show && !hide) bookBar.classList.add('is-visible');
+    else bookBar.classList.remove('is-visible');
+  }
+  window.addEventListener('scroll', function(){
+    if (bookRaf) return;
+    bookRaf = requestAnimationFrame(function(){ bookRaf = 0; updateBookBar(); });
+  }, {passive:true});
+  window.addEventListener('resize', updateBookBar);
+  updateBookBar();
+
+})();
+</script>
+
+</div>
