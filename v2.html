@@ -111,8 +111,8 @@
 .s1-hero__ghost{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);font-family:var(--cond);font-weight:900;font-style:italic;font-size:clamp(260px,calc(42 * var(--vwu,1vw)),720px);line-height:.85;color:transparent;-webkit-text-stroke:3px rgba(255,255,255,.05);letter-spacing:-.02em;white-space:nowrap;z-index:0;pointer-events:none;user-select:none}
 .s1-hero__inner{position:relative;z-index:2}
 .s1-hero__hours{font-family:var(--cond);font-weight:800;font-size:clamp(16px,calc(1.6 * var(--vwu,1vw)),28px);letter-spacing:.1em;text-transform:uppercase;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.6);margin-bottom:28px}
-.s1-hero__title{font-family:var(--cond);font-weight:900;text-transform:uppercase;font-size:clamp(60px,calc(10 * var(--vwu,1vw)),170px);line-height:.88;letter-spacing:.01em;color:#fff;-webkit-text-stroke:max(6px,.045em) #000;paint-order:stroke fill}
-.s1-hero__title .s1-line{display:block;overflow:hidden;white-space:nowrap;padding:.08em .2em .08em 0}
+.s1-hero__title{font-family:var(--cond);font-weight:900;text-transform:uppercase;font-size:clamp(50px,calc(8.5 * var(--vwu,1vw)),130px);line-height:.88;letter-spacing:.01em;color:#fff;-webkit-text-stroke:max(6px,.045em) #000;paint-order:stroke fill}
+.s1-hero__title .s1-line{display:block;overflow:hidden;white-space:nowrap;padding:.08em .3em}
 .s1-hero__title .s1-line+.s1-line{margin-top:-.12em}
 .s1-hero__lead{max-width:640px;margin-top:34px;font-size:clamp(17px,calc(1.4 * var(--vwu,1vw)),22px);line-height:1.65;color:#C9C9CF}
 
@@ -329,6 +329,45 @@
   .s1-cd__tiles{gap:8px}
   .s1-cd__tile{padding:14px 6px}
 }
+
+/* ═══ VERSION MARKERS (temporary — remove when picking one) ═══ */
+.v-mark{padding:28px 24px;background:linear-gradient(90deg,rgba(237,28,36,.12),rgba(237,28,36,.28),rgba(237,28,36,.12));border-top:3px solid var(--red);border-bottom:3px solid var(--red);text-align:center;position:relative;z-index:3}
+.v-mark__label{font-family:var(--cond);font-weight:900;font-style:italic;font-size:clamp(20px,calc(1.8 * var(--vwu,1vw)),30px);letter-spacing:.08em;text-transform:uppercase;color:#fff;-webkit-text-stroke:3px #000;paint-order:stroke fill;line-height:1.1}
+.v-mark__sub{font-family:var(--cond);font-weight:800;font-size:14px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.75);margin-top:6px}
+
+/* ═══ V2 MODAL + "ALSO HOSTED" ROW ═══ */
+.s1-also{padding:50px 0 100px;text-align:center;background:#000}
+.s1-also__row{display:inline-flex;align-items:center;gap:16px;padding:14px 22px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);border-radius:99px}
+.s1-also__lbl{font-family:var(--cond);font-weight:800;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#A1A1AA}
+.s1-also__btn{font-family:var(--cond);font-weight:800;font-size:15px;letter-spacing:.1em;text-transform:uppercase;color:#22c55e;border-bottom:2px solid rgba(34,197,94,.4);padding-bottom:2px;transition:border-color .25s}
+.s1-also__btn:hover{border-bottom-color:#22c55e}
+.s1-timeline__card--pop{cursor:pointer}
+.s1-timeline__card--pop::after{content:"VIEW →";display:block;margin-top:12px;font-family:var(--cond);font-weight:800;font-size:12px;letter-spacing:.2em;color:var(--red);opacity:.7}
+
+.s1-m2{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:40px 20px}
+.s1-m2.is-open{display:flex}
+.s1-m2__bd{position:absolute;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);animation:s1-m2-fade .3s var(--ease)}
+@keyframes s1-m2-fade{from{opacity:0}to{opacity:1}}
+.s1-m2__card{position:relative;z-index:1;max-width:860px;width:100%;max-height:88vh;overflow:auto;background:var(--ink-2);border:1px solid var(--line);border-radius:16px;padding:52px 56px;animation:s1-m2-pop .35s var(--ease)}
+@keyframes s1-m2-pop{from{opacity:0;transform:translateY(20px) scale(.98)}to{opacity:1;transform:none}}
+.s1-m2__close{position:absolute;top:16px;right:16px;width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.08);color:#fff;border:0;cursor:pointer;font-size:26px;line-height:1;transition:background .25s;z-index:2}
+.s1-m2__close:hover{background:rgba(255,255,255,.15)}
+.s1-m2__content > *+ *{margin-top:16px}
+.s1-m2__content .s1-lead{max-width:none}
+.s1-m2__content .s1-ctas{margin-top:28px}
+.s1-m2__content .s1-track-cards,
+.s1-m2__content .s1-promo__pills,
+.s1-m2__content .s1-stats,
+.s1-m2__content .s1-rotation,
+.s1-m2__content .s1-steps__list,
+.s1-m2__content .s1-rate__breakdown{margin-top:22px}
+.s1-m2__content .s1-h2{font-size:clamp(32px,calc(3.4 * var(--vwu,1vw)),52px);line-height:1}
+.s1-m2__content .s1-h2--xl{font-size:clamp(38px,calc(4.4 * var(--vwu,1vw)),72px);line-height:.95}
+@media (max-width:768px){
+  .s1-m2{padding:16px}
+  .s1-m2__card{padding:36px 24px;max-height:92vh}
+  .s1-m2__close{top:10px;right:10px}
+}
 </style>
 
 <!-- ───────────────────────── HERO ───────────────────────── -->
@@ -348,6 +387,17 @@
     </div>
   </div>
 </section>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     ▼▼▼  VERSION A · SCROLLING LONG-FORM — START  ▼▼▼
+     Timeline + full-detail sections for every day. Everything's on the
+     page; the signature is the red racing line that draws itself down
+     the week.
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="v-mark">
+  <div class="v-mark__label">▼ Version A · Scrolling Long-Form</div>
+  <div class="v-mark__sub">Everything on the page — scroll through each day</div>
+</div>
 
 <!-- ────────── WEEKLY TIMELINE (SIGNATURE MOMENT) ────────── -->
 <section class="s1-timeline" id="s1-week">
@@ -663,6 +713,119 @@
   </div>
 </section>
 
+<!-- ═══ END OF VERSION A ═══ -->
+<div class="v-mark"><div class="v-mark__label">▲ End of Version A</div></div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     ▼▼▼  VERSION B · TIMELINE WITH CLICK-TO-OPEN POPUPS — START  ▼▼▼
+     Short page. The same timeline, but each day's card opens a modal
+     with that day's full details. Click-to-open (not scroll-triggered)
+     so visitors stay in control.
+     ═══════════════════════════════════════════════════════════════════ -->
+<div class="v-mark">
+  <div class="v-mark__label">▼ Version B · Timeline with Popups</div>
+  <div class="v-mark__sub">Short page — click any day to open its details</div>
+</div>
+
+<section class="s1-timeline" id="s1-week-b">
+  <div class="s1-timeline__header">
+    <div class="s1-eyebrow s1-eyebrow--center s1-reveal">Your week here</div>
+    <h2 class="s1-h2 s1-reveal" style="--rd:.08s">Tap any day to <span class="s1-red s1-italic">see what's on</span></h2>
+  </div>
+  <div class="s1-timeline__wrap">
+    <div class="s1-timeline__track" aria-hidden="true">
+      <div class="s1-timeline__track-bg"></div>
+      <div class="s1-timeline__track-fill"></div>
+    </div>
+    <div class="s1-timeline__row s1-timeline__row--left">
+      <div class="s1-timeline__cell s1-timeline__cell--left">
+        <a href="#" class="s1-timeline__card s1-timeline__card--pop" data-day="mon">
+          <div class="s1-timeline__day">Mon</div>
+          <div class="s1-timeline__event">Group Classes</div>
+          <div class="s1-timeline__meta">5 PM kids · 7 PM adults</div>
+        </a>
+      </div>
+      <div class="s1-timeline__dot-cell"><div class="s1-timeline__dot"></div></div>
+      <div class="s1-timeline__cell s1-timeline__cell--right"></div>
+    </div>
+    <div class="s1-timeline__row s1-timeline__row--right">
+      <div class="s1-timeline__cell s1-timeline__cell--left"></div>
+      <div class="s1-timeline__dot-cell"><div class="s1-timeline__dot"></div></div>
+      <div class="s1-timeline__cell s1-timeline__cell--right">
+        <a href="#" class="s1-timeline__card s1-timeline__card--pop" data-day="tue">
+          <div class="s1-timeline__day">Tue</div>
+          <div class="s1-timeline__event">Race Together, Save Together</div>
+          <div class="s1-timeline__meta">Up to 15% off with 2+ drivers</div>
+        </a>
+      </div>
+    </div>
+    <div class="s1-timeline__row s1-timeline__row--left">
+      <div class="s1-timeline__cell s1-timeline__cell--left">
+        <a href="#" class="s1-timeline__card s1-timeline__card--pop" data-day="wed">
+          <div class="s1-timeline__day">Wed</div>
+          <div class="s1-timeline__event">Free Workshops</div>
+          <div class="s1-timeline__meta">8 PM · Classroom + Sim</div>
+        </a>
+      </div>
+      <div class="s1-timeline__dot-cell"><div class="s1-timeline__dot"></div></div>
+      <div class="s1-timeline__cell s1-timeline__cell--right"></div>
+    </div>
+    <div class="s1-timeline__row s1-timeline__row--right">
+      <div class="s1-timeline__cell s1-timeline__cell--left"></div>
+      <div class="s1-timeline__dot-cell"><div class="s1-timeline__dot"></div></div>
+      <div class="s1-timeline__cell s1-timeline__cell--right">
+        <a href="#" class="s1-timeline__card s1-timeline__card--pop" data-day="thu">
+          <div class="s1-timeline__day">Thu</div>
+          <div class="s1-timeline__event">Weekly Sprint Race</div>
+          <div class="s1-timeline__meta">8 PM · One-hour race night · $45</div>
+        </a>
+      </div>
+    </div>
+    <div class="s1-timeline__row s1-timeline__row--left">
+      <div class="s1-timeline__cell s1-timeline__cell--left">
+        <a href="#" class="s1-timeline__card s1-timeline__card--pop" data-day="fri">
+          <div class="s1-timeline__day">Fri</div>
+          <div class="s1-timeline__event">Friday Night Showdown</div>
+          <div class="s1-timeline__meta">8 PM · iRacing · $60</div>
+        </a>
+      </div>
+      <div class="s1-timeline__dot-cell"><div class="s1-timeline__dot"></div></div>
+      <div class="s1-timeline__cell s1-timeline__cell--right"></div>
+    </div>
+    <div class="s1-timeline__row s1-timeline__row--right">
+      <div class="s1-timeline__cell s1-timeline__cell--left"></div>
+      <div class="s1-timeline__dot-cell"><div class="s1-timeline__dot"></div></div>
+      <div class="s1-timeline__cell s1-timeline__cell--right">
+        <a href="#" class="s1-timeline__card s1-timeline__card--pop" data-day="sat">
+          <div class="s1-timeline__day">Sat</div>
+          <div class="s1-timeline__event">Car Meets</div>
+          <div class="s1-timeline__meta">Front lot · Rotating host crews</div>
+        </a>
+      </div>
+    </div>
+    <div class="s1-timeline__row s1-timeline__row--left">
+      <div class="s1-timeline__cell s1-timeline__cell--left">
+        <a href="#" class="s1-timeline__card s1-timeline__card--pop" data-day="sun">
+          <div class="s1-timeline__day">Sun</div>
+          <div class="s1-timeline__event">F1 Watch Parties</div>
+          <div class="s1-timeline__meta">Free · 230-inch LED</div>
+        </a>
+      </div>
+      <div class="s1-timeline__dot-cell"><div class="s1-timeline__dot"></div></div>
+      <div class="s1-timeline__cell s1-timeline__cell--right"></div>
+    </div>
+  </div>
+</section>
+
+<section class="s1-also">
+  <div class="s1-also__row">
+    <span class="s1-also__lbl">Also hosted</span>
+    <a href="#" class="s1-also__btn" data-day="drift">Scale Drift Series →</a>
+  </div>
+</section>
+
+<div class="v-mark"><div class="v-mark__label">▲ End of Version B</div></div>
+
 <!-- ─────── FULL CALENDAR ─────── -->
 <section class="s1-cal" id="s1-cal">
   <div class="s1-cal__header">
@@ -696,6 +859,117 @@
     </div>
   </div>
 </section>
+
+<!-- ─────── MODAL SHELL + TEMPLATES (Version B) ─────── -->
+<div class="s1-m2" id="s1-m2" role="dialog" aria-modal="true" aria-labelledby="s1-m2-title">
+  <div class="s1-m2__bd" data-close></div>
+  <div class="s1-m2__card">
+    <button class="s1-m2__close" type="button" data-close aria-label="Close">×</button>
+    <div class="s1-m2__content" id="s1-m2-content"></div>
+  </div>
+</div>
+
+<template id="s1-tpl-mon">
+  <div class="s1-eyebrow">Monday · Group Classes</div>
+  <h2 class="s1-h2" id="s1-m2-title">Coaching that <span class="s1-red s1-italic">sticks</span></h2>
+  <p class="s1-lead">Rotating Monday classes for drivers who've raced with us before — six-week cycle through Open Wheel, Sports Car, Street Car, Racecraft, Prototype, and Manual.</p>
+  <div class="s1-track-cards">
+    <div class="s1-track-card"><div class="s1-track-card__label">Kids · Ages 7–18</div><div class="s1-track-card__value">5 PM Mondays</div></div>
+    <div class="s1-track-card"><div class="s1-track-card__label">Adults</div><div class="s1-track-card__value">7 PM Mondays</div></div>
+  </div>
+  <div class="s1-note"><strong>New here?</strong> Start with <strong>Intro to Sim Racing</strong> on Workshop Wednesdays (every other Wednesday) before joining a Monday class.</div>
+  <div class="s1-ctas"><a href="https://www.sim1racing.com/group-classes" class="s1-btn s1-btn--red">Full Class Breakdown <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+</template>
+
+<template id="s1-tpl-tue">
+  <div class="s1-eyebrow">Tuesday · Group Discount</div>
+  <h2 class="s1-h2 s1-h2--xl" id="s1-m2-title">Race together<br><span class="s1-italic s1-red">save together</span></h2>
+  <p class="s1-lead">Roll in with 2 or more drivers on Tuesdays and the price drops. Every weekday has its own promo — see the full list before you plan your visit.</p>
+  <div class="s1-promo__pills">
+    <div class="s1-promo__pill"><div class="s1-promo__pill-amt">15<span class="s1-pct">%</span><span class="s1-pct"> off</span></div><div class="s1-promo__pill-note">Before 4 PM · 2+ drivers</div></div>
+    <div class="s1-promo__pill"><div class="s1-promo__pill-amt">10<span class="s1-pct">%</span><span class="s1-pct"> off</span></div><div class="s1-promo__pill-note">After 4 PM · 2+ drivers</div></div>
+  </div>
+  <div class="s1-ctas"><a href="https://www.sim1racing.com/daily-rates" class="s1-btn s1-btn--red">See All Daily Promos <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+</template>
+
+<template id="s1-tpl-wed">
+  <div class="s1-eyebrow">Wednesday · Workshop Wednesdays</div>
+  <h2 class="s1-h2" id="s1-m2-title">Free <span class="s1-italic s1-red">workshops</span></h2>
+  <p class="s1-lead">Every Wednesday at 8 PM. A quick classroom session on a rotating topic, then optional sim time to put it into practice.</p>
+  <div class="s1-steps__list">
+    <div class="s1-step"><div class="s1-step__num">01</div><div><div class="s1-step__title">Walk in</div><div class="s1-step__desc">No sign-ups, no cost of entry — grab a seat.</div></div></div>
+    <div class="s1-step"><div class="s1-step__num">02</div><div><div class="s1-step__title">20 min in the <em>classroom</em></div><div class="s1-step__desc">Topic rotates each week. Always free.</div></div></div>
+    <div class="s1-step"><div class="s1-step__num">03</div><div><div class="s1-step__title">Add sim time (optional)</div><div class="s1-step__desc">20 or 40 minutes on a rig to race with everyone.</div></div></div>
+  </div>
+  <div class="s1-rotation"><span class="s1-pill">Intro to Sim Racing</span><span class="s1-pill">How to Drive Manual</span><span class="s1-pill">How to Drift</span></div>
+  <div class="s1-ctas"><a href="https://sim1racing.as.me/workshop-wednesdays" target="_blank" rel="noopener" class="s1-btn s1-btn--red">Book Workshop Wednesdays <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+</template>
+
+<template id="s1-tpl-thu">
+  <div class="s1-eyebrow">Thursday · Weekly Sprint Race</div>
+  <h2 class="s1-h2 s1-h2--xl" id="s1-m2-title">Thursdays<br><span class="s1-italic s1-red">lights out at 8</span></h2>
+  <p class="s1-lead">A one-hour race night, same format every week — practice, qualify, then the race. Same car and track as the current weekly qualifier (we drop it on Instagram a few days out).</p>
+  <div class="s1-rate__card">
+    <div class="s1-rate__price"><span class="s1-cur">$</span>45</div>
+    <div class="s1-rate__price-note">Per seat · save $15 vs standard hour</div>
+    <div class="s1-rate__breakdown">
+      <div class="s1-rate__bk"><div class="s1-rate__bk-mins">10<span class="s1-m">m</span></div><div class="s1-rate__bk-lbl">Practice</div></div>
+      <div class="s1-rate__bk"><div class="s1-rate__bk-mins">10<span class="s1-m">m</span></div><div class="s1-rate__bk-lbl">Qualifying</div></div>
+      <div class="s1-rate__bk"><div class="s1-rate__bk-mins">40<span class="s1-m">m</span></div><div class="s1-rate__bk-lbl">Race</div></div>
+    </div>
+  </div>
+  <div class="s1-ctas"><a href="https://sim1racing.as.me/sprint-race" target="_blank" rel="noopener" class="s1-btn s1-btn--red">Reserve Your Spot <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+</template>
+
+<template id="s1-tpl-fri">
+  <div class="s1-eyebrow">Friday · Friday Night Showdown</div>
+  <h2 class="s1-h2 s1-h2--xl" id="s1-m2-title">Compete<br><span class="s1-italic s1-red">coast to coast</span></h2>
+  <p class="s1-lead">Fridays at 8 PM. A one-hour session where you race against sim centers from across the US. Different car category every week — GT, open-wheel, dirt, and more. Car and track drop on our Instagram a few days ahead.</p>
+  <div class="s1-stats">
+    <div class="s1-stat"><div class="s1-stat__num"><span class="s1-u">$</span>60</div><div class="s1-stat__lbl">Per Seat</div></div>
+    <div class="s1-stat"><div class="s1-stat__num">15–35</div><div class="s1-stat__lbl">On the Grid</div></div>
+    <div class="s1-stat"><div class="s1-stat__num">1<span class="s1-u">hr</span></div><div class="s1-stat__lbl">Session</div></div>
+  </div>
+  <div class="s1-req"><strong>Required:</strong> your own iRacing account and that week's content.</div>
+  <div class="s1-ctas"><a href="https://sim1racing.as.me/fns" target="_blank" rel="noopener" class="s1-btn s1-btn--red">Book the Showdown <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+</template>
+
+<template id="s1-tpl-sat">
+  <div class="s1-eyebrow">Saturday · Car Meets</div>
+  <h2 class="s1-h2 s1-h2--xl" id="s1-m2-title">Front lot<br><span class="s1-italic s1-red">crew swap</span></h2>
+  <p class="s1-lead">Meets happen out in the front lot and run alongside sim tournaments inside. Different crew each time — walk through, pull up a wheel.</p>
+  <div class="s1-crews">
+    <span class="s1-crew">Lamborghini Paramus</span>
+    <span class="s1-crew">Tristate Motorclub</span>
+    <span class="s1-crew">RIX Magazine</span>
+    <span class="s1-crew">Daikoku NYC</span>
+    <span class="s1-crew">+ more</span>
+  </div>
+  <div class="s1-ctas"><a href="https://www.instagram.com/sim1racing/" target="_blank" rel="noopener" class="s1-btn s1-btn--red">See Upcoming on Instagram <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+</template>
+
+<template id="s1-tpl-sun">
+  <div class="s1-eyebrow">Sunday · Free F1 Watch Parties</div>
+  <h2 class="s1-h2 s1-h2--xl" id="s1-m2-title">Every race<br><span class="s1-italic s1-red">230-inch LED</span></h2>
+  <p class="s1-lead">We host free watch parties for every race of the Formula 1 season. Multiple viewing areas anchored by the 230-inch LED so no matter where you grab a seat, you don't miss a corner.</p>
+  <div class="s1-cd__card" style="margin-top:22px">
+    <div class="s1-cd__eyebrow">Next watch party in</div>
+    <div class="s1-cd__tiles">
+      <div class="s1-cd__tile"><div class="s1-cd__num" data-cd="d">00</div><div class="s1-cd__u">Days</div></div>
+      <div class="s1-cd__tile"><div class="s1-cd__num" data-cd="h">00</div><div class="s1-cd__u">Hrs</div></div>
+      <div class="s1-cd__tile"><div class="s1-cd__num" data-cd="m">00</div><div class="s1-cd__u">Min</div></div>
+      <div class="s1-cd__tile"><div class="s1-cd__num" data-cd="s">00</div><div class="s1-cd__u">Sec</div></div>
+    </div>
+    <div class="s1-cd__next" data-cd="next">—</div>
+  </div>
+</template>
+
+<template id="s1-tpl-drift">
+  <div class="s1-eyebrow">In collaboration with Scale Drift Series</div>
+  <h2 class="s1-h2 s1-h2--xl" id="s1-m2-title">Scale drift<br><span class="s1-italic s1-red">series</span></h2>
+  <p class="s1-lead">Every few months, top RC drifters take over the floor for an all-day tournament — with breaks built in for the public to grab a controller and run free demo laps on the scale track.</p>
+  <div class="s1-ctas"><a href="https://www.instagram.com/scale_drift_series/" target="_blank" rel="noopener" class="s1-btn s1-btn--red">Follow @scale_drift_series <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+</template>
 
 <!-- ─────── FLOATING BOOK BAR ─────── -->
 <div class="s1-book" id="s1-book">
@@ -818,30 +1092,65 @@
   }
   function pad(n){ return String(n).padStart(2,'0'); }
   function renderCountdown(){
-    var dEl = document.getElementById('s1-cd-d');
-    var hEl = document.getElementById('s1-cd-h');
-    var mEl = document.getElementById('s1-cd-m');
-    var sEl = document.getElementById('s1-cd-s');
-    var nx  = document.getElementById('s1-cd-next');
-    if (!dEl || !hEl || !mEl || !sEl || !nx) return;
     var next = nextParty();
-    if (!next){
-      dEl.textContent='00'; hEl.textContent='00'; mEl.textContent='00'; sEl.textContent='00';
-      nx.innerHTML = '<strong>More F1 watch parties coming soon</strong>';
-      return;
-    }
-    var diff = Math.max(0, eventStart(next).getTime() - Date.now());
+    var diff = next ? Math.max(0, eventStart(next).getTime() - Date.now()) : 0;
     var days = Math.floor(diff / 86400000);
     var hrs  = Math.floor((diff % 86400000) / 3600000);
     var mins = Math.floor((diff % 3600000) / 60000);
     var secs = Math.floor((diff % 60000) / 1000);
-    dEl.textContent = pad(days); hEl.textContent = pad(hrs);
-    mEl.textContent = pad(mins); sEl.textContent = pad(secs);
-    var dLong = new Date(next.date+'T00:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
-    nx.innerHTML = '<strong>' + next.title + '</strong> · ' + dLong + ' · ' + next.time;
+    var dLong = next ? new Date(next.date+'T00:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'}) : '';
+    var nextHtml = next ? '<strong>'+next.title+'</strong> · '+dLong+' · '+next.time : '<strong>More F1 watch parties coming soon</strong>';
+    // Version A fixed IDs
+    var fixed = {d:'s1-cd-d', h:'s1-cd-h', m:'s1-cd-m', s:'s1-cd-s', next:'s1-cd-next'};
+    Object.keys(fixed).forEach(function(k){
+      var el = document.getElementById(fixed[k]);
+      if (!el) return;
+      if (k === 'next') el.innerHTML = nextHtml;
+      else el.textContent = pad({d:days,h:hrs,m:mins,s:secs}[k]);
+    });
+    // Any data-cd elements (e.g. inside the opened Sunday modal)
+    document.querySelectorAll('[data-cd]').forEach(function(el){
+      var k = el.getAttribute('data-cd');
+      if (k === 'next') el.innerHTML = nextHtml;
+      else if ({d:1,h:1,m:1,s:1}[k]) el.textContent = pad({d:days,h:hrs,m:mins,s:secs}[k]);
+    });
   }
   renderCountdown();
   setInterval(renderCountdown, 1000);
+
+  // ────────── VERSION B · MODAL POPUPS ──────────
+  var m2 = document.getElementById('s1-m2');
+  var m2Content = document.getElementById('s1-m2-content');
+  var lastFocus = null;
+  function openDay(day){
+    var tpl = document.getElementById('s1-tpl-' + day);
+    if (!tpl || !m2 || !m2Content) return;
+    m2Content.innerHTML = '';
+    m2Content.appendChild(tpl.content.cloneNode(true));
+    lastFocus = document.activeElement;
+    m2.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    renderCountdown();
+    var closer = m2.querySelector('.s1-m2__close');
+    if (closer) closer.focus();
+  }
+  function closeDay(){
+    if (!m2) return;
+    m2.classList.remove('is-open');
+    document.body.style.overflow = '';
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  document.querySelectorAll('[data-day]').forEach(function(el){
+    el.addEventListener('click', function(e){ e.preventDefault(); openDay(el.getAttribute('data-day')); });
+  });
+  if (m2){
+    m2.querySelectorAll('[data-close]').forEach(function(el){
+      el.addEventListener('click', closeDay);
+    });
+  }
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && m2 && m2.classList.contains('is-open')) closeDay();
+  });
 
   // ────────── FLOATING BOOK BAR ──────────
   var bookBar = document.getElementById('s1-book');
