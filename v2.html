@@ -140,20 +140,21 @@
 @media (max-width:1280px){ .s1-rail{display:none} }
 
 /* ─── DAY GRID + DAILY PROMO SIDECAR ────────────────── */
-.s1-day-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:60px;align-items:stretch}
+.s1-day-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:60px;align-items:start}
 .s1-day-grid--reverse .s1-day-main{order:2}
 .s1-day-grid--reverse .s1-day-promo{order:1}
 .s1-day-main > *+*{margin-top:16px}
-.s1-day-promo{background:linear-gradient(145deg,rgba(251,191,36,.08),rgba(0,0,0,.4));border:1px solid rgba(251,191,36,.3);border-radius:16px;padding:40px 36px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
-.s1-day-promo::before{content:"";position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(251,191,36,.18),transparent 70%);pointer-events:none}
-.s1-day-promo__eye{font-family:var(--cond);font-weight:800;font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:#fff;margin-bottom:14px;display:inline-flex;align-items:center;gap:12px;position:relative}
-.s1-day-promo__eye::before{content:"";width:30px;height:3px;background:#fbbf24;transform:skewX(-30deg);flex-shrink:0}
-.s1-day-promo__h{font-family:var(--cond);font-weight:900;font-size:clamp(26px,calc(2.4 * var(--vwu,1vw)),42px);line-height:1;text-transform:uppercase;color:#fff;-webkit-text-stroke:max(3px,.045em) #000;paint-order:stroke fill;margin-bottom:14px;position:relative}
+.s1-day-promo{background:linear-gradient(145deg,rgba(251,191,36,.1),rgba(0,0,0,.4));border:1px solid rgba(251,191,36,.3);border-radius:16px;padding:46px 44px;position:relative;overflow:hidden}
+.s1-day-promo::before{content:"";position:absolute;top:-60px;right:-60px;width:220px;height:220px;background:radial-gradient(circle,rgba(251,191,36,.22),transparent 70%);pointer-events:none}
+.s1-day-promo > *{position:relative}
+.s1-day-promo__note{display:inline-block;margin-bottom:18px;padding:6px 14px;background:rgba(0,0,0,.5);border:1px solid rgba(251,191,36,.3);border-radius:99px;font-family:var(--cond);font-weight:800;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#fbbf24}
+.s1-day-promo__eye{font-family:var(--cond);font-weight:800;font-size:16px;letter-spacing:.22em;text-transform:uppercase;color:#fff;margin-bottom:14px;display:flex;align-items:center;gap:14px}
+.s1-day-promo__eye::before{content:"";width:36px;height:4px;background:#fbbf24;transform:skewX(-30deg);flex-shrink:0}
+.s1-day-promo__h{font-family:var(--cond);font-weight:900;font-size:clamp(40px,calc(4 * var(--vwu,1vw)),72px);line-height:.95;text-transform:uppercase;color:#fff;-webkit-text-stroke:max(3px,.045em) #000;paint-order:stroke fill;margin-bottom:20px}
 .s1-day-promo__h em{font-style:italic;color:#fbbf24}
-.s1-day-promo__p{color:#C9C9CF;font-size:15px;line-height:1.65;margin-bottom:22px;position:relative}
-.s1-day-promo__cta{font-family:var(--cond);font-weight:800;font-size:14px;letter-spacing:.15em;text-transform:uppercase;color:#fbbf24;align-self:flex-start;border-bottom:2px solid rgba(251,191,36,.4);padding-bottom:3px;transition:border-color .25s,color .25s;position:relative}
+.s1-day-promo__p{color:#C9C9CF;font-size:17px;line-height:1.65;margin-bottom:26px;max-width:40ch}
+.s1-day-promo__cta{display:inline-block;font-family:var(--cond);font-weight:800;font-size:16px;letter-spacing:.15em;text-transform:uppercase;color:#fbbf24;border-bottom:2px solid rgba(251,191,36,.4);padding-bottom:3px;transition:border-color .25s,color .25s}
 .s1-day-promo__cta:hover{border-bottom-color:#fbbf24;color:#fff}
-.s1-day-promo__note{display:inline-block;margin-bottom:14px;padding:4px 10px;background:rgba(0,0,0,.5);border:1px solid var(--line);border-radius:99px;font-family:var(--cond);font-weight:800;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#fbbf24;position:relative}
 
 /* ─── WEEKEND · TWO CARDS SIDE BY SIDE ──────────────── */
 .s1-weekend-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:stretch;margin-top:46px}
