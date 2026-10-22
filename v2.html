@@ -144,10 +144,12 @@
 .s1-day-grid--reverse .s1-day-main{order:2}
 .s1-day-grid--reverse .s1-day-promo{order:1}
 .s1-day-main > *+*{margin-top:16px}
-.s1-day-promo{background:linear-gradient(145deg,rgba(251,191,36,.1),rgba(0,0,0,.4));border:1px solid rgba(251,191,36,.3);border-radius:16px;padding:46px 44px;position:relative;overflow:hidden}
-.s1-day-promo::before{content:"";position:absolute;top:-60px;right:-60px;width:220px;height:220px;background:radial-gradient(circle,rgba(251,191,36,.22),transparent 70%);pointer-events:none}
-.s1-day-promo > *{position:relative}
-.s1-day-promo__note{display:inline-block;margin-bottom:18px;padding:6px 14px;background:rgba(0,0,0,.5);border:1px solid rgba(251,191,36,.3);border-radius:99px;font-family:var(--cond);font-weight:800;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#fbbf24}
+.s1-day-promo{background:linear-gradient(145deg,rgba(251,191,36,.1),rgba(0,0,0,.4));border:1px solid rgba(251,191,36,.3);border-radius:16px;padding:46px 44px;position:relative;overflow:hidden;isolation:isolate}
+.s1-day-promo::before{content:"";position:absolute;top:-60px;right:-60px;width:220px;height:220px;background:radial-gradient(circle,rgba(251,191,36,.22),transparent 70%);pointer-events:none;z-index:0}
+/* Subtle gold shine sweep — slow, every 7s, sits above the glow but behind content */
+.s1-day-promo::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(110deg,transparent 35%,rgba(251,191,36,.28) 50%,transparent 65%);transform:translateX(-130%);animation:s1-promo-shine 7s ease-in-out infinite}
+@keyframes s1-promo-shine{0%,65%{transform:translateX(-130%)}90%,100%{transform:translateX(130%)}}
+.s1-day-promo > *{position:relative;z-index:2}
 .s1-day-promo__eye{font-family:var(--cond);font-weight:800;font-size:16px;letter-spacing:.22em;text-transform:uppercase;color:#fff;margin-bottom:14px;display:flex;align-items:center;gap:14px}
 .s1-day-promo__eye::before{content:"";width:36px;height:4px;background:#fbbf24;transform:skewX(-30deg);flex-shrink:0}
 .s1-day-promo__h{font-family:var(--cond);font-weight:900;font-size:clamp(40px,calc(4 * var(--vwu,1vw)),72px);line-height:.95;text-transform:uppercase;color:#fff;-webkit-text-stroke:max(3px,.045em) #000;paint-order:stroke fill;margin-bottom:20px}
@@ -199,7 +201,7 @@
 .s1-track-card{background:rgba(0,0,0,.4);border:1px solid var(--line);border-left:4px solid var(--red);border-radius:10px;padding:22px 24px;backdrop-filter:blur(8px)}
 .s1-track-card__label{font-family:var(--cond);font-weight:800;font-size:17px;letter-spacing:.16em;text-transform:uppercase;color:#C9C9CF;margin-bottom:10px}
 .s1-track-card__value{font-family:var(--cond);font-weight:900;font-size:clamp(28px,calc(2.4 * var(--vwu,1vw)),38px);text-transform:uppercase;color:#fff;line-height:1.05}
-.s1-note{margin-top:24px;padding:20px 22px;background:rgba(0,0,0,.3);border:1px solid var(--line);border-radius:10px;color:#D4D4D8;font-size:17px;line-height:1.6}
+.s1-note{margin-top:24px;padding:22px 26px;background:rgba(0,0,0,.3);border:1px solid var(--line);border-radius:10px;color:#D4D4D8;font-size:20px;line-height:1.55}
 .s1-note strong{color:#fff;font-weight:800}
 
 /* ─── TUESDAY · FULL-BLEED PROMO ─────────────────── */
@@ -405,14 +407,13 @@
             <div class="s1-track-card__value">7 PM Mondays</div>
           </div>
         </div>
-        <div class="s1-note s1-reveal" style="--rd:.3s"><strong>New here?</strong> Start with <strong>Intro to Sim Racing</strong> on Workshop Wednesdays (every other Wednesday) before joining a Monday class.</div>
+        <div class="s1-note s1-reveal" style="--rd:.3s"><strong>New here?</strong> Start with <strong>Intro to Sim Racing</strong> on a Workshop Wednesday before joining a Monday&nbsp;class.</div>
         <div class="s1-ctas s1-reveal" style="--rd:.36s">
           <a href="https://www.sim1racing.com/group-classes" class="s1-btn s1-btn--red">Full Class Breakdown <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
       </div>
       <div class="s1-day-promo s1-reveal" style="--rd:.2s">
         <!-- ▼ swap copy for Monday's specific daily promo ▼ -->
-        <span class="s1-day-promo__note">Monday Only</span>
         <div class="s1-day-promo__eye">Daily Promo</div>
         <div class="s1-day-promo__h">Monday <em>deal</em></div>
         <p class="s1-day-promo__p">We run a different promo every weekday. Replace this copy with Monday's specific deal — or point visitors straight at the full list.</p>
@@ -481,7 +482,6 @@
       </div>
       <div class="s1-day-promo s1-reveal" style="--rd:.2s">
         <!-- ▼ swap copy for Wednesday's specific daily promo ▼ -->
-        <span class="s1-day-promo__note">Wednesday Only</span>
         <div class="s1-day-promo__eye">Daily Promo</div>
         <div class="s1-day-promo__h">Wednesday <em>deal</em></div>
         <p class="s1-day-promo__p">We run a different promo every weekday. Replace this copy with Wednesday's specific deal — or point visitors straight at the full list.</p>
@@ -514,7 +514,6 @@
       </div>
       <div class="s1-day-promo s1-reveal" style="--rd:.2s">
         <!-- ▼ swap copy for Thursday's specific daily promo ▼ -->
-        <span class="s1-day-promo__note">Thursday Only</span>
         <div class="s1-day-promo__eye">Daily Promo</div>
         <div class="s1-day-promo__h">Thursday <em>deal</em></div>
         <p class="s1-day-promo__p">We run a different promo every weekday. Replace this copy with Thursday's specific deal — or point visitors straight at the full list.</p>
@@ -544,7 +543,6 @@
       </div>
       <div class="s1-day-promo s1-reveal" style="--rd:.2s">
         <!-- ▼ swap copy for Friday's specific daily promo ▼ -->
-        <span class="s1-day-promo__note">Friday Only</span>
         <div class="s1-day-promo__eye">Daily Promo</div>
         <div class="s1-day-promo__h">Friday <em>deal</em></div>
         <p class="s1-day-promo__p">We run a different promo every weekday. Replace this copy with Friday's specific deal — or point visitors straight at the full list.</p>
