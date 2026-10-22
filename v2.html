@@ -87,6 +87,15 @@
 .s1-btn--ghost{border:2px solid rgba(255,255,255,.75);color:#fff;background:rgba(255,255,255,.05)}
 .s1-btn--ghost:hover{background:#fff;color:#000;border-color:#fff;transform:translateY(-3px)}
 @keyframes s1-shine{0%,55%{transform:translateX(-120%)}85%,100%{transform:translateX(120%)}}
+/* Hero buttons scale up on desktop per design system (22/27px) */
+@media (min-width:1025px){
+  .s1-hero__inner .s1-btn{font-size:22px;padding:22px 52px}
+  .s1-hero__inner .s1-btn svg{font-size:23px}
+}
+@media (min-width:1600px){
+  .s1-hero__inner .s1-btn{font-size:27px;padding:26px 58px;letter-spacing:.1em}
+  .s1-hero__inner .s1-btn svg{font-size:27px}
+}
 
 /* ─── ANIMATION PRIMITIVES ───────────────────────────── */
 .s1-js .s1-intro{opacity:0;transform:translateY(40px);animation:s1-in .9s var(--ease) forwards;animation-delay:var(--d,0s)}
@@ -138,6 +147,13 @@
 .s1-rail__item.is-active .s1-rail__lbl{color:#fff;background:rgba(237,28,36,.25)}
 .s1-rail__item a:hover .s1-rail__lbl{color:#fff;background:rgba(255,255,255,.12)}
 @media (max-width:1280px){ .s1-rail{display:none} }
+
+/* ─── BACKGROUND-IMAGE TREATMENT (shared by any day section) ─ */
+.s1-section--bg{overflow:hidden;isolation:isolate;position:relative}
+.s1-section--bg > .s1-wrap,.s1-section--bg > .s1-wrap--wide{position:relative;z-index:1}
+.s1-day-bg{position:absolute;inset:0;z-index:0;pointer-events:none}
+.s1-day-bg img{width:100%;height:100%;object-fit:cover;display:block;opacity:.35;filter:saturate(1.1) contrast(1.05)}
+.s1-day-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.9) 0%,rgba(0,0,0,.6) 55%,rgba(0,0,0,.8) 100%)}
 
 /* ─── DAY GRID + DAILY PROMO SIDECAR ────────────────── */
 .s1-day-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:60px;align-items:start}
@@ -214,7 +230,8 @@
 .s1-promo__pills{display:flex;gap:20px;flex-wrap:wrap;margin-top:46px}
 .s1-promo__pill{background:rgba(237,28,36,.08);border:1px solid rgba(237,28,36,.35);border-radius:14px;padding:28px 36px;min-width:260px}
 .s1-promo__pill-amt{font-family:var(--cond);font-weight:900;font-style:italic;font-size:clamp(60px,calc(6 * var(--vwu,1vw)),100px);line-height:.9;color:#fff}
-.s1-promo__pill-amt .s1-pct{color:var(--red);font-size:.6em;vertical-align:top;margin-left:4px;font-style:normal}
+.s1-promo__pill-amt .s1-pct{color:var(--red);font-size:.6em;vertical-align:top;margin-left:.14em;font-style:normal}
+.s1-promo__pill-amt .s1-pct + .s1-pct{margin-left:.1em}
 .s1-promo__pill-note{font-family:var(--cond);font-weight:800;font-size:16px;letter-spacing:.14em;text-transform:uppercase;color:#D4D4D8;margin-top:8px}
 
 /* ─── WEDNESDAY · STEPS ──────────────────────────── */
@@ -238,10 +255,10 @@
 .s1-rate__price .s1-cur{color:var(--red);font-size:.5em;vertical-align:top;margin-right:4px;font-style:normal}
 .s1-rate__price-note{font-family:var(--cond);font-weight:800;font-size:18px;letter-spacing:.14em;text-transform:uppercase;color:#D4D4D8;margin-top:8px;position:relative;z-index:1}
 .s1-rate__breakdown{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:36px;position:relative;z-index:1}
-.s1-rate__bk{text-align:center;padding:22px 10px;background:rgba(0,0,0,.4);border-radius:10px}
-.s1-rate__bk-mins{font-family:var(--cond);font-weight:900;font-style:italic;font-size:44px;color:#fff;line-height:1}
-.s1-rate__bk-mins .s1-m{color:var(--red);font-size:.55em;margin-left:2px;font-style:normal}
-.s1-rate__bk-lbl{font-family:var(--cond);font-weight:800;font-size:15px;letter-spacing:.18em;text-transform:uppercase;color:#C9C9CF;margin-top:8px}
+.s1-rate__bk{text-align:center;padding:28px 10px;background:rgba(0,0,0,.4);border-radius:10px}
+.s1-rate__bk-mins{font-family:var(--cond);font-weight:900;font-style:italic;font-size:clamp(50px,calc(4.5 * var(--vwu,1vw)),72px);color:#fff;line-height:1}
+.s1-rate__bk-mins .s1-m{color:var(--red);font-size:.5em;margin-left:3px;font-style:normal}
+.s1-rate__bk-lbl{font-family:var(--cond);font-weight:800;font-size:19px;letter-spacing:.16em;text-transform:uppercase;color:#C9C9CF;margin-top:12px}
 
 /* ─── FRIDAY · STATS ─────────────────────────────── */
 .s1-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:46px 0 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
@@ -379,7 +396,7 @@
     <div class="s1-hero__hours s1-intro" style="--d:.05s">Open 7 Days a Week · 11AM – 11PM</div>
     <h1 class="s1-hero__title">
       <span class="s1-line s1-intro" style="--d:.2s">There's always</span>
-      <span class="s1-line s1-intro" style="--d:.4s">something <span class="s1-italic s1-red">on</span></span>
+      <span class="s1-line s1-intro" style="--d:.4s">something at <span class="s1-italic s1-red">SIM</span></span>
     </h1>
     <p class="s1-hero__lead s1-intro" style="--d:.65s">Group classes, free workshops, sprint races, Friday Night Showdowns, F1 watch parties, car meets — every day of the week something to walk into.</p>
     <div class="s1-ctas s1-intro" style="--d:.85s">
@@ -492,7 +509,11 @@
 </section>
 
 <!-- ─────── THURSDAY · SPRINT RACE + THURSDAY PROMO ─────── -->
-<section class="s1-section" id="s1-thu" style="background:#000">
+<section class="s1-section s1-section--bg" id="s1-thu" style="background:#000">
+  <!-- ▼ swap src for the Thursday backdrop photo ▼ -->
+  <div class="s1-day-bg" aria-hidden="true">
+    <img src="https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a271db727f85b57f5488b88/1780948412356/CTA00145.jpg" alt="" loading="lazy">
+  </div>
   <div class="s1-wrap--wide">
     <div class="s1-day-grid">
       <div class="s1-day-main">
