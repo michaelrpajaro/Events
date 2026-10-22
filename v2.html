@@ -116,7 +116,7 @@
 .s1-hero__inner{position:relative;z-index:2}
 .s1-hero__hours{font-family:var(--cond);font-weight:800;font-size:clamp(16px,calc(1.6 * var(--vwu,1vw)),28px);letter-spacing:.1em;text-transform:uppercase;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.6);margin-bottom:28px}
 .s1-hero__title{font-family:var(--cond);font-weight:900;text-transform:uppercase;font-size:clamp(50px,calc(8.5 * var(--vwu,1vw)),130px);line-height:.88;letter-spacing:.01em;color:#fff;-webkit-text-stroke:max(6px,.045em) #000;paint-order:stroke fill}
-.s1-hero__title .s1-line{display:block;overflow:hidden;white-space:nowrap;padding:.08em .3em}
+.s1-hero__title .s1-line{display:block;overflow:hidden;white-space:nowrap;padding:.08em .3em .08em 0}
 .s1-hero__title .s1-line+.s1-line{margin-top:-.12em}
 .s1-hero__lead{max-width:640px;margin-top:34px;font-size:clamp(17px,calc(1.4 * var(--vwu,1vw)),22px);line-height:1.65;color:#C9C9CF}
 
@@ -138,6 +138,55 @@
 .s1-rail__item.is-active .s1-rail__lbl{color:#fff;background:rgba(237,28,36,.25)}
 .s1-rail__item a:hover .s1-rail__lbl{color:#fff;background:rgba(255,255,255,.12)}
 @media (max-width:1280px){ .s1-rail{display:none} }
+
+/* ─── DAY GRID + DAILY PROMO SIDECAR ────────────────── */
+.s1-day-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:60px;align-items:stretch}
+.s1-day-grid--reverse .s1-day-main{order:2}
+.s1-day-grid--reverse .s1-day-promo{order:1}
+.s1-day-main > *+*{margin-top:16px}
+.s1-day-promo{background:linear-gradient(145deg,rgba(251,191,36,.08),rgba(0,0,0,.4));border:1px solid rgba(251,191,36,.3);border-radius:16px;padding:40px 36px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.s1-day-promo::before{content:"";position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(251,191,36,.18),transparent 70%);pointer-events:none}
+.s1-day-promo__eye{font-family:var(--cond);font-weight:800;font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:#fff;margin-bottom:14px;display:inline-flex;align-items:center;gap:12px;position:relative}
+.s1-day-promo__eye::before{content:"";width:30px;height:3px;background:#fbbf24;transform:skewX(-30deg);flex-shrink:0}
+.s1-day-promo__h{font-family:var(--cond);font-weight:900;font-size:clamp(26px,calc(2.4 * var(--vwu,1vw)),42px);line-height:1;text-transform:uppercase;color:#fff;-webkit-text-stroke:max(3px,.045em) #000;paint-order:stroke fill;margin-bottom:14px;position:relative}
+.s1-day-promo__h em{font-style:italic;color:#fbbf24}
+.s1-day-promo__p{color:#C9C9CF;font-size:15px;line-height:1.65;margin-bottom:22px;position:relative}
+.s1-day-promo__cta{font-family:var(--cond);font-weight:800;font-size:14px;letter-spacing:.15em;text-transform:uppercase;color:#fbbf24;align-self:flex-start;border-bottom:2px solid rgba(251,191,36,.4);padding-bottom:3px;transition:border-color .25s,color .25s;position:relative}
+.s1-day-promo__cta:hover{border-bottom-color:#fbbf24;color:#fff}
+.s1-day-promo__note{display:inline-block;margin-bottom:14px;padding:4px 10px;background:rgba(0,0,0,.5);border:1px solid var(--line);border-radius:99px;font-family:var(--cond);font-weight:800;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#fbbf24;position:relative}
+
+/* ─── WEEKEND · TWO CARDS SIDE BY SIDE ──────────────── */
+.s1-weekend-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:stretch;margin-top:46px}
+.s1-weekend-card{background:rgba(10,10,11,.6);border:1px solid var(--line);border-radius:16px;padding:40px 36px;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:border-color .3s var(--ease),transform .3s var(--ease)}
+.s1-weekend-card--meet{border-color:rgba(249,115,22,.25)}
+.s1-weekend-card--watch{border-color:rgba(167,139,250,.25)}
+.s1-weekend-card:hover{transform:translateY(-3px)}
+.s1-weekend-card__eye{font-family:var(--cond);font-weight:800;font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:#fff;margin-bottom:14px;display:inline-flex;align-items:center;gap:12px}
+.s1-weekend-card__eye::before{content:"";width:30px;height:3px;transform:skewX(-30deg);flex-shrink:0}
+.s1-weekend-card--meet .s1-weekend-card__eye::before{background:#f97316}
+.s1-weekend-card--watch .s1-weekend-card__eye::before{background:#a78bfa}
+.s1-weekend-card__h{font-family:var(--cond);font-weight:900;font-size:clamp(28px,calc(2.6 * var(--vwu,1vw)),46px);line-height:.98;text-transform:uppercase;color:#fff;-webkit-text-stroke:max(3px,.045em) #000;paint-order:stroke fill;margin-bottom:14px}
+.s1-weekend-card__h em{font-style:italic}
+.s1-weekend-card--meet .s1-weekend-card__h em{color:#f97316}
+.s1-weekend-card--watch .s1-weekend-card__h em{color:#a78bfa}
+.s1-weekend-card__p{color:#C9C9CF;font-size:15px;line-height:1.65;margin-bottom:22px}
+.s1-weekend-card__body{flex:1;display:flex;flex-direction:column}
+.s1-weekend-card__spacer{flex:1}
+.s1-weekend-card .s1-ctas{margin-top:22px}
+.s1-weekend-card .s1-crews{margin:0 0 22px}
+.s1-weekend-card .s1-cd__card{background:rgba(0,0,0,.4);border-color:rgba(167,139,250,.2);padding:26px 24px;margin:0 0 22px}
+.s1-weekend-card .s1-cd__tiles{gap:8px}
+.s1-weekend-card .s1-cd__tile{padding:14px 6px}
+.s1-weekend-card .s1-cd__num{font-size:clamp(32px,calc(3 * var(--vwu,1vw)),48px)}
+
+@media (max-width:1024px){
+  .s1-day-grid{grid-template-columns:1fr;gap:30px}
+  .s1-day-grid--reverse .s1-day-main{order:1}
+  .s1-day-grid--reverse .s1-day-promo{order:2}
+  .s1-day-promo{padding:30px 26px}
+  .s1-weekend-grid{grid-template-columns:1fr;gap:16px}
+  .s1-weekend-card{padding:30px 26px}
+}
 
 /* ─── ALTERNATING FEATURE ROWS ──────────────────────── */
 .s1-feat{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
@@ -326,8 +375,8 @@
   <div class="s1-wrap s1-hero__inner">
     <div class="s1-hero__hours s1-intro" style="--d:.05s">Open 7 Days a Week · 11AM – 11PM</div>
     <h1 class="s1-hero__title">
-      <span class="s1-line s1-intro" style="--d:.2s">Seven days</span>
-      <span class="s1-line s1-intro" style="--d:.4s"><span class="s1-italic s1-red">Seven ways to race</span></span>
+      <span class="s1-line s1-intro" style="--d:.2s">There's always</span>
+      <span class="s1-line s1-intro" style="--d:.4s">something <span class="s1-italic s1-red">on</span></span>
     </h1>
     <p class="s1-hero__lead s1-intro" style="--d:.65s">Group classes, free workshops, sprint races, Friday Night Showdowns, F1 watch parties, car meets — every day of the week something to walk into.</p>
     <div class="s1-ctas s1-intro" style="--d:.85s">
@@ -337,14 +386,11 @@
   </div>
 </section>
 
-<!-- ─────── MONDAY · GROUP CLASSES ─────── -->
+<!-- ─────── MONDAY · GROUP CLASSES + MONDAY PROMO ─────── -->
 <section class="s1-section" id="s1-mon" style="background:#000">
   <div class="s1-wrap--wide">
-    <div class="s1-feat">
-      <div class="s1-curtain s1-feat__media s1-reveal">
-        <img src="https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a271dfd73c1e86e3b638d3b/1780948478116/CTA09873+%281%29.jpg" alt="Group coaching on the sim" loading="lazy">
-      </div>
-      <div class="s1-feat__body">
+    <div class="s1-day-grid">
+      <div class="s1-day-main">
         <div class="s1-eyebrow s1-reveal">Monday · Group Classes</div>
         <h2 class="s1-h2 s1-reveal" style="--rd:.08s">Coaching that <span class="s1-red s1-italic">sticks</span></h2>
         <p class="s1-lead s1-reveal" style="--rd:.16s">Rotating Monday classes for drivers who've raced with us before — small groups, structured coaching, six-week cycle through Open Wheel, Sports Car, Street Car, Racecraft, Prototype, and Manual.</p>
@@ -362,6 +408,14 @@
         <div class="s1-ctas s1-reveal" style="--rd:.36s">
           <a href="https://www.sim1racing.com/group-classes" class="s1-btn s1-btn--red">Full Class Breakdown <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
+      </div>
+      <div class="s1-day-promo s1-reveal" style="--rd:.2s">
+        <!-- ▼ swap copy for Monday's specific daily promo ▼ -->
+        <span class="s1-day-promo__note">Monday Only</span>
+        <div class="s1-day-promo__eye">Daily Promo</div>
+        <div class="s1-day-promo__h">Monday <em>deal</em></div>
+        <p class="s1-day-promo__p">We run a different promo every weekday. Replace this copy with Monday's specific deal — or point visitors straight at the full list.</p>
+        <a href="https://www.sim1racing.com/daily-rates" class="s1-day-promo__cta">See all daily promos →</a>
       </div>
     </div>
   </div>
@@ -393,11 +447,11 @@
   </div>
 </section>
 
-<!-- ─────── WEDNESDAY · WORKSHOPS ─────── -->
+<!-- ─────── WEDNESDAY · WORKSHOPS + WEDNESDAY PROMO ─────── -->
 <section class="s1-section" id="s1-wed" style="background:var(--ink-2)">
   <div class="s1-wrap--wide">
-    <div class="s1-steps">
-      <div class="s1-steps__body">
+    <div class="s1-day-grid s1-day-grid--reverse">
+      <div class="s1-day-main">
         <div class="s1-eyebrow s1-reveal">Wednesday · Workshop Wednesdays</div>
         <h2 class="s1-h2 s1-reveal" style="--rd:.08s">Free <span class="s1-italic s1-red">workshops</span></h2>
         <p class="s1-lead s1-reveal" style="--rd:.16s">Every Wednesday at 8 PM. A quick classroom session on a rotating topic, then optional sim time to put it into practice.</p>
@@ -424,46 +478,56 @@
           <a href="https://sim1racing.as.me/workshop-wednesdays" target="_blank" rel="noopener" class="s1-btn s1-btn--red">Book Workshop Wednesdays <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
       </div>
-      <div class="s1-curtain s1-feat__media s1-reveal" style="--rd:.1s">
-        <img src="https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a28c5a96230ef37a6ea61a1/1781056937924/POR00519+%281%29.jpg" alt="Workshop at the sim center" loading="lazy">
+      <div class="s1-day-promo s1-reveal" style="--rd:.2s">
+        <!-- ▼ swap copy for Wednesday's specific daily promo ▼ -->
+        <span class="s1-day-promo__note">Wednesday Only</span>
+        <div class="s1-day-promo__eye">Daily Promo</div>
+        <div class="s1-day-promo__h">Wednesday <em>deal</em></div>
+        <p class="s1-day-promo__p">We run a different promo every weekday. Replace this copy with Wednesday's specific deal — or point visitors straight at the full list.</p>
+        <a href="https://www.sim1racing.com/daily-rates" class="s1-day-promo__cta">See all daily promos →</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ─────── THURSDAY · SPRINT RACE ─────── -->
+<!-- ─────── THURSDAY · SPRINT RACE + THURSDAY PROMO ─────── -->
 <section class="s1-section" id="s1-thu" style="background:#000">
   <div class="s1-wrap--wide">
-    <div class="s1-rate">
-      <div class="s1-rate__body">
+    <div class="s1-day-grid">
+      <div class="s1-day-main">
         <div class="s1-eyebrow s1-reveal">Thursday · Weekly Sprint Race</div>
         <h2 class="s1-h2 s1-h2--xl s1-reveal" style="--rd:.08s">Thursdays<br><span class="s1-italic s1-red">lights out at 8</span></h2>
         <p class="s1-lead s1-reveal" style="--rd:.16s">A one-hour race night, same format every week — practice, qualify, then the race. Same car and track as the current weekly qualifier (we drop it on Instagram a few days out).</p>
-        <div class="s1-ctas s1-reveal" style="--rd:.24s">
+        <div class="s1-rate__card s1-reveal" style="--rd:.24s">
+          <div class="s1-rate__price"><span class="s1-cur">$</span><span data-count="45">0</span></div>
+          <div class="s1-rate__price-note">Per seat · save $15 vs standard hour</div>
+          <div class="s1-rate__breakdown">
+            <div class="s1-rate__bk"><div class="s1-rate__bk-mins"><span data-count="10">0</span><span class="s1-m">m</span></div><div class="s1-rate__bk-lbl">Practice</div></div>
+            <div class="s1-rate__bk"><div class="s1-rate__bk-mins"><span data-count="10">0</span><span class="s1-m">m</span></div><div class="s1-rate__bk-lbl">Qualifying</div></div>
+            <div class="s1-rate__bk"><div class="s1-rate__bk-mins"><span data-count="40">0</span><span class="s1-m">m</span></div><div class="s1-rate__bk-lbl">Race</div></div>
+          </div>
+        </div>
+        <div class="s1-ctas s1-reveal" style="--rd:.3s">
           <a href="https://sim1racing.as.me/sprint-race" target="_blank" rel="noopener" class="s1-btn s1-btn--red">Reserve Your Spot <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
       </div>
-      <div class="s1-rate__card s1-reveal" style="--rd:.1s">
-        <div class="s1-rate__price"><span class="s1-cur">$</span><span data-count="45">0</span></div>
-        <div class="s1-rate__price-note">Per seat · save $15 vs standard hour</div>
-        <div class="s1-rate__breakdown">
-          <div class="s1-rate__bk"><div class="s1-rate__bk-mins"><span data-count="10">0</span><span class="s1-m">m</span></div><div class="s1-rate__bk-lbl">Practice</div></div>
-          <div class="s1-rate__bk"><div class="s1-rate__bk-mins"><span data-count="10">0</span><span class="s1-m">m</span></div><div class="s1-rate__bk-lbl">Qualifying</div></div>
-          <div class="s1-rate__bk"><div class="s1-rate__bk-mins"><span data-count="40">0</span><span class="s1-m">m</span></div><div class="s1-rate__bk-lbl">Race</div></div>
-        </div>
+      <div class="s1-day-promo s1-reveal" style="--rd:.2s">
+        <!-- ▼ swap copy for Thursday's specific daily promo ▼ -->
+        <span class="s1-day-promo__note">Thursday Only</span>
+        <div class="s1-day-promo__eye">Daily Promo</div>
+        <div class="s1-day-promo__h">Thursday <em>deal</em></div>
+        <p class="s1-day-promo__p">We run a different promo every weekday. Replace this copy with Thursday's specific deal — or point visitors straight at the full list.</p>
+        <a href="https://www.sim1racing.com/daily-rates" class="s1-day-promo__cta">See all daily promos →</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ─────── FRIDAY · NIGHT SHOWDOWN ─────── -->
+<!-- ─────── FRIDAY · NIGHT SHOWDOWN + FRIDAY PROMO ─────── -->
 <section class="s1-section" id="s1-fri" style="background:var(--ink-2)">
   <div class="s1-wrap--wide">
-    <div class="s1-feat s1-feat--reverse">
-      <div class="s1-curtain s1-feat__media s1-reveal">
-        <img src="https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a8f315b25397c12cf3ad07a/1787769179932/Untitled+design+%284%29.jpg" alt="Friday Night Showdown" loading="lazy">
-      </div>
-      <div class="s1-feat__body">
+    <div class="s1-day-grid s1-day-grid--reverse">
+      <div class="s1-day-main">
         <div class="s1-eyebrow s1-reveal">Friday · Friday Night Showdown</div>
         <h2 class="s1-h2 s1-h2--xl s1-reveal" style="--rd:.08s">Compete<br><span class="s1-italic s1-red">coast to coast</span></h2>
         <p class="s1-lead s1-reveal" style="--rd:.16s">Fridays at 8 PM. A one-hour session where you race against sim centers from across the US. Different car category every week — GT, open-wheel, dirt, and more. Car and track drop on our Instagram a few days ahead.</p>
@@ -477,60 +541,63 @@
           <a href="https://sim1racing.as.me/fns" target="_blank" rel="noopener" class="s1-btn s1-btn--red">Book the Showdown <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
       </div>
+      <div class="s1-day-promo s1-reveal" style="--rd:.2s">
+        <!-- ▼ swap copy for Friday's specific daily promo ▼ -->
+        <span class="s1-day-promo__note">Friday Only</span>
+        <div class="s1-day-promo__eye">Daily Promo</div>
+        <div class="s1-day-promo__h">Friday <em>deal</em></div>
+        <p class="s1-day-promo__p">We run a different promo every weekday. Replace this copy with Friday's specific deal — or point visitors straight at the full list.</p>
+        <a href="https://www.sim1racing.com/daily-rates" class="s1-day-promo__cta">See all daily promos →</a>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ─────── SATURDAY · CAR MEETS ─────── -->
-<section class="s1-section" id="s1-sat" style="background:#000">
+<!-- ─────── WEEKEND · CAR MEETS + F1 WATCH PARTIES ─────── -->
+<section class="s1-section" id="s1-weekend" style="background:#000">
   <div class="s1-wrap--wide">
-    <div class="s1-eyebrow s1-reveal">Saturday · Car Meets</div>
-    <h2 class="s1-h2 s1-h2--xl s1-reveal" style="--rd:.08s">Front lot<br><span class="s1-italic s1-red">crew swap</span></h2>
-    <p class="s1-lead s1-reveal" style="--rd:.16s">Meets happen out in the front lot and run alongside sim tournaments inside. Different crew each time — walk through, pull up a wheel.</p>
-    <div class="s1-crews s1-reveal" style="--rd:.24s">
-      <span class="s1-crew">Lamborghini Paramus</span>
-      <span class="s1-crew">Tristate Motorclub</span>
-      <span class="s1-crew">RIX Magazine</span>
-      <span class="s1-crew">Daikoku NYC</span>
-      <span class="s1-crew">+ more</span>
-    </div>
-    <div class="s1-mosaic">
-      <div class="s1-curtain s1-mosaic__item s1-mosaic__item--tall s1-reveal">
-        <img src="https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a271f428c14d3607f5d5a10/1780948803723/CTA08645.jpg" alt="Car meet in the front lot" loading="lazy">
-      </div>
-      <div class="s1-mosaic__col">
-        <div class="s1-curtain s1-mosaic__item s1-mosaic__item--wide s1-reveal" style="--rd:.1s">
-          <img src="https://cdn.jsdelivr.net/gh/michaelrpajaro/Home@1cc9949bcb7db1cc84f7679e3f28f82867fc02fb/images/car-meet.jpg" alt="Indoor car meet" loading="lazy">
-        </div>
-        <div class="s1-curtain s1-mosaic__item s1-mosaic__item--wide s1-reveal" style="--rd:.2s">
-          <img src="https://cdn.jsdelivr.net/gh/michaelrpajaro/Home@f6c504c9b6163a7ae40ca85c5eea69a9a072c7c4/images/exterior.jpg" alt="Outside the building" loading="lazy">
-        </div>
-      </div>
-    </div>
-    <div class="s1-ctas s1-reveal" style="--rd:.3s">
-      <a href="https://www.instagram.com/sim1racing/" target="_blank" rel="noopener" class="s1-btn s1-btn--red">See Upcoming on Instagram <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-    </div>
-  </div>
-</section>
+    <div class="s1-eyebrow s1-reveal">Weekend</div>
+    <h2 class="s1-h2 s1-h2--xl s1-reveal" style="--rd:.08s">Weekends,<br><span class="s1-italic s1-red">doors wide open</span></h2>
+    <p class="s1-lead s1-reveal" style="--rd:.16s">Front lot full of cars outside, Formula 1 on the big screen inside. Walk through either, pull up a wheel, grab a seat.</p>
 
-<!-- ─────── SUNDAY · F1 WATCH + COUNTDOWN ─────── -->
-<section class="s1-section" id="s1-sun" style="background:var(--ink-2)">
-  <div class="s1-wrap--wide">
-    <div class="s1-cd">
-      <div class="s1-cd__body">
-        <div class="s1-eyebrow s1-reveal">Sunday · Free F1 Watch Parties</div>
-        <h2 class="s1-h2 s1-h2--xl s1-reveal" style="--rd:.08s">Every race<br><span class="s1-italic s1-red">230-inch LED</span></h2>
-        <p class="s1-lead s1-reveal" style="--rd:.16s">We host free watch parties for every race of the Formula 1 season. Multiple viewing areas anchored by the 230-inch LED so no matter where you grab a seat, you don't miss a corner.</p>
-      </div>
-      <div class="s1-cd__card s1-reveal" style="--rd:.1s">
-        <div class="s1-cd__eyebrow">Next watch party in</div>
-        <div class="s1-cd__tiles">
-          <div class="s1-cd__tile"><div class="s1-cd__num" id="s1-cd-d">00</div><div class="s1-cd__u">Days</div></div>
-          <div class="s1-cd__tile"><div class="s1-cd__num" id="s1-cd-h">00</div><div class="s1-cd__u">Hrs</div></div>
-          <div class="s1-cd__tile"><div class="s1-cd__num" id="s1-cd-m">00</div><div class="s1-cd__u">Min</div></div>
-          <div class="s1-cd__tile"><div class="s1-cd__num" id="s1-cd-s">00</div><div class="s1-cd__u">Sec</div></div>
+    <div class="s1-weekend-grid">
+      <!-- Car Meets card -->
+      <div class="s1-weekend-card s1-weekend-card--meet s1-reveal" style="--rd:.2s">
+        <div class="s1-weekend-card__body">
+          <div class="s1-weekend-card__eye">Car Meets</div>
+          <h3 class="s1-weekend-card__h">Front lot<br><em>crew swap</em></h3>
+          <p class="s1-weekend-card__p">Meets happen out in the front lot and run alongside sim tournaments inside. Different crew each time — walk through, pull up a wheel.</p>
+          <div class="s1-crews">
+            <span class="s1-crew">Lamborghini Paramus</span>
+            <span class="s1-crew">Tristate Motorclub</span>
+            <span class="s1-crew">RIX Magazine</span>
+            <span class="s1-crew">Daikoku NYC</span>
+            <span class="s1-crew">+ more</span>
+          </div>
         </div>
-        <div class="s1-cd__next" id="s1-cd-next">—</div>
+        <div class="s1-weekend-card__spacer"></div>
+        <div class="s1-ctas">
+          <a href="https://www.instagram.com/sim1racing/" target="_blank" rel="noopener" class="s1-btn s1-btn--red">See Upcoming on Instagram <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+
+      <!-- F1 Watch Parties card -->
+      <div class="s1-weekend-card s1-weekend-card--watch s1-reveal" style="--rd:.28s">
+        <div class="s1-weekend-card__body">
+          <div class="s1-weekend-card__eye">Free F1 Watch Parties</div>
+          <h3 class="s1-weekend-card__h">Every race<br><em>230-inch LED</em></h3>
+          <p class="s1-weekend-card__p">We host free watch parties for every race of the Formula 1 season. Multiple viewing areas anchored by the 230-inch LED so no matter where you grab a seat, you don't miss a corner.</p>
+          <div class="s1-cd__card">
+            <div class="s1-cd__eyebrow">Next watch party in</div>
+            <div class="s1-cd__tiles">
+              <div class="s1-cd__tile"><div class="s1-cd__num" id="s1-cd-d">00</div><div class="s1-cd__u">Days</div></div>
+              <div class="s1-cd__tile"><div class="s1-cd__num" id="s1-cd-h">00</div><div class="s1-cd__u">Hrs</div></div>
+              <div class="s1-cd__tile"><div class="s1-cd__num" id="s1-cd-m">00</div><div class="s1-cd__u">Min</div></div>
+              <div class="s1-cd__tile"><div class="s1-cd__num" id="s1-cd-s">00</div><div class="s1-cd__u">Sec</div></div>
+            </div>
+            <div class="s1-cd__next" id="s1-cd-next">—</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -598,8 +665,7 @@
     <li class="s1-rail__item" data-target="s1-wed"><a href="#s1-wed"><span class="s1-rail__dot"></span><span class="s1-rail__lbl">Wed</span></a></li>
     <li class="s1-rail__item" data-target="s1-thu"><a href="#s1-thu"><span class="s1-rail__dot"></span><span class="s1-rail__lbl">Thu</span></a></li>
     <li class="s1-rail__item" data-target="s1-fri"><a href="#s1-fri"><span class="s1-rail__dot"></span><span class="s1-rail__lbl">Fri</span></a></li>
-    <li class="s1-rail__item" data-target="s1-sat"><a href="#s1-sat"><span class="s1-rail__dot"></span><span class="s1-rail__lbl">Sat</span></a></li>
-    <li class="s1-rail__item" data-target="s1-sun"><a href="#s1-sun"><span class="s1-rail__dot"></span><span class="s1-rail__lbl">Sun</span></a></li>
+    <li class="s1-rail__item" data-target="s1-weekend"><a href="#s1-weekend"><span class="s1-rail__dot"></span><span class="s1-rail__lbl">Wknd</span></a></li>
   </ul>
 </nav>
 
@@ -666,7 +732,7 @@
   // Fills itself in as scroll progresses and highlights the active day.
   var rail      = document.getElementById('s1-rail');
   var railFill  = rail ? rail.querySelector('.s1-rail__track-fill') : null;
-  var dayIds    = ['s1-mon','s1-tue','s1-wed','s1-thu','s1-fri','s1-sat','s1-sun'];
+  var dayIds    = ['s1-mon','s1-tue','s1-wed','s1-thu','s1-fri','s1-weekend'];
   var daySecs   = dayIds.map(function(id){ return document.getElementById(id); }).filter(Boolean);
   var railItems = {};
   if (rail) rail.querySelectorAll('.s1-rail__item').forEach(function(li){ railItems[li.getAttribute('data-target')] = li; });
