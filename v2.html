@@ -181,7 +181,22 @@
 .s1-day-promo__cta:hover{border-bottom-color:#fbbf24;color:#fff}
 
 /* ─── WEEKEND · TWO CARDS SIDE BY SIDE ──────────────── */
-.s1-weekend-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:stretch;margin-top:46px}
+.s1-weekend-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch;margin-top:32px}
+
+/* Weekend section runs tighter so Car Meets + F1 fit one screen view */
+#s1-weekend{padding:80px 0}
+#s1-weekend .s1-h2{font-size:clamp(40px,calc(5 * var(--vwu,1vw)),72px);line-height:.95}
+#s1-weekend .s1-lead{margin-top:18px}
+#s1-weekend .s1-weekend-card__inner{padding:28px 30px}
+#s1-weekend .s1-weekend-card__h{font-size:clamp(24px,calc(2.1 * var(--vwu,1vw)),36px);margin-bottom:12px}
+#s1-weekend .s1-weekend-card__p{font-size:16px;margin-bottom:18px;line-height:1.55}
+#s1-weekend .s1-weekend-card__eye{margin-bottom:12px}
+#s1-weekend .s1-crews{margin-bottom:16px}
+#s1-weekend .s1-weekend-card .s1-cd__card{padding:20px 22px;margin-bottom:0}
+#s1-weekend .s1-ctas{margin-top:16px}
+@media (max-width:1024px){
+  #s1-weekend{padding:70px 0}
+}
 .s1-weekend-card{background:rgba(10,10,11,.6);border:1px solid var(--line);border-radius:16px;padding:0;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:border-color .3s var(--ease),transform .3s var(--ease)}
 .s1-weekend-card__img{aspect-ratio:3/2;overflow:hidden;position:relative}
 .s1-weekend-card__img img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(1.05)}
