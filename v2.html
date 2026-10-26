@@ -134,16 +134,16 @@
    while the user scrolls through the day sections. The red line fills
    itself as you scroll, each day's dot lights up as its section passes
    the active line, and clicking a label jumps to that day. */
-.s1-rail{position:fixed;left:24px;top:50%;transform:translateY(-50%);z-index:40;opacity:0;pointer-events:none;transition:opacity .4s var(--ease)}
+.s1-rail{position:fixed;left:28px;top:50%;transform:translateY(-50%);z-index:40;opacity:0;pointer-events:none;transition:opacity .4s var(--ease)}
 .s1-rail.is-visible{opacity:1;pointer-events:auto}
-.s1-rail__track{position:absolute;left:14px;top:10px;bottom:10px;width:3px;z-index:0}
-.s1-rail__track-bg{position:absolute;inset:0;background:rgba(255,255,255,.1);border-radius:3px}
-.s1-rail__track-fill{position:absolute;left:0;top:0;width:100%;height:0%;background:linear-gradient(180deg,var(--red),var(--red-dk));box-shadow:0 0 14px rgba(237,28,36,.6);border-radius:3px;transition:height .22s var(--ease);will-change:height}
-.s1-rail__list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:14px;position:relative;z-index:1}
-.s1-rail__item a{display:flex;align-items:center;gap:14px;padding:4px 10px 4px 4px;text-decoration:none;color:inherit}
-.s1-rail__dot{width:18px;height:18px;border-radius:50%;background:#111;border:3px solid #000;box-shadow:0 0 0 1px rgba(255,255,255,.1);flex-shrink:0;position:relative;z-index:2;transition:background .3s var(--ease),box-shadow .3s var(--ease),transform .3s var(--ease)}
-.s1-rail__item.is-active .s1-rail__dot{background:var(--red);box-shadow:0 0 0 1px rgba(237,28,36,.4),0 0 18px rgba(237,28,36,.85);transform:scale(1.15)}
-.s1-rail__lbl{font-family:var(--cond);font-weight:800;font-size:17px;letter-spacing:.18em;text-transform:uppercase;color:#C9C9CF;padding:7px 14px;border-radius:7px;background:rgba(0,0,0,.65);backdrop-filter:blur(8px);transition:color .3s var(--ease),background .3s var(--ease)}
+.s1-rail__track{position:absolute;left:16px;top:12px;bottom:12px;width:4px;z-index:0}
+.s1-rail__track-bg{position:absolute;inset:0;background:rgba(255,255,255,.1);border-radius:4px}
+.s1-rail__track-fill{position:absolute;left:0;top:0;width:100%;height:0%;background:linear-gradient(180deg,var(--red),var(--red-dk));box-shadow:0 0 16px rgba(237,28,36,.6);border-radius:4px;transition:height .22s var(--ease);will-change:height}
+.s1-rail__list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:20px;position:relative;z-index:1}
+.s1-rail__item a{display:flex;align-items:center;gap:18px;padding:5px 14px 5px 6px;text-decoration:none;color:inherit}
+.s1-rail__dot{width:24px;height:24px;border-radius:50%;background:#111;border:3px solid #000;box-shadow:0 0 0 1px rgba(255,255,255,.1);flex-shrink:0;position:relative;z-index:2;transition:background .3s var(--ease),box-shadow .3s var(--ease),transform .3s var(--ease)}
+.s1-rail__item.is-active .s1-rail__dot{background:var(--red);box-shadow:0 0 0 1px rgba(237,28,36,.4),0 0 22px rgba(237,28,36,.9);transform:scale(1.18)}
+.s1-rail__lbl{font-family:var(--cond);font-weight:600;font-size:22px;letter-spacing:.14em;text-transform:uppercase;color:#D4D4D8;padding:9px 18px;border-radius:8px;background:rgba(0,0,0,.65);backdrop-filter:blur(8px);transition:color .3s var(--ease),background .3s var(--ease)}
 .s1-rail__item.is-active .s1-rail__lbl{color:#fff;background:rgba(237,28,36,.25)}
 .s1-rail__item a:hover .s1-rail__lbl{color:#fff;background:rgba(255,255,255,.12)}
 @media (max-width:1280px){ .s1-rail{display:none} }
