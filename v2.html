@@ -157,22 +157,27 @@
 .s1-day-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,.4) 40%,rgba(0,0,0,.4) 60%,rgba(0,0,0,.65) 100%)}
 
 /* ─── DAY GRID + DAILY PROMO SIDECAR ────────────────── */
-.s1-day-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:60px;align-items:start}
+.s1-day-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:60px;align-items:stretch}
 .s1-day-grid--reverse .s1-day-main{order:2}
 .s1-day-grid--reverse .s1-day-promo{order:1}
 .s1-day-main > *+*{margin-top:16px}
-.s1-day-promo{background:linear-gradient(145deg,rgba(251,191,36,.1),rgba(0,0,0,.4));border:1px solid rgba(251,191,36,.3);border-radius:16px;padding:46px 44px;position:relative;overflow:hidden;isolation:isolate}
+.s1-day-promo{background:linear-gradient(145deg,rgba(251,191,36,.1),rgba(0,0,0,.4));border:1px solid rgba(251,191,36,.3);border-radius:16px;padding:0;position:relative;overflow:hidden;isolation:isolate;display:flex;flex-direction:column}
 .s1-day-promo::before{content:"";position:absolute;top:-60px;right:-60px;width:220px;height:220px;background:radial-gradient(circle,rgba(251,191,36,.22),transparent 70%);pointer-events:none;z-index:0}
 /* Subtle gold shine sweep — slow, every 7s, sits above the glow but behind content */
 .s1-day-promo::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(110deg,transparent 35%,rgba(251,191,36,.28) 50%,transparent 65%);transform:translateX(-130%);animation:s1-promo-shine 7s ease-in-out infinite}
 @keyframes s1-promo-shine{0%,65%{transform:translateX(-130%)}90%,100%{transform:translateX(130%)}}
-.s1-day-promo > *{position:relative;z-index:2}
-.s1-day-promo__eye{font-family:var(--cond);font-weight:800;font-size:16px;letter-spacing:.22em;text-transform:uppercase;color:#fff;margin-bottom:14px;display:flex;align-items:center;gap:14px}
+/* Image fills the extra vertical space; content stays at natural height at the bottom */
+.s1-day-promo__img{flex:1;min-height:220px;overflow:hidden;position:relative;z-index:2}
+.s1-day-promo__img img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(1.05)}
+.s1-day-promo__img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.55) 100%)}
+.s1-day-promo__content{padding:36px 40px;position:relative;z-index:2;flex:0 0 auto}
+.s1-day-promo__content > *+ *{margin-top:14px}
+.s1-day-promo__eye{font-family:var(--cond);font-weight:800;font-size:16px;letter-spacing:.22em;text-transform:uppercase;color:#fff;display:flex;align-items:center;gap:14px}
 .s1-day-promo__eye::before{content:"";width:36px;height:4px;background:#fbbf24;transform:skewX(-30deg);flex-shrink:0}
-.s1-day-promo__h{font-family:var(--cond);font-weight:900;font-size:clamp(40px,calc(4 * var(--vwu,1vw)),72px);line-height:.95;text-transform:uppercase;color:#fff;-webkit-text-stroke:max(3px,.045em) #000;paint-order:stroke fill;margin-bottom:20px}
+.s1-day-promo__h{font-family:var(--cond);font-weight:900;font-size:clamp(40px,calc(4 * var(--vwu,1vw)),72px);line-height:.95;text-transform:uppercase;color:#fff;-webkit-text-stroke:max(3px,.045em) #000;paint-order:stroke fill}
 .s1-day-promo__h em{font-style:italic;color:#fbbf24}
-.s1-day-promo__p{color:#C9C9CF;font-size:17px;line-height:1.65;margin-bottom:26px;max-width:40ch}
-.s1-day-promo__cta{display:inline-block;font-family:var(--cond);font-weight:800;font-size:16px;letter-spacing:.15em;text-transform:uppercase;color:#fbbf24;border-bottom:2px solid rgba(251,191,36,.4);padding-bottom:3px;transition:border-color .25s,color .25s}
+.s1-day-promo__p{color:#C9C9CF;font-size:17px;line-height:1.65;max-width:40ch}
+.s1-day-promo__cta{display:inline-block;font-family:var(--cond);font-weight:800;font-size:16px;letter-spacing:.15em;text-transform:uppercase;color:#fbbf24;border-bottom:2px solid rgba(251,191,36,.4);padding-bottom:3px;transition:border-color .25s,color .25s;align-self:flex-start}
 .s1-day-promo__cta:hover{border-bottom-color:#fbbf24;color:#fff}
 
 /* ─── WEEKEND · TWO CARDS SIDE BY SIDE ──────────────── */
@@ -295,14 +300,6 @@
 .s1-cd__u{font-family:var(--cond);font-weight:800;font-size:15px;letter-spacing:.2em;text-transform:uppercase;color:#C9C9CF;margin-top:10px}
 .s1-cd__next{margin-top:24px;padding-top:20px;border-top:1px solid var(--line);font-family:var(--cond);font-weight:800;font-size:18px;letter-spacing:.14em;text-transform:uppercase;color:#D4D4D8;line-height:1.4}
 .s1-cd__next strong{color:#fff;font-weight:900}
-
-/* ─── SCALE DRIFT · FULL-BLEED ───────────────────── */
-.s1-drift{position:relative;overflow:hidden;isolation:isolate;padding:140px 0;min-height:600px}
-.s1-drift__bg{position:absolute;inset:0;z-index:0}
-.s1-drift__bg img{width:100%;height:100%;object-fit:cover;display:block}
-.s1-drift__bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.8) 0%,rgba(0,0,0,.45) 55%,rgba(0,0,0,.2) 100%)}
-.s1-drift__inner{position:relative;z-index:2;max-width:1760px;margin:0 auto;padding:0 clamp(24px,4vw,72px)}
-.s1-drift__content{max-width:720px}
 
 /* ─── CALENDAR ──────────────────────────────────── */
 .s1-cal{padding:120px 0;background:var(--ink-2)}
@@ -431,10 +428,15 @@
         </div>
       </div>
       <div class="s1-day-promo s1-reveal" style="--rd:.2s">
-        <div class="s1-day-promo__eye">Monday · Daily Promo</div>
-        <div class="s1-day-promo__h">Bonus <em>time</em></div>
-        <p class="s1-day-promo__p"><strong style="color:#fff;">11 AM – 4 PM:</strong> 50% extra time added to any session.<br><strong style="color:#fff;">4 PM – 11 PM:</strong> 25% extra time added.</p>
-        <a href="https://www.sim1racing.com/daily-rates" class="s1-day-promo__cta">See all daily promos →</a>
+        <div class="s1-day-promo__img">
+          <img src="https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a271dfd73c1e86e3b638d3b/1780948478116/CTA09873+%281%29.jpg" alt="Group coaching on the sim" loading="lazy">
+        </div>
+        <div class="s1-day-promo__content">
+          <div class="s1-day-promo__eye">Monday · Daily Promo</div>
+          <div class="s1-day-promo__h">Bonus <em>time</em></div>
+          <p class="s1-day-promo__p"><strong style="color:#fff;">11 AM – 4 PM:</strong> 50% extra time added to any session.<br><strong style="color:#fff;">4 PM – 11 PM:</strong> 25% extra time added.</p>
+          <a href="https://www.sim1racing.com/daily-rates" class="s1-day-promo__cta">See all daily promos →</a>
+        </div>
       </div>
     </div>
   </div>
@@ -498,10 +500,15 @@
         </div>
       </div>
       <div class="s1-day-promo s1-reveal" style="--rd:.2s">
-        <div class="s1-day-promo__eye">Wednesday · Daily Promo</div>
-        <div class="s1-day-promo__h">$20 off <em>day pass</em></div>
-        <p class="s1-day-promo__p">A full-day sim pass for <strong style="color:#fff;">$100</strong> instead of $120. Wednesdays only.</p>
-        <a href="https://www.sim1racing.com/daily-rates" class="s1-day-promo__cta">See all daily promos →</a>
+        <div class="s1-day-promo__img">
+          <img src="https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a28c5a96230ef37a6ea61a1/1781056937924/POR00519+%281%29.jpg" alt="Workshop at the sim center" loading="lazy">
+        </div>
+        <div class="s1-day-promo__content">
+          <div class="s1-day-promo__eye">Wednesday · Daily Promo</div>
+          <div class="s1-day-promo__h">$20 off <em>day pass</em></div>
+          <p class="s1-day-promo__p">A full-day sim pass for <strong style="color:#fff;">$100</strong> instead of $120. Wednesdays only.</p>
+          <a href="https://www.sim1racing.com/daily-rates" class="s1-day-promo__cta">See all daily promos →</a>
+        </div>
       </div>
     </div>
   </div>
@@ -513,29 +520,21 @@
     <img src="https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6ad966bee1d2801677abd738/1792632510953/Untitled+design+%2817%29.jpg" alt="" loading="lazy">
   </div>
   <div class="s1-wrap--wide">
-    <div class="s1-day-grid">
-      <div class="s1-day-main">
-        <div class="s1-eyebrow s1-reveal">Thursday · Weekly Sprint Race</div>
-        <h2 class="s1-h2 s1-h2--xl s1-reveal" style="--rd:.08s">Thursdays<br><span class="s1-italic s1-red">lights out at 8</span></h2>
-        <p class="s1-lead s1-reveal" style="--rd:.16s">A one-hour race night, same format every week — practice, qualify, then the race. Same car and track as the current weekly qualifier (we drop it on Instagram a few days out).</p>
-        <div class="s1-rate__card s1-reveal" style="--rd:.24s">
-          <div class="s1-rate__price"><span class="s1-cur">$</span><span data-count="45">0</span></div>
-          <div class="s1-rate__price-note">Per seat · save $15 vs standard hour</div>
-          <div class="s1-rate__breakdown">
-            <div class="s1-rate__bk"><div class="s1-rate__bk-mins"><span data-count="10">0</span><span class="s1-m">m</span></div><div class="s1-rate__bk-lbl">Practice</div></div>
-            <div class="s1-rate__bk"><div class="s1-rate__bk-mins"><span data-count="10">0</span><span class="s1-m">m</span></div><div class="s1-rate__bk-lbl">Qualifying</div></div>
-            <div class="s1-rate__bk"><div class="s1-rate__bk-mins"><span data-count="40">0</span><span class="s1-m">m</span></div><div class="s1-rate__bk-lbl">Race</div></div>
-          </div>
-        </div>
-        <div class="s1-ctas s1-reveal" style="--rd:.3s">
-          <a href="https://sim1racing.as.me/sprint-race" target="_blank" rel="noopener" class="s1-btn s1-btn--red">Reserve Your Spot <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <div class="s1-day-main">
+      <div class="s1-eyebrow s1-reveal">Thursday · Weekly Sprint Race</div>
+      <h2 class="s1-h2 s1-h2--xl s1-reveal" style="--rd:.08s">Thursdays<br><span class="s1-italic s1-red">lights out at 8</span></h2>
+      <p class="s1-lead s1-reveal" style="--rd:.16s">A one-hour race night, same format every week — practice, qualify, then the race. Same car and track as the current weekly qualifier (we drop it on Instagram a few days out). <strong style="color:#fff;">Thursday's weekly deal</strong> — $45 instead of the standard $60.</p>
+      <div class="s1-rate__card s1-reveal" style="--rd:.24s">
+        <div class="s1-rate__price"><span class="s1-cur">$</span><span data-count="45">0</span></div>
+        <div class="s1-rate__price-note">Per seat · save $15 vs standard hour</div>
+        <div class="s1-rate__breakdown">
+          <div class="s1-rate__bk"><div class="s1-rate__bk-mins"><span data-count="10">0</span><span class="s1-m">m</span></div><div class="s1-rate__bk-lbl">Practice</div></div>
+          <div class="s1-rate__bk"><div class="s1-rate__bk-mins"><span data-count="10">0</span><span class="s1-m">m</span></div><div class="s1-rate__bk-lbl">Qualifying</div></div>
+          <div class="s1-rate__bk"><div class="s1-rate__bk-mins"><span data-count="40">0</span><span class="s1-m">m</span></div><div class="s1-rate__bk-lbl">Race</div></div>
         </div>
       </div>
-      <div class="s1-day-promo s1-reveal" style="--rd:.2s">
-        <div class="s1-day-promo__eye">Thursday · Daily Promo</div>
-        <div class="s1-day-promo__h">Thursday <em>IS</em> the deal</div>
-        <p class="s1-day-promo__p">The Sprint Race is Thursday's weekly promo — a one-hour race night for <strong style="color:#fff;">$45</strong> instead of the standard $60. Show up at 8 PM and race the room.</p>
-        <a href="https://www.sim1racing.com/daily-rates" class="s1-day-promo__cta">See all daily promos →</a>
+      <div class="s1-ctas s1-reveal" style="--rd:.3s">
+        <a href="https://sim1racing.as.me/sprint-race" target="_blank" rel="noopener" class="s1-btn s1-btn--red">Reserve Your Spot <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
     </div>
   </div>
@@ -560,10 +559,15 @@
         </div>
       </div>
       <div class="s1-day-promo s1-reveal" style="--rd:.2s">
-        <div class="s1-day-promo__eye">Friday · Daily Promo</div>
-        <div class="s1-day-promo__h">VR <em>2-for-1</em></div>
-        <p class="s1-day-promo__p">Add VR to your session for <strong style="color:#fff;">$10</strong> and the second headset is on us — race a friend in VR. Minimum one-hour session.</p>
-        <a href="https://www.sim1racing.com/daily-rates" class="s1-day-promo__cta">See all daily promos →</a>
+        <div class="s1-day-promo__img">
+          <img src="https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a8f315b25397c12cf3ad07a/1787769179932/Untitled+design+%284%29.jpg" alt="Friday Night Showdown" loading="lazy">
+        </div>
+        <div class="s1-day-promo__content">
+          <div class="s1-day-promo__eye">Friday · Daily Promo</div>
+          <div class="s1-day-promo__h">VR <em>2-for-1</em></div>
+          <p class="s1-day-promo__p">Add VR to your session for <strong style="color:#fff;">$10</strong> and the second headset is on us — race a friend in VR. Minimum one-hour session.</p>
+          <a href="https://www.sim1racing.com/daily-rates" class="s1-day-promo__cta">See all daily promos →</a>
+        </div>
       </div>
     </div>
   </div>
@@ -614,23 +618,6 @@
             <div class="s1-cd__next" id="s1-cd-next">—</div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─────── SCALE DRIFT SERIES ─────── -->
-<section class="s1-drift">
-  <div class="s1-drift__bg">
-    <img src="https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a272015254df31a6e069fe5/1780949013755/27c2b863-ae33-4db5-a845-6cb9fedc1eec.png" alt="" loading="lazy">
-  </div>
-  <div class="s1-drift__inner">
-    <div class="s1-drift__content">
-      <div class="s1-eyebrow s1-reveal">In collaboration with Scale Drift Series</div>
-      <h2 class="s1-h2 s1-h2--xl s1-reveal" style="--rd:.08s">Scale drift<br><span class="s1-italic s1-red">series</span></h2>
-      <p class="s1-lead s1-reveal" style="--rd:.16s">Every few months, top RC drifters take over the floor for an all-day tournament — with breaks built in for the public to grab a controller and run free demo laps on the scale track.</p>
-      <div class="s1-ctas s1-reveal" style="--rd:.24s">
-        <a href="https://www.instagram.com/scale_drift_series/" target="_blank" rel="noopener" class="s1-btn s1-btn--red">Follow @scale_drift_series <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
       </div>
     </div>
   </div>
