@@ -229,20 +229,22 @@
 /* ─── WEEKEND · TWO CARDS SIDE BY SIDE ──────────────── */
 .s1-weekend-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch;margin-top:32px}
 
-/* Friday section runs tighter so main column + sidecar fit one screen */
-#s1-fri{padding:70px 0}
-#s1-fri .s1-h2--xl{font-size:clamp(42px,calc(4.4 * var(--vwu,1vw)),80px)}
-#s1-fri .s1-lead{font-size:17px;margin-top:18px;max-width:none;line-height:1.6}
-#s1-fri .s1-stats{margin:28px 0 0}
-#s1-fri .s1-stat{padding:22px 14px}
-#s1-fri .s1-stat__num{font-size:clamp(42px,calc(3.8 * var(--vwu,1vw)),72px)}
-#s1-fri .s1-stat__lbl{font-size:15px;margin-top:6px}
-#s1-fri .s1-req{font-size:17px;padding:18px 22px;margin-top:20px;line-height:1.5}
-#s1-fri .s1-ctas{margin-top:22px}
-#s1-fri .s1-day-main .s1-btn{font-size:18px;padding:16px 32px}
-#s1-fri .s1-day-promo__content{padding:28px 32px}
-#s1-fri .s1-day-promo__h{font-size:clamp(36px,calc(3.4 * var(--vwu,1vw)),58px);margin-bottom:14px}
-#s1-fri .s1-day-promo__p{font-size:16px;line-height:1.5;margin-bottom:0}
+/* Friday section runs tighter on tablet/desktop (mobile uses the universal mobile rules so Fri matches Mon/Wed) */
+@media (min-width:769px){
+  #s1-fri{padding:70px 0}
+  #s1-fri .s1-h2--xl{font-size:clamp(42px,calc(4.4 * var(--vwu,1vw)),80px)}
+  #s1-fri .s1-lead{font-size:17px;margin-top:18px;max-width:none;line-height:1.6}
+  #s1-fri .s1-stats{margin:28px 0 0}
+  #s1-fri .s1-stat{padding:22px 14px}
+  #s1-fri .s1-stat__num{font-size:clamp(42px,calc(3.8 * var(--vwu,1vw)),72px)}
+  #s1-fri .s1-stat__lbl{font-size:15px;margin-top:6px}
+  #s1-fri .s1-req{font-size:17px;padding:18px 22px;margin-top:20px;line-height:1.5}
+  #s1-fri .s1-ctas{margin-top:22px}
+  #s1-fri .s1-day-main .s1-btn{font-size:18px;padding:16px 32px}
+  #s1-fri .s1-day-promo__content{padding:28px 32px}
+  #s1-fri .s1-day-promo__h{font-size:clamp(36px,calc(3.4 * var(--vwu,1vw)),58px);margin-bottom:14px}
+  #s1-fri .s1-day-promo__p{font-size:16px;line-height:1.5;margin-bottom:0}
+}
 @media (min-width:1025px){
   #s1-fri{padding:90px 0}
 }
@@ -515,11 +517,11 @@
   .s1-track-card__value{font-size:17px;line-height:1.05}
   .s1-note{display:none}
 
-  /* Daily-promo sidecar — true small chip on mobile */
-  .s1-day-promo__img{display:none}
-  .s1-day-promo{min-height:0;border-radius:8px;padding:8px 12px}
+  /* Daily-promo sidecar — image back on mobile, text chip stays tiny */
+  .s1-day-promo{min-height:0;border-radius:10px;padding:0;overflow:hidden}
   .s1-day-promo::before,.s1-day-promo::after{display:none}
-  .s1-day-promo__content{padding:0;position:static}
+  .s1-day-promo__img{display:block;aspect-ratio:3/2}
+  .s1-day-promo__content{padding:10px 12px;position:static}
   .s1-day-promo__content > *+*{margin-top:3px}
   .s1-day-promo__eye{font-size:9.5px;letter-spacing:.1em;gap:6px}
   .s1-day-promo__eye::before{width:14px;height:2px}
@@ -795,7 +797,7 @@
   <div class="s1-wrap--wide">
     <div class="s1-eyebrow s1-reveal">Weekend</div>
     <h2 class="s1-h2 s1-h2--xl s1-reveal" style="--rd:.08s">Community <span class="s1-italic s1-red">events</span></h2>
-    <p class="s1-lead s1-reveal" style="--rd:.16s">Front lot full of cars outside, Formula 1 on the big screen inside. Walk through either, pull up a wheel, grab a seat.</p>
+    <p class="s1-lead s1-reveal" style="--rd:.16s">Car meets out in the front lot, sim competitions and F1 watch parties running inside. Doors open to everyone.</p>
 
     <div class="s1-weekend-grid">
       <!-- Car Meets card -->
@@ -807,8 +809,8 @@
         <div class="s1-weekend-card__inner">
           <div class="s1-weekend-card__body">
             <div class="s1-weekend-card__eye">Car Meets</div>
-            <h3 class="s1-weekend-card__h">Front lot<br><em>crew swap</em></h3>
-            <p class="s1-weekend-card__p">Meets happen out in the front lot and run alongside sim tournaments inside. Different crew each time — walk through, pull up a wheel.</p>
+            <h3 class="s1-weekend-card__h">Car meets &amp;<br><em>sim competitions</em></h3>
+            <p class="s1-weekend-card__p">Meets happen out in the front lot and run alongside sim competitions inside. Different host crew each time — walk through, grab a seat, jump in a session.</p>
             <div class="s1-crews">
               <span class="s1-crew">Lamborghini Paramus</span>
               <span class="s1-crew">Tristate Motorclub</span>
