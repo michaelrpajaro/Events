@@ -513,15 +513,16 @@
   .s1-track-card__value{font-size:17px;line-height:1.05}
   .s1-note{display:none}
 
-  /* Daily-promo sidecar — tighter + photo hidden on phones */
+  /* Daily-promo sidecar — compact phone card: photo hidden, box kept small */
   .s1-day-promo__img{display:none}
-  .s1-day-promo{min-height:0}
-  .s1-day-promo__content{padding:18px 20px}
-  .s1-day-promo__content > *+*{margin-top:8px}
-  .s1-day-promo__eye{font-size:12px;letter-spacing:.16em;gap:10px}
-  .s1-day-promo__eye::before{width:24px;height:3px}
-  .s1-day-promo__h{font-size:clamp(24px,7vw,34px);line-height:1;margin:0}
-  .s1-day-promo__p{font-size:13px;line-height:1.45;max-width:none;margin:0}
+  .s1-day-promo{min-height:0;border-radius:12px}
+  .s1-day-promo::before{width:140px;height:140px;top:-40px;right:-40px}
+  .s1-day-promo__content{padding:14px 16px}
+  .s1-day-promo__content > *+*{margin-top:6px}
+  .s1-day-promo__eye{font-size:11px;letter-spacing:.14em;gap:8px}
+  .s1-day-promo__eye::before{width:20px;height:2px}
+  .s1-day-promo__h{font-size:clamp(20px,5.6vw,26px);line-height:1;margin:0;-webkit-text-stroke-width:2px}
+  .s1-day-promo__p{font-size:12.5px;line-height:1.4;max-width:none;margin:0}
 
   /* Tuesday — promo pills side by side, smaller */
   .s1-promo{padding:52px 0}
