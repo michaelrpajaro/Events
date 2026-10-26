@@ -450,18 +450,27 @@
 @media (max-width:1024px){
   .s1{width:100vw;max-width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw)}
   .s1-section{padding:84px 0}
-  .s1-hero{padding:110px 20px 70px;min-height:auto}
-  .s1-hero__title{font-size:clamp(44px,13vw,80px)}
-  .s1-hero__ghost{font-size:clamp(180px,55vw,420px)}
+  .s1-hero{padding:90px 16px 60px;min-height:auto;text-align:center}
+  .s1-hero__inner{text-align:center}
+  .s1-hero__hours{justify-content:center;flex-wrap:nowrap;white-space:nowrap;font-size:clamp(13px,4.3vw,20px);letter-spacing:.1em;margin-bottom:20px}
+  /* Title formula — sized so the longest italic line "something at SIM1" always fits */
+  .s1-hero__title{font-size:calc((100vw - 24px) / 7.5);line-height:.92;margin:0 -6px}
+  .s1-hero__title .s1-line{display:block;white-space:nowrap;padding:.08em .15em;overflow:visible}
+  .s1-hero__title .s1-line>span{-webkit-text-stroke-width:4px}
+  .s1-hero__lead{font-size:15px;margin:18px auto 0;max-width:100%;line-height:1.6;text-align:center}
+  .s1-hero__ghost{font-size:clamp(160px,52vw,360px)}
+  .s1-hero__inner .s1-ctas{justify-content:center;flex-direction:column;align-items:center;gap:10px;margin-top:24px}
+  .s1-hero__inner .s1-ctas .s1-btn{width:66%;padding:16px 20px;font-size:15px}
   .s1-feat{grid-template-columns:1fr;gap:30px}
   .s1-feat--reverse .s1-feat__media{order:1}
   .s1-feat--reverse .s1-feat__body{order:2}
   .s1-steps,.s1-rate,.s1-cd{grid-template-columns:1fr;gap:34px}
   .s1-mosaic{grid-template-columns:1fr;gap:12px}
   .s1-rate__card{padding:30px 26px}
-  .s1-stats{grid-template-columns:1fr}
-  .s1-stat+.s1-stat{border-left:0;border-top:1px solid var(--line)}
-  .s1-track-cards{grid-template-columns:1fr}
+  .s1-stats{grid-template-columns:1fr 1fr 1fr}
+  .s1-stat+.s1-stat{border-left:1px solid var(--line)}
+  .s1-track-cards{grid-template-columns:1fr 1fr}
+  .s1-day-grid{grid-template-columns:1fr;gap:22px}
   .s1-visit__grid{grid-template-columns:1fr;gap:0}
   .s1-visit__info>*,.s1-visit__grid>.s1-visit__map{grid-column:1;grid-row:auto}
   .s1-visit__list>div{grid-template-columns:90px 1fr;padding:12px 0}
@@ -475,14 +484,106 @@
   .s1-promo__inner{padding:0 20px}
 }
 @media (max-width:768px){
-  .s1-section{padding:70px 0}
-  .s1-ctas{justify-content:center;flex-direction:column;align-items:center}
-  .s1-ctas .s1-btn{width:66%;padding:16px 22px;font-size:15px}
-  .s1-rate__price{font-size:clamp(72px,22vw,140px)}
-  .s1-promo__pill{min-width:0;flex:1 1 100%;padding:22px 26px}
-  .s1-promo__pill-amt{font-size:clamp(50px,16vw,88px)}
-  .s1-cd__tiles{gap:8px}
-  .s1-cd__tile{padding:14px 6px}
+  .s1{font-size:16px}
+  .s1-section{padding:48px 0}
+  .s1-wrap{padding:0 16px}
+  .s1-wrap--wide{padding-left:16px;padding-right:16px}
+
+  /* Universal shrink for section headings/leads on phones */
+  .s1-section .s1-eyebrow{font-size:13px;letter-spacing:.18em;margin-bottom:10px;gap:10px}
+  .s1-section .s1-eyebrow::before{width:26px;height:3px}
+  .s1-section .s1-h2{font-size:clamp(28px,7.2vw,42px);line-height:1}
+  .s1-section .s1-h2--xl{font-size:clamp(32px,8.5vw,52px);line-height:.95}
+  .s1-section .s1-lead{font-size:15px;margin-top:12px;line-height:1.5}
+
+  /* Buttons: stacked, 66% wide pattern (matches homepage) */
+  .s1-ctas{justify-content:center;flex-direction:column;align-items:center;gap:10px;margin-top:18px}
+  .s1-ctas .s1-btn{width:66%;padding:14px 18px;font-size:14px;height:auto}
+
+  /* Day grid: stack, tighter gap */
+  .s1-day-grid{gap:18px}
+  .s1-day-main > *+*{margin-top:10px}
+
+  /* Monday — track cards side by side, hide the "New here?" note */
+  .s1-track-cards{grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+  .s1-track-card{padding:12px 12px;border-left-width:3px;border-radius:8px}
+  .s1-track-card__label{font-size:11px;letter-spacing:.1em;margin-bottom:3px}
+  .s1-track-card__value{font-size:17px;line-height:1.05}
+  .s1-note{display:none}
+
+  /* Daily-promo sidecar — tighter */
+  .s1-day-promo__content{padding:20px 22px}
+  .s1-day-promo__content > *+*{margin-top:10px}
+  .s1-day-promo__eye{font-size:12px;letter-spacing:.18em;gap:10px}
+  .s1-day-promo__eye::before{width:24px;height:3px}
+  .s1-day-promo__h{font-size:clamp(26px,7.5vw,38px);line-height:1}
+  .s1-day-promo__p{font-size:13px;line-height:1.45;max-width:none}
+
+  /* Tuesday — promo pills side by side, smaller */
+  .s1-promo{padding:52px 0}
+  .s1-promo__inner{padding:0 16px}
+  .s1-promo__pills{gap:10px;margin-top:18px}
+  .s1-promo__pill{min-width:0;flex:1 1 0;padding:16px 16px}
+  .s1-promo__pill-amt{font-size:clamp(36px,10vw,56px)}
+  .s1-promo__pill-note{font-size:11px;letter-spacing:.1em;margin-top:4px}
+  .s1-promo__ghost{font-size:clamp(180px,55vw,340px)}
+
+  /* Wednesday — compact step flow */
+  .s1-steps{gap:20px}
+  .s1-steps__list{margin-top:14px}
+  .s1-step{padding:12px 0;gap:14px}
+  .s1-step__num{font-size:34px;min-width:1.4em}
+  .s1-step__title{font-size:15px;line-height:1.1;margin-bottom:3px}
+  .s1-step__desc{font-size:13px;line-height:1.4}
+  .s1-rotation{gap:6px;margin-top:14px}
+  .s1-pill{font-size:12px;padding:7px 12px;letter-spacing:.1em}
+  .s1-pill::before{width:6px;height:6px;margin-right:7px}
+
+  /* Thursday — rate card compact */
+  .s1-rate__card{padding:22px 20px}
+  .s1-rate__price{font-size:clamp(72px,22vw,110px)}
+  .s1-rate__price-note{font-size:12px;letter-spacing:.1em;margin-top:4px}
+  .s1-rate__breakdown{gap:8px;margin-top:16px}
+  .s1-rate__bk{padding:14px 6px;border-radius:8px}
+  .s1-rate__bk-mins{font-size:34px}
+  .s1-rate__bk-lbl{font-size:11px;letter-spacing:.1em;margin-top:4px}
+
+  /* Friday — stats remain 3-up (readable), compact */
+  .s1-stats{grid-template-columns:1fr 1fr 1fr;margin-top:16px}
+  .s1-stat{padding:14px 6px}
+  .s1-stat::before{width:26px;height:3px}
+  .s1-stat__num{font-size:clamp(26px,7vw,36px);line-height:1}
+  .s1-stat__lbl{font-size:11px;letter-spacing:.1em;margin-top:4px}
+  .s1-req{font-size:12.5px;padding:12px 14px;margin-top:14px;line-height:1.4}
+
+  /* Weekend — cards stack naturally and get much tighter */
+  #s1-weekend{padding:48px 0}
+  #s1-weekend .s1-h2{font-size:clamp(28px,7.2vw,42px)}
+  #s1-weekend .s1-lead{font-size:14px}
+  #s1-weekend .s1-weekend-grid{grid-template-columns:1fr;gap:14px;margin-top:18px}
+  #s1-weekend .s1-weekend-card__inner{padding:18px 20px}
+  #s1-weekend .s1-weekend-card__eye{font-size:12px}
+  #s1-weekend .s1-weekend-card__h{font-size:clamp(22px,6.5vw,30px);line-height:1;margin-bottom:8px}
+  #s1-weekend .s1-weekend-card__p{font-size:13px;line-height:1.45;margin-bottom:12px}
+  #s1-weekend .s1-crews{gap:4px;margin-bottom:10px}
+  #s1-weekend .s1-crew{font-size:11px;padding:5px 10px}
+  #s1-weekend .s1-weekend-card .s1-cd__card{padding:12px 14px}
+  #s1-weekend .s1-weekend-card .s1-cd__eyebrow{font-size:11px;margin-bottom:8px}
+  #s1-weekend .s1-weekend-card .s1-cd__tiles{gap:6px}
+  #s1-weekend .s1-weekend-card .s1-cd__tile{padding:10px 4px}
+  #s1-weekend .s1-weekend-card .s1-cd__num{font-size:26px}
+  #s1-weekend .s1-weekend-card .s1-cd__u{font-size:10px;letter-spacing:.1em;margin-top:3px}
+  #s1-weekend .s1-weekend-card .s1-cd__next{font-size:11px;letter-spacing:.1em;margin-top:10px;padding-top:10px}
+  #s1-weekend .s1-weekend-card .s1-btn{font-size:14px;padding:12px 20px;width:100%}
+  #s1-weekend .s1-ctas{margin-top:12px}
+
+  /* Friday + section-specific compact tweaks (override earlier Fri overrides) */
+  #s1-fri{padding:48px 0}
+  #s1-fri .s1-h2--xl{font-size:clamp(32px,8.5vw,52px)}
+  #s1-fri .s1-lead{font-size:14px;margin-top:10px}
+
+  /* Section-specific padding tightening to fit one screen each */
+  #s1-mon,#s1-wed,#s1-thu{padding:48px 0}
 }
 
 </style>
