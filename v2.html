@@ -450,17 +450,19 @@
 @media (max-width:1024px){
   .s1{width:100vw;max-width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw)}
   .s1-section{padding:84px 0}
-  .s1-hero{padding:90px 16px 60px;min-height:auto;text-align:center}
-  .s1-hero__inner{text-align:center}
-  .s1-hero__hours{justify-content:center;flex-wrap:nowrap;white-space:nowrap;font-size:clamp(13px,4.3vw,20px);letter-spacing:.1em;margin-bottom:20px}
-  /* Title formula — sized so the longest italic line "something at SIM1" always fits */
-  .s1-hero__title{font-size:calc((100vw - 24px) / 7.5);line-height:.92;margin:0 -6px}
-  .s1-hero__title .s1-line{display:block;white-space:nowrap;padding:.08em .15em;overflow:visible}
+  .s1-hero{padding:80px 0 50px;min-height:auto;text-align:center}
+  /* Drop .s1-wrap's 24px padding inside hero so the title formula below actually hits content width */
+  .s1-hero__inner{padding:0 16px;max-width:none;text-align:center}
+  .s1-hero__hours{justify-content:center;flex-wrap:nowrap;white-space:nowrap;font-size:clamp(13px,4vw,18px);letter-spacing:.1em;margin-bottom:16px}
+  /* Title formula — content width is (100vw - 32px) after .s1-hero__inner's 16px/side padding;
+     divisor sized against italic "something at SIM1" with a tiny safety margin */
+  .s1-hero__title{font-size:calc((100vw - 32px) / 7.8);line-height:.92;margin:0;text-align:center}
+  .s1-hero__title .s1-line{display:block;white-space:nowrap;padding:.05em .08em;overflow:visible;text-align:center}
   .s1-hero__title .s1-line>span{-webkit-text-stroke-width:4px}
-  .s1-hero__lead{font-size:15px;margin:18px auto 0;max-width:100%;line-height:1.6;text-align:center}
-  .s1-hero__ghost{font-size:clamp(160px,52vw,360px)}
-  .s1-hero__inner .s1-ctas{justify-content:center;flex-direction:column;align-items:center;gap:10px;margin-top:24px}
-  .s1-hero__inner .s1-ctas .s1-btn{width:66%;padding:16px 20px;font-size:15px}
+  .s1-hero__lead{font-size:14px;margin:14px auto 0;max-width:100%;line-height:1.55;text-align:center}
+  .s1-hero__ghost{font-size:clamp(160px,52vw,340px)}
+  .s1-hero__inner .s1-ctas{justify-content:center;flex-direction:column;align-items:center;gap:10px;margin-top:20px}
+  .s1-hero__inner .s1-ctas .s1-btn{width:66%;padding:14px 18px;font-size:14px}
   .s1-feat{grid-template-columns:1fr;gap:30px}
   .s1-feat--reverse .s1-feat__media{order:1}
   .s1-feat--reverse .s1-feat__body{order:2}
@@ -511,13 +513,15 @@
   .s1-track-card__value{font-size:17px;line-height:1.05}
   .s1-note{display:none}
 
-  /* Daily-promo sidecar — tighter */
-  .s1-day-promo__content{padding:20px 22px}
-  .s1-day-promo__content > *+*{margin-top:10px}
-  .s1-day-promo__eye{font-size:12px;letter-spacing:.18em;gap:10px}
+  /* Daily-promo sidecar — tighter + photo hidden on phones */
+  .s1-day-promo__img{display:none}
+  .s1-day-promo{min-height:0}
+  .s1-day-promo__content{padding:18px 20px}
+  .s1-day-promo__content > *+*{margin-top:8px}
+  .s1-day-promo__eye{font-size:12px;letter-spacing:.16em;gap:10px}
   .s1-day-promo__eye::before{width:24px;height:3px}
-  .s1-day-promo__h{font-size:clamp(26px,7.5vw,38px);line-height:1}
-  .s1-day-promo__p{font-size:13px;line-height:1.45;max-width:none}
+  .s1-day-promo__h{font-size:clamp(24px,7vw,34px);line-height:1;margin:0}
+  .s1-day-promo__p{font-size:13px;line-height:1.45;max-width:none;margin:0}
 
   /* Tuesday — promo pills side by side, smaller */
   .s1-promo{padding:52px 0}
@@ -583,7 +587,17 @@
   #s1-fri .s1-lead{font-size:14px;margin-top:10px}
 
   /* Section-specific padding tightening to fit one screen each */
-  #s1-mon,#s1-wed,#s1-thu{padding:48px 0}
+  #s1-mon,#s1-wed,#s1-thu{padding:40px 0}
+
+  /* Mon/Wed/Fri extra compact — tiny gap between main and sidecar, lead one-liner */
+  #s1-mon .s1-day-grid,#s1-wed .s1-day-grid,#s1-fri .s1-day-grid{gap:14px}
+  #s1-mon .s1-lead,#s1-wed .s1-lead,#s1-fri .s1-lead{font-size:13.5px;line-height:1.45;margin-top:8px}
+  #s1-mon .s1-ctas,#s1-wed .s1-ctas,#s1-fri .s1-ctas{margin-top:14px}
+  #s1-mon .s1-day-main > *+*,#s1-wed .s1-day-main > *+*,#s1-fri .s1-day-main > *+*{margin-top:8px}
+  /* Hide the workshop rotation chip row on phones to save a line */
+  #s1-wed .s1-rotation{display:none}
+  /* Friday req callout one-line */
+  #s1-fri .s1-req{font-size:12px;padding:10px 12px;margin-top:10px}
 }
 
 </style>
