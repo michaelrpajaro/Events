@@ -182,7 +182,11 @@
 
 /* ─── WEEKEND · TWO CARDS SIDE BY SIDE ──────────────── */
 .s1-weekend-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:stretch;margin-top:46px}
-.s1-weekend-card{background:rgba(10,10,11,.6);border:1px solid var(--line);border-radius:16px;padding:40px 36px;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:border-color .3s var(--ease),transform .3s var(--ease)}
+.s1-weekend-card{background:rgba(10,10,11,.6);border:1px solid var(--line);border-radius:16px;padding:0;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:border-color .3s var(--ease),transform .3s var(--ease)}
+.s1-weekend-card__img{aspect-ratio:3/2;overflow:hidden;position:relative}
+.s1-weekend-card__img img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(1.05)}
+.s1-weekend-card__img::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.55) 100%)}
+.s1-weekend-card__inner{padding:40px 36px;display:flex;flex-direction:column;flex:1}
 .s1-weekend-card--meet{border-color:rgba(249,115,22,.25)}
 .s1-weekend-card--watch{border-color:rgba(167,139,250,.25)}
 .s1-weekend-card:hover{transform:translateY(-3px)}
@@ -583,39 +587,51 @@
     <div class="s1-weekend-grid">
       <!-- Car Meets card -->
       <div class="s1-weekend-card s1-weekend-card--meet s1-reveal" style="--rd:.2s">
-        <div class="s1-weekend-card__body">
-          <div class="s1-weekend-card__eye">Car Meets</div>
-          <h3 class="s1-weekend-card__h">Front lot<br><em>crew swap</em></h3>
-          <p class="s1-weekend-card__p">Meets happen out in the front lot and run alongside sim tournaments inside. Different crew each time — walk through, pull up a wheel.</p>
-          <div class="s1-crews">
-            <span class="s1-crew">Lamborghini Paramus</span>
-            <span class="s1-crew">Tristate Motorclub</span>
-            <span class="s1-crew">RIX Magazine</span>
-            <span class="s1-crew">Daikoku NYC</span>
-            <span class="s1-crew">+ more</span>
-          </div>
+        <!-- ▼ swap src for the real car-meet photo (3:2) ▼ -->
+        <div class="s1-weekend-card__img">
+          <img src="https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a271f428c14d3607f5d5a10/1780948803723/CTA08645.jpg" alt="Car meet in the front lot" loading="lazy">
         </div>
-        <div class="s1-weekend-card__spacer"></div>
-        <div class="s1-ctas">
-          <a href="https://www.instagram.com/sim1racing/" target="_blank" rel="noopener" class="s1-btn s1-btn--red">See Upcoming on Instagram <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <div class="s1-weekend-card__inner">
+          <div class="s1-weekend-card__body">
+            <div class="s1-weekend-card__eye">Car Meets</div>
+            <h3 class="s1-weekend-card__h">Front lot<br><em>crew swap</em></h3>
+            <p class="s1-weekend-card__p">Meets happen out in the front lot and run alongside sim tournaments inside. Different crew each time — walk through, pull up a wheel.</p>
+            <div class="s1-crews">
+              <span class="s1-crew">Lamborghini Paramus</span>
+              <span class="s1-crew">Tristate Motorclub</span>
+              <span class="s1-crew">RIX Magazine</span>
+              <span class="s1-crew">Daikoku NYC</span>
+              <span class="s1-crew">+ more</span>
+            </div>
+          </div>
+          <div class="s1-weekend-card__spacer"></div>
+          <div class="s1-ctas">
+            <a href="https://www.instagram.com/sim1racing/" target="_blank" rel="noopener" class="s1-btn s1-btn--red">See Upcoming on Instagram <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
         </div>
       </div>
 
       <!-- F1 Watch Parties card -->
       <div class="s1-weekend-card s1-weekend-card--watch s1-reveal" style="--rd:.28s">
-        <div class="s1-weekend-card__body">
-          <div class="s1-weekend-card__eye">Free F1 Watch Parties</div>
-          <h3 class="s1-weekend-card__h">Every race<br><em>230-inch LED</em></h3>
-          <p class="s1-weekend-card__p">We host free watch parties for every race of the Formula 1 season. Multiple viewing areas anchored by the 230-inch LED so no matter where you grab a seat, you don't miss a corner.</p>
-          <div class="s1-cd__card">
-            <div class="s1-cd__eyebrow">Next watch party in</div>
-            <div class="s1-cd__tiles">
-              <div class="s1-cd__tile"><div class="s1-cd__num" id="s1-cd-d">00</div><div class="s1-cd__u">Days</div></div>
-              <div class="s1-cd__tile"><div class="s1-cd__num" id="s1-cd-h">00</div><div class="s1-cd__u">Hrs</div></div>
-              <div class="s1-cd__tile"><div class="s1-cd__num" id="s1-cd-m">00</div><div class="s1-cd__u">Min</div></div>
-              <div class="s1-cd__tile"><div class="s1-cd__num" id="s1-cd-s">00</div><div class="s1-cd__u">Sec</div></div>
+        <!-- ▼ swap src for the real F1 watch-party photo (3:2) ▼ -->
+        <div class="s1-weekend-card__img">
+          <img src="https://static1.squarespace.com/static/675f613ae652273e9723cfd3/t/6a271e93cae3eb591fbb3331/1780948628182/CTA09047+%281%29.jpg" alt="F1 watch party in the lounge" loading="lazy">
+        </div>
+        <div class="s1-weekend-card__inner">
+          <div class="s1-weekend-card__body">
+            <div class="s1-weekend-card__eye">Free F1 Watch Parties</div>
+            <h3 class="s1-weekend-card__h">Every race<br><em>230-inch LED</em></h3>
+            <p class="s1-weekend-card__p">We host free watch parties for every race of the Formula 1 season. Multiple viewing areas anchored by the 230-inch LED so no matter where you grab a seat, you don't miss a corner.</p>
+            <div class="s1-cd__card">
+              <div class="s1-cd__eyebrow">Next watch party in</div>
+              <div class="s1-cd__tiles">
+                <div class="s1-cd__tile"><div class="s1-cd__num" id="s1-cd-d">00</div><div class="s1-cd__u">Days</div></div>
+                <div class="s1-cd__tile"><div class="s1-cd__num" id="s1-cd-h">00</div><div class="s1-cd__u">Hrs</div></div>
+                <div class="s1-cd__tile"><div class="s1-cd__num" id="s1-cd-m">00</div><div class="s1-cd__u">Min</div></div>
+                <div class="s1-cd__tile"><div class="s1-cd__num" id="s1-cd-s">00</div><div class="s1-cd__u">Sec</div></div>
+              </div>
+              <div class="s1-cd__next" id="s1-cd-next">—</div>
             </div>
-            <div class="s1-cd__next" id="s1-cd-next">—</div>
           </div>
         </div>
       </div>
