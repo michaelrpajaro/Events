@@ -513,16 +513,18 @@
   .s1-track-card__value{font-size:17px;line-height:1.05}
   .s1-note{display:none}
 
-  /* Daily-promo sidecar — compact phone card: photo hidden, box kept small */
+  /* Daily-promo sidecar — box hugs its content on mobile */
   .s1-day-promo__img{display:none}
-  .s1-day-promo{min-height:0;border-radius:12px}
-  .s1-day-promo::before{width:140px;height:140px;top:-40px;right:-40px}
-  .s1-day-promo__content{padding:14px 16px}
-  .s1-day-promo__content > *+*{margin-top:6px}
-  .s1-day-promo__eye{font-size:11px;letter-spacing:.14em;gap:8px}
-  .s1-day-promo__eye::before{width:20px;height:2px}
-  .s1-day-promo__h{font-size:clamp(20px,5.6vw,26px);line-height:1;margin:0;-webkit-text-stroke-width:2px}
-  .s1-day-promo__p{font-size:12.5px;line-height:1.4;max-width:none;margin:0}
+  .s1-day-promo{min-height:0;border-radius:10px}
+  .s1-day-promo::before{display:none}       /* kill the yellow corner glow */
+  .s1-day-promo::after{display:none}        /* kill the shine sweep too — looks noisy at small sizes */
+  .s1-day-promo__content{padding:10px 12px}
+  .s1-day-promo__content > *+*{margin-top:4px}
+  .s1-day-promo__eye{font-size:10px;letter-spacing:.12em;gap:7px}
+  .s1-day-promo__eye::before{width:16px;height:2px}
+  .s1-day-promo__h{font-size:clamp(16px,4.4vw,20px);line-height:1;margin:0;-webkit-text-stroke-width:0}
+  .s1-day-promo__p{font-size:11.5px;line-height:1.35;max-width:none;margin:0}
+  .s1-day-promo__p br{display:none}         /* collapse the two-line Monday copy to natural flow */
 
   /* Tuesday — promo pills side by side, smaller */
   .s1-promo{padding:52px 0}
