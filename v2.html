@@ -117,8 +117,9 @@
   .s1-rate__card{padding:56px 60px}
   .s1-rate__price{font-size:clamp(140px,calc(13 * var(--vwu,1vw)),240px)}
   .s1-rate__price-note{font-size:22px}
-  .s1-rate__bk-mins{font-size:clamp(56px,calc(5.2 * var(--vwu,1vw)),88px)}
-  .s1-rate__bk-lbl{font-size:22px}
+  .s1-rate__bk{padding:40px 16px}
+  .s1-rate__bk-mins{font-size:clamp(72px,calc(6.4 * var(--vwu,1vw)),120px)}
+  .s1-rate__bk-lbl{font-size:28px;margin-top:16px}
   /* Friday stat band */
   .s1-stats .s1-stat__num{font-size:clamp(52px,calc(5.5 * var(--vwu,1vw)),100px)}
   .s1-stats .s1-stat__lbl{font-size:19px}
@@ -228,19 +229,45 @@
 /* ─── WEEKEND · TWO CARDS SIDE BY SIDE ──────────────── */
 .s1-weekend-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch;margin-top:32px}
 
+/* Friday section runs tighter so main column + sidecar fit one screen */
+#s1-fri{padding:70px 0}
+#s1-fri .s1-h2--xl{font-size:clamp(42px,calc(4.4 * var(--vwu,1vw)),80px)}
+#s1-fri .s1-lead{font-size:17px;margin-top:18px;max-width:none;line-height:1.6}
+#s1-fri .s1-stats{margin:28px 0 0}
+#s1-fri .s1-stat{padding:22px 14px}
+#s1-fri .s1-stat__num{font-size:clamp(42px,calc(3.8 * var(--vwu,1vw)),72px)}
+#s1-fri .s1-stat__lbl{font-size:15px;margin-top:6px}
+#s1-fri .s1-req{font-size:17px;padding:18px 22px;margin-top:20px;line-height:1.5}
+#s1-fri .s1-ctas{margin-top:22px}
+#s1-fri .s1-day-main .s1-btn{font-size:18px;padding:16px 32px}
+#s1-fri .s1-day-promo__content{padding:28px 32px}
+#s1-fri .s1-day-promo__h{font-size:clamp(36px,calc(3.4 * var(--vwu,1vw)),58px);margin-bottom:14px}
+#s1-fri .s1-day-promo__p{font-size:16px;line-height:1.5;margin-bottom:0}
+@media (min-width:1025px){
+  #s1-fri{padding:90px 0}
+}
+
 /* Weekend section runs tighter so Car Meets + F1 fit one screen view */
-#s1-weekend{padding:80px 0}
-#s1-weekend .s1-h2{font-size:clamp(40px,calc(5 * var(--vwu,1vw)),72px);line-height:.95}
-#s1-weekend .s1-lead{margin-top:18px}
-#s1-weekend .s1-weekend-card__inner{padding:28px 30px}
-#s1-weekend .s1-weekend-card__h{font-size:clamp(24px,calc(2.1 * var(--vwu,1vw)),36px);margin-bottom:12px}
-#s1-weekend .s1-weekend-card__p{font-size:16px;margin-bottom:18px;line-height:1.55}
-#s1-weekend .s1-weekend-card__eye{margin-bottom:12px}
-#s1-weekend .s1-crews{margin-bottom:16px}
-#s1-weekend .s1-weekend-card .s1-cd__card{padding:20px 22px;margin-bottom:0}
-#s1-weekend .s1-ctas{margin-top:16px}
+#s1-weekend{padding:60px 0}
+#s1-weekend .s1-h2{font-size:clamp(36px,calc(4.2 * var(--vwu,1vw)),64px);line-height:.95}
+#s1-weekend .s1-lead{font-size:17px;margin-top:14px;line-height:1.55}
+#s1-weekend .s1-weekend-grid{margin-top:26px;gap:20px}
+#s1-weekend .s1-weekend-card__inner{padding:22px 24px}
+#s1-weekend .s1-weekend-card__eye{font-size:15px;margin-bottom:10px}
+#s1-weekend .s1-weekend-card__h{font-size:clamp(22px,calc(1.9 * var(--vwu,1vw)),30px);margin-bottom:10px;line-height:1}
+#s1-weekend .s1-weekend-card__p{font-size:15px;margin-bottom:14px;line-height:1.5}
+#s1-weekend .s1-crews{margin-bottom:12px;gap:6px}
+#s1-weekend .s1-crew{font-size:14px;padding:8px 14px;border-left-width:3px}
+#s1-weekend .s1-weekend-card .s1-cd__card{padding:16px 18px;margin-bottom:0}
+#s1-weekend .s1-weekend-card .s1-cd__eyebrow{font-size:14px;margin-bottom:10px}
+#s1-weekend .s1-weekend-card .s1-cd__tile{padding:12px 6px}
+#s1-weekend .s1-weekend-card .s1-cd__num{font-size:clamp(34px,calc(3 * var(--vwu,1vw)),52px)}
+#s1-weekend .s1-weekend-card .s1-cd__u{font-size:12px;margin-top:6px}
+#s1-weekend .s1-weekend-card .s1-cd__next{font-size:14px;margin-top:14px;padding-top:12px}
+#s1-weekend .s1-ctas{margin-top:12px}
+#s1-weekend .s1-weekend-card .s1-btn{font-size:16px;padding:14px 28px}
 @media (max-width:1024px){
-  #s1-weekend{padding:70px 0}
+  #s1-weekend{padding:60px 0}
 }
 .s1-weekend-card{background:rgba(10,10,11,.6);border:1px solid var(--line);border-radius:16px;padding:0;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:border-color .3s var(--ease),transform .3s var(--ease)}
 .s1-weekend-card__img{aspect-ratio:3/2;overflow:hidden;position:relative}
@@ -325,10 +352,10 @@
 .s1-rate__price .s1-cur{color:var(--red);font-size:.5em;vertical-align:top;margin-right:4px;font-style:normal}
 .s1-rate__price-note{font-family:var(--cond);font-weight:800;font-size:18px;letter-spacing:.14em;text-transform:uppercase;color:#D4D4D8;margin-top:8px;position:relative;z-index:1}
 .s1-rate__breakdown{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:36px;position:relative;z-index:1}
-.s1-rate__bk{text-align:center;padding:28px 10px;background:rgba(0,0,0,.4);border-radius:10px}
-.s1-rate__bk-mins{font-family:var(--cond);font-weight:900;font-style:italic;font-size:clamp(50px,calc(4.5 * var(--vwu,1vw)),72px);color:#fff;line-height:1}
-.s1-rate__bk-mins .s1-m{color:var(--red);font-size:.5em;margin-left:3px;font-style:normal}
-.s1-rate__bk-lbl{font-family:var(--cond);font-weight:800;font-size:19px;letter-spacing:.16em;text-transform:uppercase;color:#C9C9CF;margin-top:12px}
+.s1-rate__bk{text-align:center;padding:32px 14px;background:rgba(0,0,0,.4);border-radius:12px}
+.s1-rate__bk-mins{font-family:var(--cond);font-weight:900;font-style:italic;font-size:clamp(60px,calc(5.5 * var(--vwu,1vw)),88px);color:#fff;line-height:1}
+.s1-rate__bk-mins .s1-m{color:var(--red);font-size:.5em;margin-left:4px;font-style:normal}
+.s1-rate__bk-lbl{font-family:var(--cond);font-weight:800;font-size:22px;letter-spacing:.16em;text-transform:uppercase;color:#D4D4D8;margin-top:14px}
 
 /* ─── FRIDAY · STATS ─────────────────────────────── */
 .s1-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:46px 0 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
@@ -508,7 +535,6 @@
           <div class="s1-day-promo__eye">Monday · Daily Promo</div>
           <div class="s1-day-promo__h">Bonus <em>time</em></div>
           <p class="s1-day-promo__p"><strong style="color:#fff;">11 AM – 4 PM:</strong> 50% extra time added to any session.<br><strong style="color:#fff;">4 PM – 11 PM:</strong> 25% extra time added.</p>
-          <a href="https://www.sim1racing.com/daily-rates" class="s1-day-promo__cta">See all daily promos →</a>
         </div>
       </div>
     </div>
@@ -580,7 +606,6 @@
           <div class="s1-day-promo__eye">Wednesday · Daily Promo</div>
           <div class="s1-day-promo__h">$20 off <em>day pass</em></div>
           <p class="s1-day-promo__p">A full-day sim pass for <strong style="color:#fff;">$100</strong> instead of $120. Wednesdays only.</p>
-          <a href="https://www.sim1racing.com/daily-rates" class="s1-day-promo__cta">See all daily promos →</a>
         </div>
       </div>
     </div>
@@ -639,7 +664,6 @@
           <div class="s1-day-promo__eye">Friday · Daily Promo</div>
           <div class="s1-day-promo__h">VR <em>2-for-1</em></div>
           <p class="s1-day-promo__p">Add VR to your session for <strong style="color:#fff;">$10</strong> and the second headset is on us — race a friend in VR. Minimum one-hour session.</p>
-          <a href="https://www.sim1racing.com/daily-rates" class="s1-day-promo__cta">See all daily promos →</a>
         </div>
       </div>
     </div>
